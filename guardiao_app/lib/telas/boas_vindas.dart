@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:guardiao_app/telas/cadastro/cadastro_1.dart';
+import 'package:guardiao_app/telas/login.dart';
 
 class TelaBoasVindas extends StatelessWidget {
+  final String rota = '/boas-vindas';
   const TelaBoasVindas({super.key});
 
   @override
@@ -55,7 +58,14 @@ class TelaBoasVindas extends StatelessWidget {
                     ),
                     const SizedBox(height: 40.0),
                     ElevatedButton(
-                      onPressed: (){}, 
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TelaLogin(), 
+                          ),
+                        );
+                      }, 
                       style: ElevatedButton.styleFrom(
                         fixedSize: Size(MediaQuery.of(context).size.width,55.0),
                         backgroundColor: Colors.white,
@@ -79,21 +89,26 @@ class TelaBoasVindas extends StatelessWidget {
                       text: TextSpan(
                         text: "Não possui uma conta? ",
                         style: const TextStyle(
-                              fontFamily: 'Lato',
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: "Cadastre-se", 
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = (){
-
-                                  },
-                              )
-                            ]
+                          fontFamily: 'Lato',
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "Cadastre-se", 
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const TelaCadastro(), 
+                                  ),
+                                );
+                              },
+                          )
+                        ]
                       ), 
                     ),
                   ],

@@ -7,8 +7,12 @@ environment:
   sdk: '>=3.0.5 <4.0.0'
 
 dependencies:
+  firebase_auth: ^4.7.1
+  firebase_core: ^2.15.0
   flutter:
     sdk: flutter
+  provider: ^6.0.5
+  cloud_firestore: ^4.8.4 
 
 dev_dependencies:
   flutter_test:
@@ -27,10 +31,17 @@ flutter:
           weight: 700
     - family: Lato
       fonts:
+        - asset: assets/fontes/Lato-Thin.ttf
+          weight: 100
+        - asset: assets/fontes/Lato-Light.ttf
+          weight: 300
         - asset: assets/fontes/Lato-Regular.ttf
           weight: 400
         - asset: assets/fontes/Lato-Bold.ttf
           weight: 700
+    - family: CustomIcons
+      fonts:
+        - asset: assets/icones/CustomIcons.ttf
   assets:
     - assets/imagens/
     - assets/fontes/
