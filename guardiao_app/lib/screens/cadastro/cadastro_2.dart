@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
-import 'package:guardiao_app/telas/inicio.dart';
-import 'package:guardiao_app/telas/login.dart';
+import 'package:guardiao_app/screens/inicio.dart';
+import 'package:guardiao_app/screens/login.dart';
 
 class TelaCadastro2 extends StatefulWidget {
   const TelaCadastro2({super.key});

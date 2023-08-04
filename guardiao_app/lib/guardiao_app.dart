@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:guardiao_app/telas/boas_vindas.dart';
-import 'package:guardiao_app/telas/cadastro/cadastro_1.dart';
-import 'package:guardiao_app/telas/inicio.dart';
-import 'package:guardiao_app/telas/login.dart';
+import 'package:guardiao_app/screens/boas_vindas.dart';
+import 'package:guardiao_app/screens/cadastro/cadastro_1.dart';
+import 'package:guardiao_app/screens/inicio.dart';
+import 'package:guardiao_app/screens/login.dart';
 import 'package:guardiao_app/widgets/verifica_autenticacao.dart';
 
 class GuardiaoApp extends StatefulWidget {
