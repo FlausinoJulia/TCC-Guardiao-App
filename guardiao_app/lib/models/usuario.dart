@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'contato.dart';
+
 class Usuario {
   final String? uid; 
   final String? nome;
   final String? email;
   final String? senha;
   final String? numero;
-  final List<String>? contatosDeEmergencia ;
+  final List<Contato>? contatosDeEmergencia ;
 
   Usuario ({
     this.uid,

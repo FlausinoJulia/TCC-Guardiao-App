@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:guardiao_app/models/usuario.dart';
 
 class Firestore {
-  CollectionReference _usuarios = FirebaseFirestore.instance.collection('usuarios');
+
+  final CollectionReference _usuarios = FirebaseFirestore.instance.collection('usuarios');
   
   Future<void> criarUsuario(Usuario usuario) async {
     _usuarios.doc(usuario.uid).set(usuario.toFirestore())
@@ -12,7 +13,7 @@ class Firestore {
 
 // atualizar telefone, nome, senha, email
   Future<void> atualizar(Usuario usuario, String campo, String valor, int indice) async {
-    final refUsuario = db.collection("usuarios").doc(usuario.uid);
+    final refUsuario = _usuarios.doc(usuario.uid);
 
     if (campo != "contatosDeEmergencia") {
       refUsuario.update({"${campo}": valor}).then(
@@ -21,10 +22,7 @@ class Firestore {
       );
     }
     else {
-      /*String numeroAntigo = usuario.contatosDeEmergencia!.elementAt(indice);
-      refUsuario.update({
-        "${campo}": FieldValue.arrayRemove([numeroAntigo]),
-      });*/
+
     }
   }
 }
