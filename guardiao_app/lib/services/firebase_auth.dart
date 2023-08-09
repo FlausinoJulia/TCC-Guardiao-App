@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+String? getUid() {
+  return FirebaseAuth.instance.currentUser?.uid;
+}
+
 Future<bool> cadastrar(String email, String senha, BuildContext context) async {
   try {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email, 
       password: senha
     );
+    
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
@@ -16,6 +21,8 @@ Future<bool> cadastrar(String email, String senha, BuildContext context) async {
     } else if (e.code == 'invalid-email') {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Email inválido.')));
     } else {
+      print("email: ${email}");
+      print (e.toString());
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
     }
     return false;

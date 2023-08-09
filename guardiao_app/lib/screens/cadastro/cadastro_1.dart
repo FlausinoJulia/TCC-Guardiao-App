@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/models/usuario.dart';
 //import 'package:guardiao_app/screens/inicio.dart';
 import 'package:guardiao_app/screens/login.dart';
+import 'package:guardiao_app/services/firebase_auth.dart';
 
 import 'cadastro_2.dart';
 
@@ -14,11 +16,12 @@ class TelaCadastro extends StatefulWidget {
 
 class _TelaCadastroState extends State<TelaCadastro> {
   final _formKey = GlobalKey<FormState>();
+  Usuario usuario = Usuario();
   final nomeController = TextEditingController();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
   final confirmaSenhaController = TextEditingController();
-  final telefoneController = TextEditingController();
+  final numeroController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +51,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
                   fontWeight: FontWeight.bold)
               ),
               Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  key: _formKey,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
@@ -81,6 +84,13 @@ class _TelaCadastroState extends State<TelaCadastro> {
                           fontFamily: 'Lato',
                           color: Colors.white
                         ),
+                        validator: (value) {
+                          if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                            return "Nome inválido!";
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                     ),
                     Padding(
@@ -113,6 +123,13 @@ class _TelaCadastroState extends State<TelaCadastro> {
                           color: Colors.white
                         ),
                         keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(value)) {
+                            return "Email inválido!";
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                     ),
                     Padding(
@@ -145,6 +162,13 @@ class _TelaCadastroState extends State<TelaCadastro> {
                           fontFamily: 'Lato',
                           color: Colors.white
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 6) {
+                            return "A senha deve conter no mínimo 6 caracteres.";
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                     ),
                     Padding(
@@ -177,12 +201,19 @@ class _TelaCadastroState extends State<TelaCadastro> {
                           fontFamily: 'Lato',
                           color: Colors.white
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty || value != senhaController.text) {
+                            return "As senhas são diferentes!";
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
                       child: TextFormField(
-                        controller: telefoneController,
+                        controller: numeroController,
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           contentPadding: const EdgeInsets.all(20.0),
@@ -200,7 +231,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                               width: 2.5,
                             ),
                           ),
-                          labelText: 'Telefone',
+                          labelText: 'Número de celular',
                           labelStyle: const TextStyle(color: Colors.white),
                         ),
                         style: const TextStyle(
@@ -209,18 +240,33 @@ class _TelaCadastroState extends State<TelaCadastro> {
                           color: Colors.white
                         ),
                         keyboardType: TextInputType.phone,
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 11) {
+                            return "Número inválido!";
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 45.0),
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const TelaCadastro2(), 
-                            ),
-                          );
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            usuario.nome = nomeController.text.toString().trim();
+                            usuario.email = emailController.text.toString().trim();
+                            usuario.senha = senhaController.text.toString().trim();
+                            usuario.numero = numeroController.text.toString().trim();
+
+                            bool vaiNavegar = await cadastrar(usuario.email!, usuario.nome!, context);
+                            if (vaiNavegar) {
+                              usuario.uid = getUid();
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => TelaCadastro2(dadosUsuario: usuario))
+                              );
+                            }
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(MediaQuery.of(context).size.width, 55.0),
