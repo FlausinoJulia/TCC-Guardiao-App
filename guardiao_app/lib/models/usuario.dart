@@ -6,7 +6,7 @@ class Usuario {
   String? email;
   String? senha;
   String? numero;
-  List<String>? contatosDeEmergencia ;
+  List<Map<String, dynamic>>? contatosDeEmergencia ;
 
   Usuario ({
     this.uid,

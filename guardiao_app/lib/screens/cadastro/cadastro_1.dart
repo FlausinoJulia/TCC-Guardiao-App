@@ -86,7 +86,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         ),
                         validator: (value) {
                           if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                            return "Nome inválido!";
+                            return "Nome inválido.";
                           } else {
                             return null;
                           }
@@ -125,7 +125,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(value)) {
-                            return "Email inválido!";
+                            return "Email inválido.";
                           } else {
                             return null;
                           }
@@ -203,7 +203,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         ),
                         validator: (value) {
                           if (value!.isEmpty || value != senhaController.text) {
-                            return "As senhas são diferentes!";
+                            return "As senhas são diferentes.";
                           } else {
                             return null;
                           }
@@ -242,7 +242,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         keyboardType: TextInputType.phone,
                         validator: (value) {
                           if (value!.isEmpty || value.length < 11) {
-                            return "Número inválido!";
+                            return "Número inválido.";
                           } else {
                             return null;
                           }
@@ -259,7 +259,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                             usuario.senha = senhaController.text.toString().trim();
                             usuario.numero = numeroController.text.toString().trim();
 
-                            bool vaiNavegar = await cadastrar(usuario.email!, usuario.nome!, context);
+                            bool vaiNavegar = await cadastrar(usuario.email!, usuario.senha!, context);
                             if (vaiNavegar) {
                               usuario.uid = getUid();
                               Navigator.of(context).push(

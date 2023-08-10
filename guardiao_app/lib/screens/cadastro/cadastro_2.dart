@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/models/contato.dart';
 import 'package:guardiao_app/models/usuario.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/screens/inicio.dart';
@@ -21,7 +22,6 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
   final numeroUmController = TextEditingController();
   final numeroDoisController = TextEditingController();
   final numeroTresController = TextEditingController();
-  List<String> contatos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -385,6 +385,7 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
                         child: ElevatedButton(
                           onPressed: () {
                             // adicionar lista de contatos no user
+                            salvarListaDeContatos();
                             Firestore.criarUsuario(widget.dadosUsuario);
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) => const TelaInicial())
@@ -444,5 +445,31 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
         ),
       )
     );
+  }
+  
+  void salvarListaDeContatos() {
+    List<Map<String, dynamic>> contatos = [];
+    print(contatoUmController.text.toString().trim());
+
+    Contato contatoUm = Contato(
+      nome: contatoUmController.text.toString().trim(), 
+      numero: numeroUmController.text.toString().trim()
+    );
+    contatos.add(contatoUm.toFirestore());
+
+    Contato contatoDois = Contato(
+      nome: contatoDoisController.text.toString().trim(), 
+      numero: numeroDoisController.text.toString().trim()
+    );
+    contatos.add(contatoDois.toFirestore());
+
+    Contato contatoTres = Contato(
+      nome: contatoTresController.text.toString().trim(), 
+      numero: numeroTresController.text.toString().trim()
+    );
+    contatos.add(contatoTres.toFirestore());
+
+
+    widget.dadosUsuario.contatosDeEmergencia = contatos;
   }
 }
