@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/presentation/custom_icons_icons.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+
 
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
@@ -10,8 +14,8 @@ class TelaInicial extends StatefulWidget {
 
 class _TelaInicialState extends State<TelaInicial> {
   int _indiceMenu = 0;
-  //bool primeiraVezNoApp = false;
-
+ // final _mapController = MapController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +23,21 @@ class _TelaInicialState extends State<TelaInicial> {
         child: Stack (
           clipBehavior: Clip.none,
           children: [
+            FlutterMap(
+              options: MapOptions(
+                center: const LatLng(-22.902181930872175, -47.06698501217295),
+                zoom: 18.0,
+              ), 
+              children: [
+                TileLayer(
+                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'com.example.app',
+                ),
+              ],
+            ),
+           // OSMFlutter(
+            //  controller: ,
+            //),
             Container(
               height: 160.0,
               decoration: const BoxDecoration(
@@ -46,9 +65,7 @@ class _TelaInicialState extends State<TelaInicial> {
                         labelText: "Onde você está?",
                         labelStyle: const TextStyle(
                           fontFamily: 'Lato',
-                          ///fontSize: 15.0,
                           color: Color(0xFF6C6C6C),
-                          //fontWeight: FontWeight.bold,
                         ),
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
