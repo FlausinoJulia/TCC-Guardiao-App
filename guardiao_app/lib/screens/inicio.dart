@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/presentation/custom_icons_icons.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 
@@ -14,7 +12,14 @@ class TelaInicial extends StatefulWidget {
 
 class _TelaInicialState extends State<TelaInicial> {
   int _indiceMenu = 0;
- // final _mapController = MapController();
+  final _mapController = MapController.withUserPosition(
+        trackUserLocation: UserTrackingOption(
+           enableTracking: true,
+           unFollowUser: false,
+        )
+  );
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -23,21 +28,46 @@ class _TelaInicialState extends State<TelaInicial> {
         child: Stack (
           clipBehavior: Clip.none,
           children: [
-            FlutterMap(
-              options: MapOptions(
-                center: const LatLng(-22.902181930872175, -47.06698501217295),
-                zoom: 18.0,
-              ), 
-              children: [
-                TileLayer(
-                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'com.example.app',
+           OSMFlutter(
+             controller: _mapController,
+             mapIsLoading: const Center(child: CircularProgressIndicator(),),
+             //trackMyPosition: true,
+             osmOption: OSMOption(
+              zoomOption: const ZoomOption(
+                initZoom: 8, 
+                minZoomLevel: 3,
+                maxZoomLevel: 19,
+                stepZoom: 1.0,
+              ),
+              userLocationMarker: UserLocationMaker(
+                personMarker: const MarkerIcon(
+                  icon: Icon(
+                    Icons.location_history_rounded,
+                    color: Colors.red,
+                    size: 30,
+                  ),
                 ),
-              ],
+                directionArrowMarker: const MarkerIcon(
+                  icon: Icon(
+                      Icons.double_arrow,
+                      size: 48,
+                  ),
+                ),
+              ),
+              roadConfiguration: const RoadOption(
+                roadColor: Colors.yellowAccent,
+              ),
+              markerOption: MarkerOption(
+                defaultMarker: const MarkerIcon(
+                  icon: Icon(
+                    Icons.person_pin_circle,
+                    color: Colors.blue,
+                    size: 56,
+                  )
+                ),
+              )
+             ),
             ),
-           // OSMFlutter(
-            //  controller: ,
-            //),
             Container(
               height: 160.0,
               decoration: const BoxDecoration(
@@ -85,9 +115,7 @@ class _TelaInicialState extends State<TelaInicial> {
                         labelText: "Para onde você vai?",
                         labelStyle: const TextStyle(
                           fontFamily: 'Lato',
-                          ///fontSize: 15.0,
                           color: Color(0xFF6C6C6C),
-                          //fontWeight: FontWeight.bold,
                         ),
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
