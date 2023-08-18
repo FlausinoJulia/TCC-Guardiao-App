@@ -15,7 +15,7 @@ class _TelaLoginState extends State<TelaLogin> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,12 +130,12 @@ class _TelaLoginState extends State<TelaLogin> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         bool vaiNavegar = await login(emailController.text, senhaController.text, context);
-                        if (vaiNavegar)
+                        if (vaiNavegar && context.mounted)
                         {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => const TelaInicial()
-                            )
+                            ),
                           );
                         }
                       }

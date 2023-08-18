@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/screens/boas_vindas.dart';
 //import 'package:guardiao_app/screens/boas_vindas.dart';
 import 'package:guardiao_app/screens/inicio.dart';
-import 'package:guardiao_app/screens/perfil/perfil.dart';
+//import 'package:guardiao_app/screens/perfil/perfil.dart';
 
 
 class VerificaAutenticacao extends StatefulWidget {

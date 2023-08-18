@@ -21,8 +21,6 @@ Future<bool> cadastrar(String email, String senha, BuildContext context) async {
     } else if (e.code == 'invalid-email') {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Email inválido.')));
     } else {
-      print("senha: ${senha}");
-      print (e.toString());
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
     }
     return false;
@@ -41,6 +39,8 @@ Future<bool> login(String email, String senha, BuildContext context) async {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('A senha deve conter ao menos 6 caracteres!')));
     } else if (e.code == 'wrong-password') {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Este email já está cadastrado.')));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Erro ao fazer login. Tente novamente!')));
     }
     return false;
   }

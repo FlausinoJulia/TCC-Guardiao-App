@@ -383,13 +383,18 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // adicionar lista de contatos no user
                             salvarListaDeContatos();
-                            Firestore.criarUsuario(widget.dadosUsuario);
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => const TelaInicial())
-                            );
+                            bool vaiNavegar = await Firestore.criarUsuario(widget.dadosUsuario);
+                            
+                            if(vaiNavegar && context.mounted) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) => const TelaInicial())
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size(MediaQuery.of(context).size.width, 55.0),
@@ -449,7 +454,6 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
   
   void salvarListaDeContatos() {
     List<Map<String, dynamic>> contatos = [];
-    print(contatoUmController.text.toString().trim());
 
     Contato contatoUm = Contato(
       nome: contatoUmController.text.toString().trim(), 

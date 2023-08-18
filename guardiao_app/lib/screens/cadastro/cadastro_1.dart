@@ -260,7 +260,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                             usuario.numero = numeroController.text.toString().trim();
 
                             bool vaiNavegar = await cadastrar(usuario.email!, usuario.senha!, context);
-                            if (vaiNavegar) {
+                            if (vaiNavegar && context.mounted) {
                               usuario.uid = getUid();
                               Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) => TelaCadastro2(dadosUsuario: usuario))
