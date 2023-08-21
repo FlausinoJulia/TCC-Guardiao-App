@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/presentation/custom_icons_icons.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
-import 'package:open_street_map_search_and_pick/widgets/wide_button.dart';
-
+// import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+// import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
+// import 'package:open_street_map_search_and_pick/widgets/wide_button.dart';
+import 'package:guardiao_app/widgets/mapa.dart';
 
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
@@ -20,12 +20,12 @@ class _TelaInicialState extends State<TelaInicial> {
   //          unFollowUser: false,
   //       )
   // );
-  final _mapController =  MapController.withPosition(
-      initPosition: GeoPoint(
-        latitude: -22.902109016015434,
-        longitude: -47.066974974805134,
-    ),
-  );
+  // final _mapController =  MapController.withPosition(
+  //     initPosition: GeoPoint(
+  //       latitude: -22.902109016015434,
+  //       longitude: -47.066974974805134,
+  //   ),
+  // );
   
   @override
   Widget build(BuildContext context) {
