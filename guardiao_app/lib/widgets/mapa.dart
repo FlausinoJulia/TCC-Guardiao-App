@@ -8,6 +8,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
+import 'package:guardiao_app/presentation/custom_icons_icons.dart';
+
 class OpenStreetMapSearchAndPick extends StatefulWidget {
   final LatLong center; // coordenada do centro do mapa
   final void Function(PickedData pickedData) onPicked; // o que vai fazer ao selecionar a loc?
@@ -79,6 +81,7 @@ class _OpenStreetMapSearchAndPickState
   void setNameCurrentPos() async {
     double latitude = _mapController.center.latitude;
     double longitude = _mapController.center.longitude;
+
     if (kDebugMode) {
       print(latitude);
     }
@@ -154,17 +157,10 @@ class _OpenStreetMapSearchAndPickState
 
   @override
   Widget build(BuildContext context) {
-    // String? _autocompleteSelection;
-    OutlineInputBorder inputBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: widget.buttonColor),
-    );
-    OutlineInputBorder inputFocusBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: widget.buttonColor, width: 3.0),
-    );
     return SafeArea(
       child: Stack(
         children: [
-          Positioned.fill(
+          Positioned(
               child: FlutterMap(
             options: MapOptions(
                 center: LatLng(widget.center.latitude, widget.center.longitude),
@@ -183,14 +179,57 @@ class _OpenStreetMapSearchAndPickState
               ),
             ],
           )),
-         
+          Positioned(
+            child: Container(
+              height: 160.0,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    spreadRadius: 0.0,
+                    blurRadius: 10.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+                    Positioned(
+              top: 180.0,
+              right: 20.0,
+              child: Container(
+                width: 200.0,
+                height: 35.0,
+                decoration: const BoxDecoration(
+                  borderRadius:  BorderRadius.all(Radius.circular(10.0)),
+                ),
+                child: ElevatedButton.icon(
+                  onPressed: () {}, 
+                  icon: const Icon(
+                    CustomIcons.visivel, 
+                    size: 20.0,
+                    color: Color(0xFF6C6C6C),
+                  ), 
+                  label: const Text("Exibir zonas de perigo",
+                  style: TextStyle(
+                      color: Color(0xFF6C6C6C),
+                      fontFamily: 'Lato',
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.white,),
+                ),
+              ),
+            ),
+
           // destiny positioned
           Positioned(
-            top: 60,
+            top: 70,
             left: 0,
             right: 0,
             child: Container(
-              margin: const EdgeInsets.all(15),
+              margin: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
@@ -201,10 +240,25 @@ class _OpenStreetMapSearchAndPickState
                       controller: _destinyController,
                       focusNode: _destinyFocusNode,
                       decoration: InputDecoration(
-                        hintText: widget.hintText,
-                        border: inputBorder,
-                        focusedBorder: inputFocusBorder,
+                        icon: const Icon(Icons.search_rounded),
+                        iconColor:  const Color(0xFF6C6C6C),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        filled: true,
+                        fillColor: const Color(0xFFEFEFEF),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        labelText: "Para onde você vai?",
+                        labelStyle: const TextStyle(
+                          fontFamily: 'Lato',
+                          color: Color(0xFF6C6C6C),
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
+                      onTap: () {
+                        _destinyController.clear();
+                      },
                       onChanged: (String value) {
                         if (_debounce?.isActive ?? false) _debounce?.cancel();
 
@@ -276,7 +330,7 @@ class _OpenStreetMapSearchAndPickState
             left: 0,
             right: 0,
             child: Container(
-              margin: const EdgeInsets.all(15),
+              margin: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
@@ -286,11 +340,26 @@ class _OpenStreetMapSearchAndPickState
                   TextFormField (
                       controller: _searchController,
                       focusNode: _focusNode,
-                      decoration: InputDecoration(
-                        hintText: widget.hintText,
-                        border: inputBorder,
-                        focusedBorder: inputFocusBorder,
+                      decoration:  InputDecoration(
+                        icon: const Icon(Icons.location_pin),
+                        iconColor:  const Color(0xFF6C6C6C),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        filled: true,
+                        fillColor: const Color(0xFFEFEFEF),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        labelText: "Onde você está?",
+                        labelStyle: const TextStyle(
+                          fontFamily: 'Lato',
+                          color: Color(0xFF6C6C6C),
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
+                      onTap: () {
+                        _searchController.clear();
+                      },
                       onChanged: (String value) {
                         if (_debounce?.isActive ?? false) _debounce?.cancel();
 
@@ -340,6 +409,7 @@ class _OpenStreetMapSearchAndPickState
                             subtitle: Text(
                                 '${_options[index].lat},${_options[index].lon}'),
                             onTap: () {
+                              _searchController.text = _options[index].displayname;
                               _mapController.move(
                                   LatLng(
                                       _options[index].lat, _options[index].lon),
@@ -357,6 +427,7 @@ class _OpenStreetMapSearchAndPickState
               ),
             ),
           ),
+
           
         ],
       ),
