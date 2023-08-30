@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:guardiao_app/models/localizacao.dart';
 
 class Usuario {
   String? uid; 
@@ -6,7 +7,8 @@ class Usuario {
   String? email;
   String? senha;
   String? numero;
-  List<Map<String, dynamic>>? contatosDeEmergencia ;
+  List<Map<String, dynamic>>? contatosDeEmergencia;
+  Localizacao? locAtual;
 
   Usuario ({
     this.uid,
@@ -14,7 +16,8 @@ class Usuario {
     this.email, 
     this.senha, 
     this.numero, 
-    this.contatosDeEmergencia
+    this.contatosDeEmergencia,
+    this.locAtual,
   });
 
   factory Usuario.fromFirestore(
@@ -30,6 +33,7 @@ class Usuario {
       numero: data?['numero'], 
       contatosDeEmergencia: 
         data?['contatosDeEmergencia'] is Iterable? List.from(data?['contatosDeEmergencia']) : null, 
+      locAtual: data?['locAtual'],
     );
   }  
 
@@ -41,6 +45,7 @@ class Usuario {
       if (senha != null) "senha": senha,
       if (numero != null) "numero": numero,
       if (contatosDeEmergencia != null) "contatosDeEmergencia": contatosDeEmergencia,
+      if (locAtual != null) "locAtual": locAtual,                                                                              
     };
   }
 }

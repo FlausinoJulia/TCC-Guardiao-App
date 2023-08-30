@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:guardiao_app/controllers/LocalizacaoController.dart';
 import 'package:guardiao_app/presentation/custom_icons_icons.dart';
 import 'package:guardiao_app/widgets/mapa.dart';
+
+
 
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
@@ -11,14 +15,52 @@ class TelaInicial extends StatefulWidget {
 
 class _TelaInicialState extends State<TelaInicial> {
   int _indiceMenu = 0;
+  late double longitude;
+  late double latitude;
+
+  Future<Position> getLocalizacaoAtual() async {
+
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      return Future.error('Serviços de localização desativados.');
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission==LocationPermission.denied) {
+        return Future.error('Permissão para localização negada.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Permissão para localização negada para sempre.');
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
   
   @override
   Widget build(BuildContext context) {
+    //double latitude = 0; //= -22.9021287822007;
+    //double longitude = 0; // = -47.06691060187551;
+
+    getLocalizacaoAtual().then((value) {
+      print(value);
+      longitude = value.longitude;
+      latitude = value.latitude;
+      print(latitude);
+      
+    });
+
     return Scaffold(
       body: OpenStreetMapSearchAndPick(
-        center: const LatLong(-22.902109016015434, -47.066974974805134),
-        
-        onPicked: (value){}, 
+        //center: const LatLong(-22.9021287822007, -47.06691060187551),
+        center: LatLong(latitude, longitude),
+        //center: LatLong(lbController.latitude, lbController.longitude),
+        onPicked: (value){
+        }, 
       ),
       bottomNavigationBar: Container(
         height: 70.0,
@@ -68,5 +110,30 @@ class _TelaInicialState extends State<TelaInicial> {
         ),
       ),
     );
+
+    
   }
+
+  // Future<Position> _posicaoAtual() async {
+  //   LocationPermission permissao;
+    
+  //   bool ativado = await Geolocator.isLocationServiceEnabled();
+  //   if (!ativado) {
+  //     return Future.error('Por favor, habilite a localização no smartphone');
+  //   }
+
+  //   permissao = await Geolocator.checkPermission();
+  //   if (permissao == LocationPermission.denied) {
+  //     permissao = await Geolocator.requestPermission();
+  //     if (permissao == LocationPermission.denied) {
+  //       return Future.error('Você precisa autorizar o acesso à localização.');
+  //     }
+  //   }
+
+  //   if (permissao == LocationPermission.deniedForever) {
+  //     return Future.error('Você precisa autorizar o acesso à localização.');
+  //   }
+
+  //   return await Geolocator.getCurrentPosition();
+  // }
 }

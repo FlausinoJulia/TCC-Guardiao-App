@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/screens/boas_vindas.dart';
 //import 'package:guardiao_app/screens/boas_vindas.dart';
 import 'package:guardiao_app/screens/inicio.dart';
-//import 'package:guardiao_app/screens/perfil/perfil.dart';
+import 'package:guardiao_app/screens/perfil/perfil.dart';
 
 
 class VerificaAutenticacao extends StatefulWidget {
@@ -34,7 +34,7 @@ class _VerificaAutenticacaoState extends State<VerificaAutenticacao> {
         Navigator.pushReplacement(
           context, 
           MaterialPageRoute(
-            builder: (context) => const TelaInicial()
+            builder: (context) => const TelaPerfil()
           ),
         );
       }

@@ -11,7 +11,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:guardiao_app/presentation/custom_icons_icons.dart';
 
 class OpenStreetMapSearchAndPick extends StatefulWidget {
-  final LatLong center; // coordenada do centro do mapa
+  final LatLong center;     // coordenada do centro do mapa
+  // final LatLong destiny;    // coordenada do destino
+  // final LatLong localPlace; // coordenada da localização atual
   final void Function(PickedData pickedData) onPicked; // o que vai fazer ao selecionar a loc?
   final Future<LatLng> Function() onGetCurrentLocationPressed;
   final IconData zoomInIcon;
@@ -37,6 +39,8 @@ class OpenStreetMapSearchAndPick extends StatefulWidget {
   const OpenStreetMapSearchAndPick(
       {Key? key,
       this.center = const LatLong(0, 0),
+      // this.destiny = const LatLong(0, 0),
+      // this.localPlace = const LatLong(0, 0),
       required this.onPicked,
       this.zoomOutIcon = Icons.zoom_out_map,
       this.zoomInIcon = Icons.zoom_in_map,
@@ -73,6 +77,16 @@ class _OpenStreetMapSearchAndPickState
   final FocusNode _focusNode = FocusNode();
   final FocusNode _destinyFocusNode = FocusNode();
 
+  // coordenadas de local
+  double latLocal = 0;
+  double lonLocal = 0;
+
+  // coordenadas de destino
+  double latDestiny = 0;
+  double lonDestiny = 0;
+
+  //LatLong localPlace = const LatLong(0, 0);
+
   List<OSMdata> _options = <OSMdata>[];
   List<OSMdata> _destinyOptions = <OSMdata>[];
   Timer? _debounce;
@@ -80,7 +94,7 @@ class _OpenStreetMapSearchAndPickState
 
   void setNameCurrentPos() async {
     double latitude = _mapController.center.latitude;
-    double longitude = _mapController.center.longitude;
+    double longitude = _mapController.center.longitude;    
 
     if (kDebugMode) {
       print(latitude);
@@ -104,6 +118,11 @@ class _OpenStreetMapSearchAndPickState
   void setNameCurrentPosAtInit() async {
     double latitude = widget.center.latitude;
     double longitude = widget.center.longitude;
+
+    // definindo a coordenada atual
+    latLocal = widget.center.latitude;
+    lonLocal = widget.center.longitude;
+
     if (kDebugMode) {
       print(latitude);
     }
@@ -195,7 +214,7 @@ class _OpenStreetMapSearchAndPickState
             ),
           ),
 
-                    Positioned(
+          Positioned(
               top: 180.0,
               right: 20.0,
               child: Container(
@@ -309,7 +328,9 @@ class _OpenStreetMapSearchAndPickState
                                 '${_destinyOptions[index].lat},${_destinyOptions[index].lon}'),
                             onTap: () {
                               _destinyController.text = _destinyOptions[index].displayname;
-                              //latDestino = _destinyOptions[index].lat;
+                              // definindo a coordenada de destino
+                              latDestiny = _destinyOptions[index].lat;
+                              lonDestiny =  _destinyOptions[index].lon;
 
                               _focusNode.unfocus();
                               _destinyOptions.clear();
@@ -323,7 +344,6 @@ class _OpenStreetMapSearchAndPickState
             ),
           ),
           
-
           // local place positioned
           Positioned(
             top: 0,
@@ -414,7 +434,9 @@ class _OpenStreetMapSearchAndPickState
                                   LatLng(
                                       _options[index].lat, _options[index].lon),
                                   15.0);
-                              //latLocal = _options[index].lat;
+                              // definindo coordenadas da loc. atual
+                              latLocal = _options[index].lat;
+                              lonLocal = _options[index].lon;
 
                               _focusNode.unfocus();
                               _options.clear();
@@ -427,8 +449,6 @@ class _OpenStreetMapSearchAndPickState
               ),
             ),
           ),
-
-          
         ],
       ),
     );

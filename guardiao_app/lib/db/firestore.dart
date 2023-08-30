@@ -29,4 +29,8 @@ class Firestore {
       .onError((error, stackTrace) => false);
       return false;
   }
+
+  // static Future<void> atualizarLocAtual(String uid, GeoPoint novaLoc) async {
+  //   FirebaseFirestore.instance.collection('usuarios').doc(uid).update({'locAtual': {'latitude': novaLoc.latitude, 'longitude:' novaLoc.longitude}});
+  // }
 }
