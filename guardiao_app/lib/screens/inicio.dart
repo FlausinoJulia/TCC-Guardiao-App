@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:guardiao_app/controllers/LocalizacaoController.dart';
+//import 'package:guardiao_app/controllers/LocalizacaoController.dart';
 import 'package:guardiao_app/presentation/custom_icons_icons.dart';
 import 'package:guardiao_app/widgets/mapa.dart';
 
@@ -17,6 +17,21 @@ class _TelaInicialState extends State<TelaInicial> {
   int _indiceMenu = 0;
   late double longitude;
   late double latitude;
+
+  @override
+  void initState() async {
+    longitude = 0;
+    latitude = 0;
+    await getLocalizacaoAtual().then((value) {
+      print("position: ${value}");
+      latitude = value.latitude;
+      longitude = value.longitude;
+      print(latitude);
+    });
+    print("longitude: ${longitude}");
+
+    super.initState();
+  }
 
   Future<Position> getLocalizacaoAtual() async {
 
@@ -38,21 +53,15 @@ class _TelaInicialState extends State<TelaInicial> {
       return Future.error('Permissão para localização negada para sempre.');
     }
 
-    return await Geolocator.getCurrentPosition();
+    Position pos = await Geolocator.getCurrentPosition();
+
+    return pos;
   }
   
   @override
   Widget build(BuildContext context) {
     //double latitude = 0; //= -22.9021287822007;
     //double longitude = 0; // = -47.06691060187551;
-
-    getLocalizacaoAtual().then((value) {
-      print(value);
-      longitude = value.longitude;
-      latitude = value.latitude;
-      print(latitude);
-      
-    });
 
     return Scaffold(
       body: OpenStreetMapSearchAndPick(
