@@ -18,21 +18,6 @@ class _TelaInicialState extends State<TelaInicial> {
   late double longitude;
   late double latitude;
 
-  @override
-  void initState() async {
-    longitude = 0;
-    latitude = 0;
-    await getLocalizacaoAtual().then((value) {
-      print("position: ${value}");
-      latitude = value.latitude;
-      longitude = value.longitude;
-      print(latitude);
-    });
-    print("longitude: ${longitude}");
-
-    super.initState();
-  }
-
   Future<Position> getLocalizacaoAtual() async {
 
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -60,13 +45,20 @@ class _TelaInicialState extends State<TelaInicial> {
   
   @override
   Widget build(BuildContext context) {
-    //double latitude = 0; //= -22.9021287822007;
-    //double longitude = 0; // = -47.06691060187551;
-
-    return Scaffold(
+    return FutureBuilder(
+      future: getLocalizacaoAtual(), // Execute your asynchronous method here
+      builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // While waiting for the data to be loaded, display a loading indicator
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // If an error occurred, display an error message
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Scaffold(
       body: OpenStreetMapSearchAndPick(
         //center: const LatLong(-22.9021287822007, -47.06691060187551),
-        center: LatLong(latitude, longitude),
+        center: LatLong(snapshot.data!.latitude, snapshot.data!.longitude),
         //center: LatLong(lbController.latitude, lbController.longitude),
         onPicked: (value){
         }, 
@@ -119,6 +111,12 @@ class _TelaInicialState extends State<TelaInicial> {
         ),
       ),
     );
+        }
+      },
+    );
+  
+
+    
 
     
   }
