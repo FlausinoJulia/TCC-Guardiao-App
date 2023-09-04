@@ -5,6 +5,29 @@ class TelaInformacoesPessoais extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      width: 390,
+      height: 844,
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+      ),
+    ),
+      child: Stack(
+        children: [
+          Positioned(
+            left: 64,
+            top: 55,
+            child: Transform(
+              transform: Matrix4.identity(
+                
+              ),
+            ),            
+          )
+        ],
+      )
+      );
   }
 }

@@ -5,6 +5,17 @@ class TelaContatoEmergencia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text(
+        'Informações Pessoais',
+        textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w500,
+          ),
+      ),
+      );
   }
 }
