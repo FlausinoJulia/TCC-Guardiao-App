@@ -7,7 +7,7 @@ class Usuario {
   String? senha;
   String? numero;
   List<Map<String, dynamic>>? contatosDeEmergencia;
-  GeoPoint? locAtual;
+  //GeoPoint? locAtual;
 
   Usuario ({
     this.uid,
