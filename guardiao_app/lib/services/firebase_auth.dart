@@ -44,4 +44,9 @@ Future<bool> login(String email, String senha, BuildContext context) async {
     }
     return false;
   }
+
+}
+  
+Future<void> logout() async {
+  await FirebaseAuth.instance.signOut();
 }

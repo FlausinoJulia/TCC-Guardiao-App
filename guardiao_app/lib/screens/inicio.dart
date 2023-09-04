@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-//import 'package:guardiao_app/controllers/LocalizacaoController.dart';
-import 'package:guardiao_app/presentation/custom_icons_icons.dart';
+import 'package:guardiao_app/db/firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/widgets/mapa.dart';
 
 
@@ -14,9 +15,8 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
-  int _indiceMenu = 0;
-  late double longitude;
-  late double latitude;
+  //late double longitude;
+  //late double latitude;
 
   Future<Position> getLocalizacaoAtual() async {
 
@@ -40,6 +40,9 @@ class _TelaInicialState extends State<TelaInicial> {
 
     Position pos = await Geolocator.getCurrentPosition();
 
+    String uid = getUid()!;
+    Firestore.adicionarLocalizacao(uid, GeoPoint(pos.latitude, pos.longitude));
+
     return pos;
   }
   
@@ -50,97 +53,22 @@ class _TelaInicialState extends State<TelaInicial> {
       builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While waiting for the data to be loaded, display a loading indicator
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator(),); 
         } else if (snapshot.hasError) {
           // If an error occurred, display an error message
           return Text('Error: ${snapshot.error}');
         } else {
           return Scaffold(
-      body: OpenStreetMapSearchAndPick(
-        //center: const LatLong(-22.9021287822007, -47.06691060187551),
-        center: LatLong(snapshot.data!.latitude, snapshot.data!.longitude),
-        //center: LatLong(lbController.latitude, lbController.longitude),
-        onPicked: (value){
-        }, 
-      ),
-      bottomNavigationBar: Container(
-        height: 70.0,
-        decoration: const BoxDecoration(
-          borderRadius:  BorderRadius.only(
-            topRight: Radius.circular(15.0),
-            topLeft: Radius.circular(15.0),
-          ),
-          boxShadow: [
-            BoxShadow(color: Colors.black12, spreadRadius: 0.0, blurRadius: 10.0)
-          ]
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only (
-            topLeft:Radius.circular(15.0),
-            topRight: Radius.circular(15.0),
-          ),
-          child: BottomNavigationBar(
-            iconSize: 25.0,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: const Color(0xFF040268),
-            selectedItemColor: const Color(0xFF3640F1),
-            unselectedItemColor: Colors.white,
-            currentIndex: _indiceMenu,
-            onTap: (value) {
-              setState(() => _indiceMenu = value);
-            },
-            items: const [
-             BottomNavigationBarItem (
-                label: 'Início', 
-                icon: Icon(CustomIcons.inicio),
-              ),
-              BottomNavigationBarItem (
-                label: 'Denúncias', 
-                icon: Icon(CustomIcons.denuncias),
-              ),
-              BottomNavigationBarItem (
-                label: 'Alarme', 
-                icon: Icon(CustomIcons.alarme),
-              ),
-              BottomNavigationBarItem (
-                label: 'Perfil', 
-                icon: Icon(CustomIcons.perfil),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            body: OpenStreetMapSearchAndPick(
+              //center: const LatLong(-22.9021287822007, -47.06691060187551),
+              center: LatLong(snapshot.data!.latitude, snapshot.data!.longitude),
+              //center: LatLong(lbController.latitude, lbController.longitude),
+              onPicked: (value){
+              }, 
+            ),
+          );
         }
       },
     );
-  
-
-    
-
-    
   }
-
-  // Future<Position> _posicaoAtual() async {
-  //   LocationPermission permissao;
-    
-  //   bool ativado = await Geolocator.isLocationServiceEnabled();
-  //   if (!ativado) {
-  //     return Future.error('Por favor, habilite a localização no smartphone');
-  //   }
-
-  //   permissao = await Geolocator.checkPermission();
-  //   if (permissao == LocationPermission.denied) {
-  //     permissao = await Geolocator.requestPermission();
-  //     if (permissao == LocationPermission.denied) {
-  //       return Future.error('Você precisa autorizar o acesso à localização.');
-  //     }
-  //   }
-
-  //   if (permissao == LocationPermission.deniedForever) {
-  //     return Future.error('Você precisa autorizar o acesso à localização.');
-  //   }
-
-  //   return await Geolocator.getCurrentPosition();
-  // }
 }

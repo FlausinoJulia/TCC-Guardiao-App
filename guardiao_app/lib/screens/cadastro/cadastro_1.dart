@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/models/usuario.dart';
 //import 'package:guardiao_app/screens/inicio.dart';
 import 'package:guardiao_app/screens/login.dart';
-import 'package:guardiao_app/services/firebase_auth.dart';
 
 import 'cadastro_2.dart';
 
@@ -259,13 +258,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                             usuario.senha = senhaController.text.toString().trim();
                             usuario.numero = numeroController.text.toString().trim();
 
-                            bool vaiNavegar = await cadastrar(usuario.email!, usuario.senha!, context);
-                            if (vaiNavegar && context.mounted) {
-                              usuario.uid = getUid();
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => TelaCadastro2(dadosUsuario: usuario))
-                              );
-                            }
+                            //bool vaiNavegar = await cadastrar(usuario.email!, usuario.senha!, context);
+                            //usuario.uid = getUid();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => TelaCadastro2(dadosUsuario: usuario))
+                            );
                           }
                         },
                         style: ElevatedButton.styleFrom(

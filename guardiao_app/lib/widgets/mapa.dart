@@ -2,9 +2,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:guardiao_app/db/firestore.dart';
+import 'package:guardiao_app/screens/boas_vindas.dart';
+import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
@@ -224,7 +228,15 @@ class _OpenStreetMapSearchAndPickState
                   borderRadius:  BorderRadius.all(Radius.circular(10.0)),
                 ),
                 child: ElevatedButton.icon(
-                  onPressed: () {}, 
+                  onPressed: () {
+                    logout();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TelaBoasVindas(), 
+                      ),
+                    );
+                  }, 
                   icon: const Icon(
                     CustomIcons.visivel, 
                     size: 20.0,
@@ -275,9 +287,9 @@ class _OpenStreetMapSearchAndPickState
                         ),
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
-                      onTap: () {
-                        _destinyController.clear();
-                      },
+                      // onTap: () {
+                      //   _destinyController.clear();
+                      // },
                       onChanged: (String value) {
                         if (_debounce?.isActive ?? false) _debounce?.cancel();
 
@@ -332,6 +344,10 @@ class _OpenStreetMapSearchAndPickState
                               latDestiny = _destinyOptions[index].lat;
                               lonDestiny =  _destinyOptions[index].lon;
 
+                              // armazenando novo destino no firestore
+                              String uid = getUid()!;
+                              Firestore.adicionarDestino(uid, GeoPoint(latDestiny, lonDestiny));
+
                               _focusNode.unfocus();
                               _destinyOptions.clear();
                               setState(() {});
@@ -377,9 +393,9 @@ class _OpenStreetMapSearchAndPickState
                         ),
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
-                      onTap: () {
-                        _searchController.clear();
-                      },
+                      // onTap: () {
+                      //   _searchController.clear();
+                      // },
                       onChanged: (String value) {
                         if (_debounce?.isActive ?? false) _debounce?.cancel();
 

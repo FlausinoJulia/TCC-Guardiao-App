@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/models/contato.dart';
 import 'package:guardiao_app/models/usuario.dart';
 import 'package:guardiao_app/db/firestore.dart';
-import 'package:guardiao_app/screens/inicio.dart';
 import 'package:guardiao_app/screens/login.dart';
+import 'package:guardiao_app/screens/menu.dart';
+import 'package:guardiao_app/services/firebase_auth.dart';
 
 class TelaCadastro2 extends StatefulWidget {
   final Usuario dadosUsuario;
@@ -386,12 +387,23 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
                           onPressed: () async {
                             // adicionar lista de contatos no user
                             salvarListaDeContatos();
-                            bool vaiNavegar = await Firestore.criarUsuario(widget.dadosUsuario);
-                            
-                            if(vaiNavegar && context.mounted) {
+          
+                            // adicionando usuario no firebase auth
+                            await cadastrar(widget.dadosUsuario.email!, widget.dadosUsuario.senha!, context); 
+
+                            String? uid = getUid();
+                            if (uid != null && context.mounted)
+                            {
+                              widget.dadosUsuario.uid = uid;
+                              bool vaiNavegar = await Firestore.criarUsuario(widget.dadosUsuario);
+                              if(vaiNavegar && context.mounted) {
                                 Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) => const TelaInicial())
-                              );
+                                  MaterialPageRoute(builder: (context) => const Menu())
+                                );
+                              }
+                              else {
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
+                              }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
                             }

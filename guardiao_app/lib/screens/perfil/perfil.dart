@@ -14,10 +14,10 @@ class TelaPerfil extends StatelessWidget {
             Stack(
               children: [
                 Container (
-                  color: const Color(0xFF040268),
+                  //color: const Color(0xFF040268),
                   height: 340.0,
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFF040268),
                     boxShadow: [
                       BoxShadow(color: Colors.black12, spreadRadius: 0.0, blurRadius: 10.0)
                     ],

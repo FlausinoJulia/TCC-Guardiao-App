@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geo_firestore_flutter/geo_firestore_flutter.dart';
 import 'package:guardiao_app/models/usuario.dart';
 
 class Firestore {
-   
+
   // adiciona um novo usuário no bd
   static Future<bool> criarUsuario(Usuario usuario) async {
     FirebaseFirestore.instance
@@ -10,8 +11,11 @@ class Firestore {
       .doc(usuario.uid)
       .set(usuario.toFirestore())
       .then((value) => true)
-      .catchError((error) => false);
-      return false;
+      .catchError((error) {
+        print(error.toString());
+        return false;
+      });
+      return true;
   }
 
   // atualiza todas as infos do usuário
@@ -33,4 +37,15 @@ class Firestore {
   // static Future<void> atualizarLocAtual(String uid, GeoPoint novaLoc) async {
   //   FirebaseFirestore.instance.collection('usuarios').doc(uid).update({'locAtual': {'latitude': novaLoc.latitude, 'longitude:' novaLoc.longitude}});
   // }
+  
+  
+  static adicionarLocalizacao(String uid, GeoPoint loc) async {
+    GeoFirestore localizacoes = GeoFirestore(FirebaseFirestore.instance.collection('localizacoes'));
+    await localizacoes.setLocation(uid, loc);
+  }
+
+  static adicionarDestino(String uid, GeoPoint dest) async {
+    GeoFirestore localizacoes = GeoFirestore(FirebaseFirestore.instance.collection('destinos'));
+    await localizacoes.setLocation(uid, dest);
+  }
 }

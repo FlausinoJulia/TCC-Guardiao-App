@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/screens/boas_vindas.dart';
-import 'package:guardiao_app/screens/inicio.dart';
+import 'package:guardiao_app/screens/menu.dart';
 //import 'package:guardiao_app/screens/perfil/perfil.dart';
 
 
@@ -33,7 +33,7 @@ class _VerificaAutenticacaoState extends State<VerificaAutenticacao> {
         Navigator.pushReplacement(
           context, 
           MaterialPageRoute(
-            builder: (context) => const TelaInicial()
+            builder: (context) => const Menu()
           ),
         );
       }
