@@ -13,7 +13,7 @@ class TelaEditaPerfil extends StatelessWidget {
         height: 844,
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
-          color: const Color(0xFFF7F7F6),
+          color: Color(0xFFF7F7F6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -45,12 +45,19 @@ class TelaEditaPerfil extends StatelessWidget {
                   width: 32,
                   height: 32,
                   clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(),
-                  child: const Stack(children: []),
+                  decoration: BoxDecoration(),
+                  child: Stack(children: []),
                 ),
               ),
             ),
-            const Positioned(
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () {},
+            ),
+            Positioned(
               left: 85,
               top: 461,
               child: Text(
@@ -86,13 +93,13 @@ class TelaEditaPerfil extends StatelessWidget {
                 height: 50,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                    side: BorderSide(width: 1, color: Color(0xFFD9D9D9)),
                     borderRadius: BorderRadius.circular(40),
                   ),
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 149,
               top: 385,
               child: Text(
@@ -106,7 +113,7 @@ class TelaEditaPerfil extends StatelessWidget {
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               left: 85,
               top: 520,
               child: Text(
@@ -135,7 +142,7 @@ class TelaEditaPerfil extends StatelessWidget {
                         width: 150,
                         height: 150,
                         decoration: ShapeDecoration(
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             image: NetworkImage(
                                 "https://via.placeholder.com/150x150"),
                             fit: BoxFit.fill,
@@ -147,235 +154,25 @@ class TelaEditaPerfil extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        decoration: const ShapeDecoration(
-                          color: Color(0x59040268),
-                          shape: OvalBorder(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 240,
-              top: 338,
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage("https://via.placeholder.com/30x30"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 284,
-              top: 459,
-              child: Container(
-                width: 25,
-                height: 25,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage("https://via.placeholder.com/25x25"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              top: 771,
-              child: Container(
-                width: 390,
-                height: 73,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 390,
-                        height: 73,
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF040268),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                          ),
-                          /*
-                          border: Border.only(
-                            left: BorderSide(),
-                            top: BorderSide(),
-                            right: BorderSide(),
-                            bottom: BorderSide(width: 0.15),
-                          ),
-                          */
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 46,
-                      top: 13,
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                            left: 0,
-                            top: 30,
-                            child: Text(
-                              'Início',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w700,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 150,
+                              height: 150,
+                              decoration: ShapeDecoration(
+                                color: Colors.black,
+                                shape: OvalBorder(),
                               ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 6,
-                            top: 0,
-                            child: Container(
-                              width: 22,
-                              height: 22,
-                              decoration: const ShapeDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://via.placeholder.com/22x22"),
-                                  fit: BoxFit.fill,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15)),
-                                ),
+                                onPressed: () {},
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      left: 119,
-                      top: 14,
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                            left: 0,
-                            top: 29,
-                            child: Text(
-                              'Denúncias',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 22,
-                            top: 0,
-                            child: Container(
-                              width: 23,
-                              height: 23,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://via.placeholder.com/23x23"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      left: 224,
-                      top: 16,
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                            left: 0,
-                            top: 27,
-                            child: Text(
-                              'Alarme',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0.20,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 14,
-                            top: 0,
-                            child: Container(
-                              width: 19,
-                              height: 19,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://via.placeholder.com/19x19"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      left: 310,
-                      top: 15,
-                      child: Stack(
-                        children: [
-                          const Positioned(
-                            left: 0,
-                            top: 28,
-                            child: Text(
-                              'Perfil',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0.20,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 6,
-                            top: 0,
-                            child: Container(
-                              width: 22,
-                              height: 22,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://via.placeholder.com/22x22"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          ],
+                        )),
                   ],
                 ),
               ),

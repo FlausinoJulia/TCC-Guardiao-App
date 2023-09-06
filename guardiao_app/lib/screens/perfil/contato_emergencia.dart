@@ -16,6 +16,8 @@ class TelaContatoEmergencia extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
       ),
-      );
+      
+    )
+    ;
   }
 }
