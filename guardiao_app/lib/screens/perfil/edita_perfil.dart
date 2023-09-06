@@ -13,7 +13,7 @@ class TelaEditaPerfil extends StatelessWidget {
         height: 844,
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
-          color: Color(0xFFF7F7F6),
+          color: const Color(0xFFF7F7F6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -45,12 +45,12 @@ class TelaEditaPerfil extends StatelessWidget {
                   width: 32,
                   height: 32,
                   clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Stack(children: []),
+                  decoration: const BoxDecoration(),
+                  child: const Stack(children: []),
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 85,
               top: 461,
               child: Text(
@@ -86,13 +86,13 @@ class TelaEditaPerfil extends StatelessWidget {
                 height: 50,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0xFFD9D9D9)),
+                    side: const BorderSide(width: 1, color: Color(0xFFD9D9D9)),
                     borderRadius: BorderRadius.circular(40),
                   ),
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 149,
               top: 385,
               child: Text(
@@ -106,7 +106,7 @@ class TelaEditaPerfil extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 85,
               top: 520,
               child: Text(
@@ -135,7 +135,7 @@ class TelaEditaPerfil extends StatelessWidget {
                         width: 150,
                         height: 150,
                         decoration: ShapeDecoration(
-                          image: DecorationImage(
+                          image: const DecorationImage(
                             image: NetworkImage(
                                 "https://via.placeholder.com/150x150"),
                             fit: BoxFit.fill,
@@ -152,7 +152,7 @@ class TelaEditaPerfil extends StatelessWidget {
                       child: Container(
                         width: 150,
                         height: 150,
-                        decoration: ShapeDecoration(
+                        decoration: const ShapeDecoration(
                           color: Color(0x59040268),
                           shape: OvalBorder(),
                         ),
@@ -168,7 +168,7 @@ class TelaEditaPerfil extends StatelessWidget {
               child: Container(
                 width: 30,
                 height: 30,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage("https://via.placeholder.com/30x30"),
                     fit: BoxFit.fill,
@@ -182,7 +182,7 @@ class TelaEditaPerfil extends StatelessWidget {
               child: Container(
                 width: 25,
                 height: 25,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage("https://via.placeholder.com/25x25"),
                     fit: BoxFit.fill,
@@ -205,7 +205,7 @@ class TelaEditaPerfil extends StatelessWidget {
                         width: 390,
                         height: 73,
                         padding: const EdgeInsets.symmetric(vertical: 20),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color(0xFF040268),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15),
@@ -227,7 +227,7 @@ class TelaEditaPerfil extends StatelessWidget {
                       top: 13,
                       child: Stack(
                         children: [
-                          Positioned(
+                          const Positioned(
                             left: 0,
                             top: 30,
                             child: Text(
@@ -247,7 +247,7 @@ class TelaEditaPerfil extends StatelessWidget {
                             child: Container(
                               width: 22,
                               height: 22,
-                              decoration: ShapeDecoration(
+                              decoration: const ShapeDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(
                                       "https://via.placeholder.com/22x22"),
@@ -268,7 +268,7 @@ class TelaEditaPerfil extends StatelessWidget {
                       top: 14,
                       child: Stack(
                         children: [
-                          Positioned(
+                          const Positioned(
                             left: 0,
                             top: 29,
                             child: Text(
@@ -288,7 +288,7 @@ class TelaEditaPerfil extends StatelessWidget {
                             child: Container(
                               width: 23,
                               height: 23,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(
                                       "https://via.placeholder.com/23x23"),
@@ -305,7 +305,7 @@ class TelaEditaPerfil extends StatelessWidget {
                       top: 16,
                       child: Stack(
                         children: [
-                          Positioned(
+                          const Positioned(
                             left: 0,
                             top: 27,
                             child: Text(
@@ -326,7 +326,7 @@ class TelaEditaPerfil extends StatelessWidget {
                             child: Container(
                               width: 19,
                               height: 19,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(
                                       "https://via.placeholder.com/19x19"),
@@ -343,7 +343,7 @@ class TelaEditaPerfil extends StatelessWidget {
                       top: 15,
                       child: Stack(
                         children: [
-                          Positioned(
+                          const Positioned(
                             left: 0,
                             top: 28,
                             child: Text(
@@ -364,7 +364,7 @@ class TelaEditaPerfil extends StatelessWidget {
                             child: Container(
                               width: 22,
                               height: 22,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(
                                       "https://via.placeholder.com/22x22"),

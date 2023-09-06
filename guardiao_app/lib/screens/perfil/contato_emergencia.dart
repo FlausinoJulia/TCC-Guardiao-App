@@ -6,7 +6,7 @@ class TelaContatoEmergencia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(
+      child: const Text(
         'Informações Pessoais',
         textAlign: TextAlign.center,
           style: TextStyle(

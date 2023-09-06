@@ -75,6 +75,8 @@ class _OpenStreetMapSearchAndPickState
     extends State<OpenStreetMapSearchAndPick> {
   MapController _mapController = MapController();
   
+  bool estaVisivel = false;
+
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _destinyController = TextEditingController();
   
@@ -347,6 +349,11 @@ class _OpenStreetMapSearchAndPickState
                                 // armazenando novo destino no firestore
                                 String uid = getUid()!;
                                 Firestore.adicionarDestino(uid, GeoPoint(latDestiny, lonDestiny));
+
+                                if (_searchController.text.isNotEmpty && latLocal != 0 && latDestiny != 0 && 
+                                    _destinyController.text.isNotEmpty && latDestiny != 0 && lonDestiny != 0) {
+
+                                }
       
                                 _focusNode.unfocus();
                                 _destinyOptions.clear();
@@ -466,32 +473,71 @@ class _OpenStreetMapSearchAndPickState
               ),
             ),
 
-            Positioned(
-              bottom: 10,
-              child: Center(
-                child: Card(
-                  color: Colors.pink,
-                  child: SizedBox(
-                    width: 350.0,
-                    height: 126.0,
-                    child: Column(
-                      children: [
-                        Row(
+            
+            Visibility(
+              visible: estaVisivel,
+              child: Positioned(
+                bottom: 10,
+                child: Center(
+                  child: Card(
+                    color: Colors.white,
+                    child: SizedBox(
+                      width: 350.0,
+                      height: 126.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Deseja iniciar a viagem?"
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  "Deseja iniciar a viagem?",
+                                  style: TextStyle(
+                                    fontFamily: 'Lato',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                IconButton (
+                                  icon: const Icon(
+                                    Icons.cancel_rounded,
+                                    color: Color.fromARGB(255, 150, 150, 150)
+                                  ),
+                                  onPressed: () {
+            
+                                  },
+                                ),
+                              ],
                             ),
-                            Icon (
-                              Icons.cancel_rounded
+                            ElevatedButton(
+                              onPressed: () {
+                                // verificar se tem pessoas indo para o mesmo lugar
+                                
+                              },
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: Size(MediaQuery.of(context).size.width, 55.0),
+                                backgroundColor: const Color(0xFF040268),
+                                padding: const EdgeInsets.all(15.0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ), 
+                              child: const Center(
+                                child: Text(
+                                  "Iniciar",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.0,
+                                    fontFamily: 'Lato',
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                        ElevatedButton(
-                          
-                          onPressed: () {}, 
-                          child: const Center(child: Text("Iniciar"),),
-                        )
-                      ],
+                      ),
                     ),
                   ),
                 ),

@@ -11,10 +11,7 @@ class Firestore {
       .doc(usuario.uid)
       .set(usuario.toFirestore())
       .then((value) => true)
-      .catchError((error) {
-        print(error.toString());
-        return false;
-      });
+      .catchError((error) => false);
       return true;
   }
 

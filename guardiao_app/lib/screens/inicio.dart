@@ -56,13 +56,18 @@ class _TelaInicialState extends State<TelaInicial> {
           return const Center(child: CircularProgressIndicator(),); 
         } else if (snapshot.hasError) {
           // If an error occurred, display an error message
-          return Text('Error: ${snapshot.error}');
+          //return Text('Error: ${snapshot.error}');
+          return Scaffold(
+            body: OpenStreetMapSearchAndPick(
+              center: LatLong(snapshot.data!.latitude, snapshot.data!.longitude),
+              onPicked: (value){
+              }, 
+            ),
+          );
         } else {
           return Scaffold(
             body: OpenStreetMapSearchAndPick(
-              //center: const LatLong(-22.9021287822007, -47.06691060187551),
               center: LatLong(snapshot.data!.latitude, snapshot.data!.longitude),
-              //center: LatLong(lbController.latitude, lbController.longitude),
               onPicked: (value){
               }, 
             ),
