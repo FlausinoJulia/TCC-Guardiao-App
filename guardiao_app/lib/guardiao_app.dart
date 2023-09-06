@@ -3,6 +3,8 @@ import 'package:guardiao_app/screens/boas_vindas.dart';
 import 'package:guardiao_app/screens/cadastro/cadastro_1.dart';
 import 'package:guardiao_app/screens/inicio.dart';
 import 'package:guardiao_app/screens/login.dart';
+import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
+import 'package:guardiao_app/screens/perfil/perfil.dart';
 import 'package:guardiao_app/widgets/verifica_autenticacao.dart';
 
 class GuardiaoApp extends StatefulWidget {
@@ -22,7 +24,7 @@ class _GuardiaoAppState extends State<GuardiaoApp> {
       theme: ThemeData(
         primaryColor: const Color.fromRGBO(4, 2, 104, 1.0), // mudar para primarySwatch
       ),
-      home: const VerificaAutenticacao(),
+      home: const TelaEditaPerfil(),
       routes: {
         //'/':            (context) => const AuthCheck(),
         '/inicio':      (context) => const TelaInicial(),
