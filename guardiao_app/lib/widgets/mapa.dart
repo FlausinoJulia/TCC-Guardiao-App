@@ -151,6 +151,7 @@ class _OpenStreetMapSearchAndPickState
 
   @override
   void initState() {
+    
     _mapController = MapController();
 
     setNameCurrentPosAtInit();
@@ -350,9 +351,24 @@ class _OpenStreetMapSearchAndPickState
                                 String uid = getUid()!;
                                 Firestore.adicionarDestino(uid, GeoPoint(latDestiny, lonDestiny));
 
-                                if (_searchController.text.isNotEmpty && latLocal != 0 && latDestiny != 0 && 
-                                    _destinyController.text.isNotEmpty && latDestiny != 0 && lonDestiny != 0) {
+                                // se o destino e a loc atual estiverem preenchidos
 
+                                print ("loc atual: ${_searchController.text}");
+                                print ("lat local: $latLocal");
+                                print ("lon local: $lonLocal"); 
+                                print ("destino: ${_destinyController.text}");
+                                print ("lat dest: $latDestiny");
+                                print ("lon dest: $lonDestiny"); 
+                                if (_searchController.text.isNotEmpty && latLocal != 0 && lonLocal != 0 && 
+                                    _destinyController.text.isNotEmpty && latDestiny != 0 && lonDestiny != 0) {
+                                    
+                                  // mostrar a rota e deixar o card visivel
+                                  
+                                  estaVisivel = true; // depois do set state o card deverá estar visivel
+
+                                                                  
+
+                                    
                                 }
       
                                 _focusNode.unfocus();
@@ -456,7 +472,7 @@ class _OpenStreetMapSearchAndPickState
                                 _mapController.move(
                                     LatLng(
                                         _options[index].lat, _options[index].lon),
-                                    15.0);
+                                    18.0);
                                 // definindo coordenadas da loc. atual
                                 latLocal = _options[index].lat;
                                 lonLocal = _options[index].lon;
@@ -506,7 +522,8 @@ class _OpenStreetMapSearchAndPickState
                                     color: Color.fromARGB(255, 150, 150, 150)
                                   ),
                                   onPressed: () {
-            
+                                    estaVisivel = false;
+                                    setState(() {});
                                   },
                                 ),
                               ],
@@ -514,7 +531,7 @@ class _OpenStreetMapSearchAndPickState
                             ElevatedButton(
                               onPressed: () {
                                 // verificar se tem pessoas indo para o mesmo lugar
-                                
+                                Firestore.getDocumentsTest(GeoPoint(latDestiny, lonDestiny));
                               },
                               style: ElevatedButton.styleFrom(
                                 fixedSize: Size(MediaQuery.of(context).size.width, 55.0),

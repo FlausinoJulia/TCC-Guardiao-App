@@ -45,4 +45,15 @@ class Firestore {
     GeoFirestore localizacoes = GeoFirestore(FirebaseFirestore.instance.collection('destinos'));
     await localizacoes.setLocation(uid, dest);
   }
+
+  static getDocumentsTest(GeoPoint geoPoint) async {
+    GeoFirestore localizacoes = GeoFirestore(FirebaseFirestore.instance.collection('destinos'));
+    final queryLocation = geoPoint;
+
+    // creates a new query around [37.7832, -122.4056] with a radius of 0.0 kilometers
+    final List<DocumentSnapshot> documents = await localizacoes.getAtLocation(queryLocation, 0);
+    documents.forEach((document) {
+      print("DOCUMENTO: ${document.id}");
+    });
+  }
 }

@@ -5,8 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/widgets/mapa.dart';
 
-
-
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
 
