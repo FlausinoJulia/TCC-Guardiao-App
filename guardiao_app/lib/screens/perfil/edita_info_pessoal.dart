@@ -115,7 +115,7 @@ class TelaInformacoesPessoais extends StatelessWidget {
             left: 80,
             top: 337,
             child: Text(
-              '*****',
+              '***********',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -469,7 +469,7 @@ class TelaInformacoesPessoais extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '*****',
+                    '***********',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
