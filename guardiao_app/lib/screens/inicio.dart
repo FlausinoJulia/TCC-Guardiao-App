@@ -52,12 +52,12 @@ class _TelaInicialState extends State<TelaInicial> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While waiting for the data to be loaded, display a loading indicator
           return const Center(child: CircularProgressIndicator(),); 
-        } else if (snapshot.hasError) {
+        } else if (snapshot.hasError) { // nao foi permitida a localizacao
           // If an error occurred, display an error message
           //return Text('Error: ${snapshot.error}');
           return Scaffold(
             body: OpenStreetMapSearchAndPick(
-              center: LatLong(snapshot.data!.latitude, snapshot.data!.longitude),
+              center: const LatLong(-22.90207936673223, -47.066738940426944),
               onPicked: (value){
               }, 
             ),

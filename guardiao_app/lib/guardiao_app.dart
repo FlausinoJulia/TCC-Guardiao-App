@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/screens/denuncias/denuncias.dart';
 // import 'package:guardiao_app/screens/boas_vindas.dart';
 // import 'package:guardiao_app/screens/cadastro/cadastro_1.dart';
 // import 'package:guardiao_app/screens/inicio.dart';
@@ -24,7 +25,7 @@ class _GuardiaoAppState extends State<GuardiaoApp> {
       theme: ThemeData(
         primaryColor: const Color.fromRGBO(4, 2, 104, 1.0), // mudar para primarySwatch
       ),
-      home: const VerificaAutenticacao(),
+      home: const TelaDenuncias(),
       // routes: {
       //   //'/':            (context) => const AuthCheck(),
       //   '/inicio':      (context) => const TelaInicial(),

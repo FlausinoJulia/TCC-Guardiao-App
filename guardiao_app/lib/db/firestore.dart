@@ -46,7 +46,7 @@ class Firestore {
     await localizacoes.setLocation(uid, dest);
   }
 
-  static getDocumentsTest(GeoPoint geoPoint) async {
+  static getUsuariosComMesmoDestino(GeoPoint geoPoint) async {
     GeoFirestore localizacoes = GeoFirestore(FirebaseFirestore.instance.collection('destinos'));
     final queryLocation = geoPoint;
 

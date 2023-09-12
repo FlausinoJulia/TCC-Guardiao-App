@@ -531,7 +531,7 @@ class _OpenStreetMapSearchAndPickState
                             ElevatedButton(
                               onPressed: () {
                                 // verificar se tem pessoas indo para o mesmo lugar
-                                Firestore.getDocumentsTest(GeoPoint(latDestiny, lonDestiny));
+                                Firestore.getUsuariosComMesmoDestino(GeoPoint(latDestiny, lonDestiny));
                               },
                               style: ElevatedButton.styleFrom(
                                 fixedSize: Size(MediaQuery.of(context).size.width, 55.0),
