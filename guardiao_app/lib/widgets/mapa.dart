@@ -9,6 +9,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/screens/boas_vindas.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
+import 'package:guardiao_app/services/route_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
@@ -76,6 +77,7 @@ class _OpenStreetMapSearchAndPickState
   MapController _mapController = MapController();
   
   bool estaVisivel = false;
+  List<LatLng> coordenadasDaRota = [];
 
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _destinyController = TextEditingController();
@@ -204,6 +206,16 @@ class _OpenStreetMapSearchAndPickState
                   // attributionBuilder: (_) {
                   //   return Text("© OpenStreetMap contributors");
                   // },
+                ),
+                PolylineLayer(
+                  polylineCulling: false,
+                  polylines: [
+                    Polyline(
+                      points: coordenadasDaRota,
+                      color: Colors.blue,
+                      strokeWidth: 5,
+                    )
+                  ],
                 ),
               ],
             ),
@@ -341,7 +353,7 @@ class _OpenStreetMapSearchAndPickState
                               title: Text(_destinyOptions[index].displayname),
                               subtitle: Text(
                                   '${_destinyOptions[index].lat},${_destinyOptions[index].lon}'),
-                              onTap: () {
+                              onTap: () {//async {
                                 _destinyController.text = _destinyOptions[index].displayname;
                                 // definindo a coordenada de destino
                                 latDestiny = _destinyOptions[index].lat;
@@ -352,23 +364,23 @@ class _OpenStreetMapSearchAndPickState
                                 Firestore.adicionarDestino(uid, GeoPoint(latDestiny, lonDestiny));
 
                                 // se o destino e a loc atual estiverem preenchidos
-
-                                print ("loc atual: ${_searchController.text}");
-                                print ("lat local: $latLocal");
-                                print ("lon local: $lonLocal"); 
-                                print ("destino: ${_destinyController.text}");
-                                print ("lat dest: $latDestiny");
-                                print ("lon dest: $lonDestiny"); 
                                 if (_searchController.text.isNotEmpty && latLocal != 0 && lonLocal != 0 && 
                                     _destinyController.text.isNotEmpty && latDestiny != 0 && lonDestiny != 0) {
                                     
                                   // mostrar a rota e deixar o card visivel
-                                  
+                                  // coordenadasDaRota = await getCoordinates("$lonLocal,$latLocal", "$lonDestiny,$latDestiny");
+                                  // if (coordenadasDaRota == [] && context.mounted) {
+                                  //   ScaffoldMessenger.of(context).showSnackBar(
+                                  //     const SnackBar(
+                                  //       content: Text(
+                                  //         'Não foi possível encontrar uma rota',
+                                  //         style: TextStyle(color: Colors.white),
+                                  //       ),
+                                  //       backgroundColor: Color.fromARGB(255, 198, 94, 87),
+                                  //     ),
+                                  //   );
+                                  // }
                                   estaVisivel = true; // depois do set state o card deverá estar visivel
-
-                                                                  
-
-                                    
                                 }
       
                                 _focusNode.unfocus();
@@ -494,14 +506,18 @@ class _OpenStreetMapSearchAndPickState
               visible: estaVisivel,
               child: Positioned(
                 bottom: 10,
+                left: 3,
                 child: Center(
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                     color: Colors.white,
                     child: SizedBox(
-                      width: 350.0,
-                      height: 126.0,
+                      width: 345.0,
+                      height: 140.0,
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 18.0, top: 15),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -534,7 +550,7 @@ class _OpenStreetMapSearchAndPickState
                                 Firestore.getUsuariosComMesmoDestino(GeoPoint(latDestiny, lonDestiny));
                               },
                               style: ElevatedButton.styleFrom(
-                                fixedSize: Size(MediaQuery.of(context).size.width, 55.0),
+                                fixedSize: Size(MediaQuery.of(context).size.width, 46.0),
                                 backgroundColor: const Color(0xFF040268),
                                 padding: const EdgeInsets.all(15.0),
                                 shape: RoundedRectangleBorder(
