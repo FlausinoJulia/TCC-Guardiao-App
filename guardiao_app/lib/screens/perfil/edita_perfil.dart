@@ -1,7 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/utils.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TelaEditaPerfil extends StatelessWidget {
   const TelaEditaPerfil({super.key});
+
+  void selectImage() async{
+    Uint8List img = await pickImage(ImageSource.gallery);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,7 @@ class TelaEditaPerfil extends StatelessWidget {
                         color: Colors.white,
                         size: 30,
                       ),
-                      onPressed: () {},
+                      onPressed: selectImage,
                     ),
                     bottom: -10,
                     left: 108,
