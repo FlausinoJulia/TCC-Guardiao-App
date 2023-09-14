@@ -36,6 +36,15 @@ class TelaPerfil extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage('https://via.placeholder.com/100x100'),
+                      ),
+                    ],
+                  ),
+                  /*
                   Container(
                     width: 100,
                     height: 100,
@@ -49,6 +58,7 @@ class TelaPerfil extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100))),
                   ),
+                  */
                   SizedBox(
                     height: 18,
                   ),
@@ -65,27 +75,15 @@ class TelaPerfil extends StatelessWidget {
                   SizedBox(
                     height: 18,
                   ),
-                  /*
-                  ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          fixedSize: Size(MediaQuery.of(context).size.width,55.0),
-                          backgroundColor: Colors.white,
-                          padding: const EdgeInsets.all(15.0), 
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)
-                          )
-                        ),
-                        
-                      ),
-                  */
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        fixedSize:
-                            Size(MediaQuery.of(context).size.width, 50.0),
-                        padding: const EdgeInsets.all(2),
+                        minimumSize: Size(210, 45),
+                        //fixedSize:
+                            //Size(MediaQuery.of(context).size.longestSide, 50.0),
+                        // padding: const EdgeInsets.all(2),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16))),
+                            borderRadius: BorderRadius.circular(12))),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -109,16 +107,16 @@ class TelaPerfil extends StatelessWidget {
           SizedBox(
             height: 32,
           ),
-          Container(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Column(children: [
+          Align(
+            child: Row(
+              children: [
+                SizedBox(width: 35,),
                 TextButton.icon(
                   onPressed: () {},
                   icon: const Icon(
                     Icons.info_outline,
                     color: Colors.black,
-                    size: 18.0,
+                    size: 25.0,
                   ),
                   label: const Text(
                     "Informações pessoais",
@@ -126,12 +124,18 @@ class TelaPerfil extends StatelessWidget {
                         color: Colors.black, fontFamily: 'Lato', fontSize: 18),
                   ),
                 ),
-                TextButton.icon(
+              ],),
+            ),
+            Align(
+              child: Row(
+                children: [
+                  SizedBox(width: 35,),
+                  TextButton.icon(
                   onPressed: () {},
                   icon: const Icon(
                     Icons.local_phone_outlined,
                     color: Colors.black,
-                    size: 18.0,
+                    size: 25.0,
                   ),
                   label: const Text(
                     "Meus contatos de emergência",
@@ -139,12 +143,18 @@ class TelaPerfil extends StatelessWidget {
                         color: Colors.black, fontFamily: 'Lato', fontSize: 18),
                   ),
                 ),
-                TextButton.icon(
+                ]),
+            ),
+            Align(
+              child: Row(
+                children: [
+                  SizedBox(width: 35,),
+                  TextButton.icon(
                   onPressed: () {},
                   icon: const Icon(
                     Icons.exit_to_app_rounded,
                     color: Colors.red,
-                    size: 18.0,
+                    size: 25.0,
                   ),
                   label: const Text(
                     "Sair do aplicativo pessoais",
@@ -156,9 +166,9 @@ class TelaPerfil extends StatelessWidget {
                     ),
                   ),
                 ),
-              ]),
-            ),
-          )
+                ]),
+            )
+          
         ]),
       ),
     );

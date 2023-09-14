@@ -6,103 +6,55 @@ class TelaEditaPerfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF040268),
-      body: Center(
-          child: Container(
-        width: 390,
-        height: 844,
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          color: Color(0xFFF7F7F6),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Container(
-                width: 390,
-                height: 844,
-                decoration: ShapeDecoration(
-                  color: Color(0xFF02006C),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+        backgroundColor: const Color(0xFF040268),
+        body: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 20,
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 64,
-              top: 65,
-              child: Transform(
-                transform: Matrix4.identity()
-                  ..translate(0.0, 0.0)
-                  ..rotateZ(-3.14),
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Stack(children: []),
-                ),
-              ),
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () {},
-            ),
-            Positioned(
-              left: 85,
-              top: 461,
-              child: Text(
-                'Maria Luiza Pereira',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontFamily: 'Lato',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 58,
-              top: 447,
-              child: Container(
-                width: 273,
-                height: 50,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0xFFD9D9D9)),
-                    borderRadius: BorderRadius.circular(40),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {},
                   ),
-                ),
+                ],
               ),
-            ),
-            Positioned(
-              left: 58,
-              top: 447,
-              child: Container(
-                width: 273,
-                height: 50,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0xFFD9D9D9)),
-                    borderRadius: BorderRadius.circular(40),
+              SizedBox(
+                height: 150,
+              ),
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 80,
+                    backgroundImage:
+                        NetworkImage('https://via.placeholder.com/100x100'),
                   ),
-                ),
+                  Positioned(
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: () {},
+                    ),
+                    bottom: -10,
+                    left: 108,
+                  ),
+                ],
               ),
-            ),
-            Positioned(
-              left: 149,
-              top: 385,
-              child: Text(
+              SizedBox(
+                height: 20,
+              ),
+              Text(
                 'Alterar foto',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -110,13 +62,41 @@ class TelaEditaPerfil extends StatelessWidget {
                   fontSize: 18,
                   fontFamily: 'Lato',
                   fontWeight: FontWeight.w500,
+                  height: 0,
                 ),
               ),
-            ),
-            Positioned(
-              left: 85,
-              top: 520,
-              child: Text(
+              SizedBox(
+                height: 32,
+              ),
+              Container(
+                width: 273,
+                height: 50,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: Color(0xFFD9D9D9)),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                ),
+                child: TextButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.edit_document,
+                    color: Colors.white,
+                    size: 25.0,
+                  ),
+                  label: const Text(
+                    "Maria Luiza Pereira",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Lato',
+                      fontSize: 16,
+                      //fontWeight: FontWeight.medium
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text(
                 'Editar informações pessoais',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -124,62 +104,11 @@ class TelaEditaPerfil extends StatelessWidget {
                   fontSize: 18,
                   fontFamily: 'Lato',
                   fontWeight: FontWeight.w500,
+                  height: 0,
                 ),
-              ),
-            ),
-            Positioned(
-              left: 120,
-              top: 218,
-              child: Container(
-                width: 150,
-                height: 150,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                "https://via.placeholder.com/150x150"),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 150,
-                              decoration: ShapeDecoration(
-                                color: Colors.black,
-                                shape: OvalBorder(),
-                              ),
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {},
-                              ),
-                            ),
-                          ],
-                        )),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      )),
-    );
+              )
+            ],
+          ),
+        ));
   }
 }

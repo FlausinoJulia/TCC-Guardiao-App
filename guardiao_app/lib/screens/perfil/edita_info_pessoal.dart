@@ -5,38 +5,60 @@ class TelaInformacoesPessoais extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 390,
-      height: 844,
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            left: 64,
-            top: 65,
-            child: Transform(
-              transform: Matrix4.identity()
-                ..translate(0.0, 0.0)
-                ..rotateZ(-3.14),
-              child: Container(
-                width: 32,
-                height: 32,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(),
-                child: Stack(children: []),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: const Color(0xFF040268),
+                  ),
+                  onPressed: () {},
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                Text(
+                  'Informações Pessoais',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w500,
+                    height: 0,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              width: 300,
+              height: 100,
+              child: Text(
+                'Essas são as suas informações pessoais, elas não ficam visíveis no seu perfil.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.w300,
+                  height: 0,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: 40,
-            top: 178,
-            child: Container(
+            Container(
               width: 309,
               height: 278,
               decoration: ShapeDecoration(
@@ -54,7 +76,10 @@ class TelaInformacoesPessoais extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+          ],
+        ),
+      ),
+      /* 
           Positioned(
             left: 80,
             top: 211,
@@ -97,6 +122,7 @@ class TelaInformacoesPessoais extends StatelessWidget {
               ),
             ),
           ),
+          
           Positioned(
             left: 80,
             top: 277,
@@ -531,9 +557,10 @@ class TelaInformacoesPessoais extends StatelessWidget {
                 ],
               ),
             ),
+            
           ),
         ],
-      ),
+      ),*/
     );
   }
 }
