@@ -78,6 +78,7 @@ class _OpenStreetMapSearchAndPickState
   
   bool estaVisivel = false;
   List<LatLng> coordenadasDaRota = [];
+  List<Marker> marcadores = [];
 
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _destinyController = TextEditingController();
@@ -217,6 +218,9 @@ class _OpenStreetMapSearchAndPickState
                     )
                   ],
                 ),
+                MarkerLayer(
+                  markers: marcadores,
+                ),
               ],
             ),
             Container(
@@ -353,7 +357,7 @@ class _OpenStreetMapSearchAndPickState
                               title: Text(_destinyOptions[index].displayname),
                               subtitle: Text(
                                   '${_destinyOptions[index].lat},${_destinyOptions[index].lon}'),
-                              onTap: () {//async {
+                              onTap: () async {
                                 _destinyController.text = _destinyOptions[index].displayname;
                                 // definindo a coordenada de destino
                                 latDestiny = _destinyOptions[index].lat;
@@ -368,18 +372,19 @@ class _OpenStreetMapSearchAndPickState
                                     _destinyController.text.isNotEmpty && latDestiny != 0 && lonDestiny != 0) {
                                     
                                   // mostrar a rota e deixar o card visivel
-                                  // coordenadasDaRota = await getCoordinates("$lonLocal,$latLocal", "$lonDestiny,$latDestiny");
-                                  // if (coordenadasDaRota == [] && context.mounted) {
-                                  //   ScaffoldMessenger.of(context).showSnackBar(
-                                  //     const SnackBar(
-                                  //       content: Text(
-                                  //         'Não foi possível encontrar uma rota',
-                                  //         style: TextStyle(color: Colors.white),
-                                  //       ),
-                                  //       backgroundColor: Color.fromARGB(255, 198, 94, 87),
-                                  //     ),
-                                  //   );
-                                  // }
+                                  coordenadasDaRota.clear();
+                                  coordenadasDaRota = await getCoordinates("$lonLocal,$latLocal", "$lonDestiny,$latDestiny");
+                                  if (coordenadasDaRota == [] && context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Não foi possível encontrar uma rota',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        backgroundColor: Color.fromARGB(255, 198, 94, 87),
+                                      ),
+                                    );
+                                  }
                                   estaVisivel = true; // depois do set state o card deverá estar visivel
                                 }
       
