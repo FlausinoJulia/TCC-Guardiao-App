@@ -79,6 +79,9 @@ class _OpenStreetMapSearchAndPickState
   bool estaVisivel = false;
   List<LatLng> coordenadasDaRota = [];
   List<Marker> marcadores = [];
+  
+  //Marker marcadorDestino = Marker(point: LatLng(0,0), builder: (context) => const Icon(Icons.abc, size: 0,));
+  //late Marker marcadorLocAtual;
 
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _destinyController = TextEditingController();
@@ -93,8 +96,6 @@ class _OpenStreetMapSearchAndPickState
   // coordenadas de destino
   double latDestiny = 0;
   double lonDestiny = 0;
-
-  //LatLong localPlace = const LatLong(0, 0);
 
   List<OSMdata> _options = <OSMdata>[];
   List<OSMdata> _destinyOptions = <OSMdata>[];
@@ -159,7 +160,7 @@ class _OpenStreetMapSearchAndPickState
 
     setNameCurrentPosAtInit();
 
-    _mapController.mapEventStream.listen((event) async {
+    _mapController.mapEventStream.listen((event) async { // aqui esta atualizando toda vez que move (definindo o evento do mapa)
       if (event is MapEventMoveEnd) {
         var client = http.Client();
         String url =
@@ -174,6 +175,8 @@ class _OpenStreetMapSearchAndPickState
         setState(() {});
       }
     });
+
+    //marcadorLocAtual = Marker();
 
     super.initState();
   }
@@ -219,7 +222,26 @@ class _OpenStreetMapSearchAndPickState
                   ],
                 ),
                 MarkerLayer(
-                  markers: marcadores,
+                  markers: [
+                    if (latLocal != 0 && lonLocal != 0) 
+                      Marker(
+                        point: LatLng(latLocal, lonLocal),
+                        builder:(context) => Icon(
+                          Icons.location_pin,
+                          color: Colors.red,
+                          size: 30,
+                        ),
+                      ),
+                    if (latDestiny != 0 && lonDestiny != 0)
+                      Marker(
+                        point: LatLng(latDestiny, lonDestiny),
+                        builder:(context) => Icon(
+                          Icons.location_pin,
+                          color: Colors.red,
+                          size: 30,
+                        ),
+                      ),                    
+                  ],
                 ),
               ],
             ),
