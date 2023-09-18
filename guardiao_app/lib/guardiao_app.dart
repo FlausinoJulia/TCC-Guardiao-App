@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:guardiao_app/screens/perfil/contato_emergencia.dart';
-import 'package:guardiao_app/screens/perfil/edita_info_pessoal.dart';
-import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
-import 'package:guardiao_app/screens/perfil/perfil.dart';
+// import 'package:guardiao_app/screens/perfil/contato_emergencia.dart';
+// import 'package:guardiao_app/screens/perfil/edita_info_pessoal.dart';
+// import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
+// import 'package:guardiao_app/screens/perfil/perfil.dart';
 
 // import 'package:guardiao_app/screens/denuncias/denuncias.dart';
 // import 'package:guardiao_app/screens/boas_vindas.dart';
@@ -30,7 +30,8 @@ class _GuardiaoAppState extends State<GuardiaoApp> {
       theme: ThemeData(
         primaryColor: const Color.fromRGBO(4, 2, 104, 1.0), // mudar para primarySwatch
       ),
-      home: const TelaEditaPerfil(),
+      //home: const TelaEditaPerfil(),
+      home: const VerificaAutenticacao(),
       // routes: {
       //   //'/':            (context) => const AuthCheck(),
       //   '/inicio':      (context) => const TelaInicial(),

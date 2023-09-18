@@ -56,10 +56,10 @@ class Firestore {
     String? idDoUsuarioAtual = getUid();
 
     final List<DocumentSnapshot> documents = await localizacoes.getAtLocation(queryLocation, 0);
-    documents.forEach((document) {
+    for (var document in documents) {
       // print("DOCUMENTO: ${document.id}");
       if (document.id != idDoUsuarioAtual) grupo.add(document.id); // adicionando os usuarios que vao para o mesmo destino no grupo
-    });
+    }
 
     return grupo;
   }

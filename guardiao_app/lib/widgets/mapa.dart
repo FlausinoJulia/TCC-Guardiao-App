@@ -226,7 +226,7 @@ class _OpenStreetMapSearchAndPickState
                     if (latLocal != 0 && lonLocal != 0) 
                       Marker(
                         point: LatLng(latLocal, lonLocal),
-                        builder:(context) => Icon(
+                        builder:(context) => const Icon(
                           Icons.location_pin,
                           color: Colors.red,
                           size: 30,
@@ -566,6 +566,10 @@ class _OpenStreetMapSearchAndPickState
                                   ),
                                   onPressed: () {
                                     estaVisivel = false;
+                                    coordenadasDaRota = [];
+                                    latDestiny = 0; 
+                                    lonDestiny = 0;
+                                    _destinyController.clear();
                                     setState(() {});
                                   },
                                 ),
