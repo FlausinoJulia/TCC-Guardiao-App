@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:guardiao_app/screens/perfil/contato_emergencia.dart';
+import 'package:guardiao_app/screens/perfil/edita_info_pessoal.dart';
 import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
 
 class TelaPerfil extends StatelessWidget {
@@ -112,7 +115,13 @@ class TelaPerfil extends StatelessWidget {
               children: [
                 SizedBox(width: 35,),
                 TextButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TelaInformacoesPessoais(),
+                          ));
+                  },
                   icon: const Icon(
                     Icons.info_outline,
                     color: Colors.black,
@@ -131,7 +140,13 @@ class TelaPerfil extends StatelessWidget {
                 children: [
                   SizedBox(width: 35,),
                   TextButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TelaContatoEmergencia(),
+                          ));
+                  },
                   icon: const Icon(
                     Icons.local_phone_outlined,
                     color: Colors.black,
@@ -150,14 +165,14 @@ class TelaPerfil extends StatelessWidget {
                 children: [
                   SizedBox(width: 35,),
                   TextButton.icon(
-                  onPressed: () {},
+                  onPressed: (){},
                   icon: const Icon(
                     Icons.exit_to_app_rounded,
                     color: Colors.red,
                     size: 25.0,
                   ),
                   label: const Text(
-                    "Sair do aplicativo pessoais",
+                    "Sair do aplicativo",
                     style: TextStyle(
                       color: Colors.red,
                       fontFamily: 'Lato',

@@ -1,18 +1,17 @@
+import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/screens/perfil/perfil.dart';
 import 'package:guardiao_app/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class TelaEditaPerfil extends StatelessWidget {
   const TelaEditaPerfil({super.key});
 
-  void selectImage() async{
-    Uint8List img = await pickImage(ImageSource.gallery);
-  }
-
   @override
   Widget build(BuildContext context) {
+    String imageUrl = '';
     return Scaffold(
         backgroundColor: const Color(0xFF040268),
         body: Center(
@@ -31,7 +30,13 @@ class TelaEditaPerfil extends StatelessWidget {
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TelaPerfil(),
+                          ));
+                    },
                   ),
                 ],
               ),
@@ -52,7 +57,34 @@ class TelaEditaPerfil extends StatelessWidget {
                         color: Colors.white,
                         size: 30,
                       ),
-                      onPressed: selectImage,
+                      onPressed: () async{
+                        ImagePicker imagePicker = ImagePicker();
+                        XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+                        print('${file?.path}');
+
+                        if(file==null) return;
+
+                        // isso aqui não sei se precisa pq é da galeria e não cammera
+                        String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+                        // Get a reference to storage root
+                        Reference referenceRoot = FirebaseStorage.instance.ref();
+                        Reference referenceDirImages = referenceRoot.child('images');
+                      
+                        // reate a reference for the image to be stored
+                        //Reference referenceImageToUpload = referenceDirImages.child('${file?.name}');
+                        Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+                        // Handle errors/sucess
+                        try{
+                          // Store the file
+                          await referenceImageToUpload.putFile(File(file.path));
+                          // Sucess: get the dowload URL
+                          imageUrl = await referenceImageToUpload.getDownloadURL();
+                        }catch(error){
+                          // Some error ocurred
+                        }
+                      },
                     ),
                     bottom: -10,
                     left: 108,
@@ -103,7 +135,9 @@ class TelaEditaPerfil extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Text(
                 'Editar informações pessoais',
                 textAlign: TextAlign.center,

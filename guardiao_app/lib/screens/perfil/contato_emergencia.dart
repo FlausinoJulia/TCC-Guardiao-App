@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/screens/perfil/perfil.dart';
 
 class TelaContatoEmergencia extends StatelessWidget {
   const TelaContatoEmergencia({super.key});
@@ -6,68 +7,75 @@ class TelaContatoEmergencia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Stack(children: [
-              Container(
-                alignment: Alignment.topCenter,
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: const Color(0xFF040268),
-                      ),
-                      onPressed: () {},
-                    ),
-                    SizedBox(
-                      width: 40,
-                    ),
-                    Text('Contatos de Emergência',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontFamily: 'Lato',
-                          fontWeight: FontWeight.w500,
-                        )),
-                  ],
+      backgroundColor: Colors.white,
+      body: Container(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: const Color(0xFF040268),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TelaPerfil(),
+                          ));
+                  },
+                ),
+                SizedBox(
+                  width: 40,
+                ),
+                Text(
+                  'Contatos de Emergência',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w500,
+                    height: 0,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              width: 340,
+              height: 90,
+              child: Text(
+                'Esses contatos receberão uma mensagem de emergência quando você adicionar o botão de pânico.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Lato',
+                  fontWeight: FontWeight.w300,
+                  height: 0,
                 ),
               ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: 70,
-                  ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Text(
-                      'Esses contatos receberão uma mensagem de emergência quando você acionar o botão de pânico. ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Informe até 3 contatos de emergência.',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: 'Lato',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+            ),
+            Text(
+              'Informe até 3 contatos de emergência.',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w400,
+                height: 0,
               ),
-              Form(
+            ),
+            Form(
                 key: null,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,14 +95,14 @@ class TelaContatoEmergencia extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(40.0),
                                   borderSide: const BorderSide(
                                     color: Colors.black,
-                                    width: 2.0,
+                                    //width: 2.0,
                                   ),
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(40.0),
                                   borderSide: const BorderSide(
                                     color: Colors.black,
-                                    width: 2.5,
+                                   // width: 2.5,
                                   ),
                                 ),
                                 labelText: 'Nome',
@@ -344,6 +352,17 @@ class TelaContatoEmergencia extends StatelessWidget {
                   ],
                 ),
               )
-            ])));
+          ],
+        ),
+      ),
+      /*
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(children: [
+              
+              
+            ]))
+            */
+    );
   }
 }

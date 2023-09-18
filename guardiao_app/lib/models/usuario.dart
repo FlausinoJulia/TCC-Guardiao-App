@@ -6,6 +6,7 @@ class Usuario {
   String? email;
   String? senha;
   String? numero;
+  String? image;
   List<Map<String, dynamic>>? contatosDeEmergencia;
   GeoPoint? locAtual;
 
@@ -17,6 +18,7 @@ class Usuario {
     this.numero, 
     this.contatosDeEmergencia,
     this.locAtual,
+    this.image
   });
 
   factory Usuario.fromFirestore(
@@ -30,6 +32,7 @@ class Usuario {
       email: data?['email'], 
       senha: data?['senha'], 
       numero: data?['numero'], 
+      image: data?['image'],
       contatosDeEmergencia: 
         data?['contatosDeEmergencia'] is Iterable? List.from(data?['contatosDeEmergencia']) : null, 
       locAtual: data?['locAtual'],
@@ -44,7 +47,8 @@ class Usuario {
       if (senha != null) "senha": senha,
       if (numero != null) "numero": numero,
       if (contatosDeEmergencia != null) "contatosDeEmergencia": contatosDeEmergencia,
-      if (locAtual != null) "locAtual": locAtual,                                                                              
+      if (locAtual != null) "locAtual": locAtual,       
+      if (image != null) "image": image,                                                 
     };
   }
 }

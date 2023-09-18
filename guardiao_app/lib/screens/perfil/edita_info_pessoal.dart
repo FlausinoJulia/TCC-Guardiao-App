@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/screens/perfil/perfil.dart';
 
 class TelaInformacoesPessoais extends StatelessWidget {
   const TelaInformacoesPessoais({super.key});
@@ -23,10 +24,16 @@ class TelaInformacoesPessoais extends StatelessWidget {
                     Icons.arrow_back,
                     color: const Color(0xFF040268),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TelaPerfil(),
+                          ));
+                  },
                 ),
                 SizedBox(
-                  width: 50,
+                  width: 40,
                 ),
                 Text(
                   'Informações Pessoais',
