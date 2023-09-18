@@ -91,7 +91,7 @@ class _OpenStreetMapSearchAndPickState
 
   // coordenadas de local
   double latLocal = 0;
-  double lonLocal = 0;
+  double lonLocal = 0; 
 
   // coordenadas de destino
   double latDestiny = 0;

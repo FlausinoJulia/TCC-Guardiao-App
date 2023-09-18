@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geo_firestore_flutter/geo_firestore_flutter.dart';
 import 'package:guardiao_app/models/usuario.dart';
 
+import '../services/firebase_auth.dart';
+
 class Firestore {
 
   // adiciona um novo usuário no bd
@@ -46,14 +48,19 @@ class Firestore {
     await localizacoes.setLocation(uid, dest);
   }
 
-  static getUsuariosComMesmoDestino(GeoPoint geoPoint) async {
+  static Future<List<String>> getUsuariosComMesmoDestino(GeoPoint geoPoint) async {
     GeoFirestore localizacoes = GeoFirestore(FirebaseFirestore.instance.collection('destinos'));
     final queryLocation = geoPoint;
+    
+    List<String> grupo = [];
+    String? idDoUsuarioAtual = getUid();
 
-    // creates a new query around [37.7832, -122.4056] with a radius of 0.0 kilometers
     final List<DocumentSnapshot> documents = await localizacoes.getAtLocation(queryLocation, 0);
     documents.forEach((document) {
-      print("DOCUMENTO: ${document.id}");
+      // print("DOCUMENTO: ${document.id}");
+      if (document.id != idDoUsuarioAtual) grupo.add(document.id); // adicionando os usuarios que vao para o mesmo destino no grupo
     });
+
+    return grupo;
   }
 }
