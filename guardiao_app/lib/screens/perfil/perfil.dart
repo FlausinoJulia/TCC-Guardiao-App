@@ -1,14 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:guardiao_app/screens/perfil/contato_emergencia.dart';
 import 'package:guardiao_app/screens/perfil/edita_info_pessoal.dart';
 import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
+import 'package:guardiao_app/widgets/verifica_autenticacao.dart';
 
 class TelaPerfil extends StatelessWidget {
-  const TelaPerfil({super.key});
+  TelaPerfil({super.key});
+  /*
+
+  final _firebaseAuth = FirebaseAuth.instance;
+  String nome = '';
+
+  pegarUsuario() async{
+    User? usuario = await _firebaseAuth.currentUser;
+    if(usuario != null){
+      setState((){
+        nome = usuario.displayName!;
+      });
+    }
+  }
+  */
+
+/*
+  sair() async{
+    await _firebaseAuth.signOut().then(
+      (user) => Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: VerificaAutenticacao)
+        )
+    );
+  }*/
 
   @override
   Widget build(BuildContext context) {
+    //pegarUsuario();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -66,7 +92,7 @@ class TelaPerfil extends StatelessWidget {
                     height: 18,
                   ),
                   Text(
-                    'Maria Luiza Pereira',
+                    'nome',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFFF7F7F6),
@@ -91,7 +117,7 @@ class TelaPerfil extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TelaEditaPerfil(),
+                            builder: (context) => TelaEditaPerfil(),
                           ));
                     },
                     child: const Text(

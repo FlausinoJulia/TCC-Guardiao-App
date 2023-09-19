@@ -7,11 +7,38 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class TelaEditaPerfil extends StatelessWidget {
-  const TelaEditaPerfil({super.key});
+  TelaEditaPerfil({super.key});
+
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
+  Future<XFile?> getImage() async{
+    final ImagePicker _picker = ImagePicker();
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    return image;
+  }
+
+  Future<void> upload(String path) async{
+    File file = File(path);
+    try{
+      String ref = 'images/img-${DateTime.now().toString()}.jpg';
+      await storage.ref(ref).putFile(file);
+    } on FirebaseException catch(e){
+      throw Exception('Erro no upload: ${e.code}');
+    }
+  }
+
+  pickAndUploadImage() async{
+    XFile? file = await getImage();
+    if (file != null){
+      await upload(file.path);
+    }
+  }
+      //String imageUrl = '';
+
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = '';
+    //String imageUrl = '';
     return Scaffold(
         backgroundColor: const Color(0xFF040268),
         body: Center(
@@ -34,7 +61,7 @@ class TelaEditaPerfil extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TelaPerfil(),
+                            builder: (context) => TelaPerfil(),
                           ));
                     },
                   ),
@@ -57,7 +84,8 @@ class TelaEditaPerfil extends StatelessWidget {
                         color: Colors.white,
                         size: 30,
                       ),
-                      onPressed: () async{
+                      onPressed: pickAndUploadImage
+                      /*async{
                         ImagePicker imagePicker = ImagePicker();
                         XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
                         print('${file?.path}');
@@ -84,7 +112,7 @@ class TelaEditaPerfil extends StatelessWidget {
                         }catch(error){
                           // Some error ocurred
                         }
-                      },
+                      },*/
                     ),
                     bottom: -10,
                     left: 108,
