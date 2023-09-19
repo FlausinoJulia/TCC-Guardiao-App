@@ -77,6 +77,7 @@ class _OpenStreetMapSearchAndPickState
   MapController _mapController = MapController();
   
   bool estaVisivel = false;
+  bool iniciandoViagem = false;
   List<LatLng> coordenadasDaRota = [];
   List<Marker> marcadores = [];
   
@@ -531,83 +532,89 @@ class _OpenStreetMapSearchAndPickState
             
             Visibility(
               visible: estaVisivel,
-              child: Positioned(
-                bottom: 10,
-                left: 3,
-                child: Center(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    color: Colors.white,
-                    child: SizedBox(
-                      width: 345.0,
-                      height: 140.0,
+                  child: Expanded(
+                    child: Align(
+                      alignment: FractionalOffset.bottomCenter,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 18.0, top: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "Deseja iniciar a viagem?",
-                                  style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          color: Colors.white,
+                          child: SizedBox(
+                            width: 345.0,
+                            height: 140.0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 18.0, top: 15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        "Deseja iniciar a viagem?",
+                                        style: TextStyle(
+                                          fontFamily: 'Lato',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      IconButton (
+                                        icon: const Icon(
+                                          Icons.cancel_rounded,
+                                          color: Color.fromARGB(255, 150, 150, 150)
+                                        ),
+                                        onPressed: () {
+                                          estaVisivel = false;
+                                          coordenadasDaRota = [];
+                                          latDestiny = 0; 
+                                          lonDestiny = 0;
+                                          _destinyController.clear();
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                IconButton (
-                                  icon: const Icon(
-                                    Icons.cancel_rounded,
-                                    color: Color.fromARGB(255, 150, 150, 150)
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      // verificar se tem pessoas indo para o mesmo lugar
+                                      List<String> grupo = await Firestore.getUsuariosComMesmoDestino(GeoPoint(latDestiny, lonDestiny));
+                                      if (grupo.isEmpty) {
+                                        
+                                      } else {
+                                        
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      fixedSize: Size(MediaQuery.of(context).size.width, 46.0),
+                                      backgroundColor: const Color(0xFF040268),
+                                      padding: const EdgeInsets.all(15.0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ), 
+                                    child: const Center(
+                                      child: Text(
+                                        "Iniciar",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          fontFamily: 'Lato',
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                  onPressed: () {
-                                    estaVisivel = false;
-                                    coordenadasDaRota = [];
-                                    latDestiny = 0; 
-                                    lonDestiny = 0;
-                                    _destinyController.clear();
-                                    setState(() {});
-                                  },
-                                ),
-                              ],
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                // verificar se tem pessoas indo para o mesmo lugar
-                                Firestore.getUsuariosComMesmoDestino(GeoPoint(latDestiny, lonDestiny));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: Size(MediaQuery.of(context).size.width, 46.0),
-                                backgroundColor: const Color(0xFF040268),
-                                padding: const EdgeInsets.all(15.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ), 
-                              child: const Center(
-                                child: Text(
-                                  "Iniciar",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.0,
-                                    fontFamily: 'Lato',
-                                  ),
-                                ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-         
          ],
         ),
       ),
