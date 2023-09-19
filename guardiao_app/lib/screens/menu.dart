@@ -21,7 +21,7 @@ class _MenuState extends State<Menu> {
     const TelaInicial(),
     const TelaDenuncias(),
     const TelaAlarme(),
-    const TelaPerfil(),
+    TelaPerfil(),
   ];
   
   @override
