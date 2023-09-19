@@ -32,7 +32,7 @@ class _GuardiaoAppState extends State<GuardiaoApp> {
         primaryColor: const Color.fromRGBO(4, 2, 104, 1.0), // mudar para primarySwatch
       ),
       //home: const TelaEditaPerfil(),
-      home: TelaEditaPerfil(),
+      home: const VerificaAutenticacao(),
       // routes: {
       //   //'/':            (context) => const AuthCheck(),
       //   '/inicio':      (context) => const TelaInicial(),
