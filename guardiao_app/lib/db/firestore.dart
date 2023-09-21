@@ -33,6 +33,19 @@ class Firestore {
       return false;
   }
 
+  static Future<Usuario?> getUsuario(String uid) async {
+    final ref = FirebaseFirestore.instance.collection('usuarios').doc(uid).withConverter(
+      fromFirestore: Usuario.fromFirestore, 
+      toFirestore: (Usuario usuario, _) => usuario.toFirestore(),
+    );
+
+    final docSnap = await ref.get();
+
+    final usuario = docSnap.data();
+
+    return usuario;    
+  }
+
   // static Future<void> atualizarLocAtual(String uid, GeoPoint novaLoc) async {
   //   FirebaseFirestore.instance.collection('usuarios').doc(uid).update({'locAtual': {'latitude': novaLoc.latitude, 'longitude:' novaLoc.longitude}});
   // }
@@ -61,6 +74,13 @@ class Firestore {
       if (document.id != idDoUsuarioAtual) grupo.add(document.id); // adicionando os usuarios que vao para o mesmo destino no grupo
     }
 
+    // verificar se todos os usuarios da lista estao disponiveis para formar o grupo
+
     return grupo;
+  }
+
+  // denuncias  
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getDenuncias() {
+    return FirebaseFirestore.instance.collection('denuncias').snapshots();
   }
 }

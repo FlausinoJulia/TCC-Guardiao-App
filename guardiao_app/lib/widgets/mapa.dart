@@ -236,7 +236,7 @@ class _OpenStreetMapSearchAndPickState
                     if (latDestiny != 0 && lonDestiny != 0)
                       Marker(
                         point: LatLng(latDestiny, lonDestiny),
-                        builder:(context) => Icon(
+                        builder:(context) => const Icon(
                           Icons.location_pin,
                           color: Colors.red,
                           size: 30,
@@ -572,7 +572,7 @@ class _OpenStreetMapSearchAndPickState
                                           latDestiny = 0; 
                                           lonDestiny = 0;
                                           _destinyController.clear();
-                                          setState(() {});
+                                          //setState(() {});
                                         },
                                       ),
                                     ],
@@ -584,7 +584,42 @@ class _OpenStreetMapSearchAndPickState
                                       if (grupo.isEmpty) {
                                         
                                       } else {
-                                        
+                                        showModalBottomSheet(
+                                          context: context, 
+                                          builder: (context) {
+                                            return Container(
+                                               width: MediaQuery.of(context).size.width,
+                                               decoration: const BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10.0),
+                                                    topRight: Radius.circular(10.0),
+                                                  ),
+                                                ),
+                                               child: Column(
+                                                  children: [
+                                                    const Text("Essas pessoas estão indo para o mesmo lugar que você:"),
+                                                    ListView.builder(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      itemCount: grupo.length,
+                                                      itemBuilder: (BuildContext context, int indice) {
+                                                        return Row (
+                                                          children: [
+                                                            // foto
+                                                            Text("Nome do usuário: $grupo[indice]" ) // pegar o nome através do uid
+                                                          ],
+                                                        );
+                                                      },
+                                                    ),
+                                                    ElevatedButton(
+                                                      onPressed: () {},
+                                                      child: const Text("Formar grupo"),
+                                                    ),
+                                                  ],
+                                                ),
+                                            );
+                                          },
+                                        );
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(

@@ -1,4 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/db/firestore.dart';
+
+//import '../../models/usuario.dart';
+
+//import '../../models/denuncia.dart';
 
 class TelaDenuncias extends StatefulWidget {
   const TelaDenuncias({super.key});
@@ -8,15 +14,45 @@ class TelaDenuncias extends StatefulWidget {
 }
 
 class _TelaDenunciasState extends State<TelaDenuncias> {
+  //late List<Denuncia> denuncias;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Stack(
           children: [
-            // ListView.builder(
-            //   itemBuilder: ,
-            // ),
+            StreamBuilder(
+              stream: Firestore.getDenuncias(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center (
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                else if (!snapshot.hasData) {
+                  return const Center (
+                    child: Text("Nenhuma denúncia encontrada."),
+                  );
+                }
+                else {
+                  return Expanded(
+                    child: ListView(
+                      children: snapshot.data!.docs.map((document) {
+                        return Card(
+                          child: ListTile (
+                            //leading: foto,
+                            title: document['nomeUsuario'],
+                            subtitle: document['descricao'],
+                            //trailing: ,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }
+              },
+            ),
             Container(
               color: Colors.white,
               width: double.infinity,

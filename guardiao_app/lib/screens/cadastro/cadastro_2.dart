@@ -387,6 +387,8 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
                           onPressed: () async {
                             // adicionar lista de contatos no user
                             salvarListaDeContatos();
+
+                            widget.dadosUsuario.estaDisponivel = true;
           
                             // adicionando usuario no firebase auth
                             await cadastrar(widget.dadosUsuario.email!, widget.dadosUsuario.senha!, context); 
