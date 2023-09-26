@@ -18,22 +18,28 @@ class _CardDenunciaState extends State<CardDenuncia> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(15.0),
       child: Container(
-        color: const Color(0xFFE9E9E9),
         constraints: const BoxConstraints(
-          maxWidth: 200.0,
-          minHeight: 50.0,
+          maxWidth: 150.0,
+          minHeight: 40.0,
           maxHeight: 182.0,
         ),
-        padding: const EdgeInsets.all(10.0),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20),),
+          color: Color(0xFFE9E9E9),
+        ),
+        padding: const EdgeInsets.all(20.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 30,
-              height: 30,
-              color: const Color(0xFF6C6C6C),
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(30),),
+                color: Color(0xFF6C6C6C)
+              ),
             ), // local para colocar a foto
             const SizedBox(width: 10.0,),
             Expanded(

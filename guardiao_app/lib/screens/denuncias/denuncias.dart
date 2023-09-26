@@ -20,10 +20,15 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
         child: Center(
           child: Column(
             children: [
-              const Text(
-                "Central de Denúncias",
-                style: TextStyle(
-                  fontSize: 30.0,
+              const Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text(
+                  "Central de Denúncias",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontFamily: 'Lato',
+              
+                  ),
                 ),
               ),
               StreamBuilder(
@@ -57,21 +62,27 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
                 color: Colors.white,
                 width: double.infinity,
                 height: 105.0,
-                child: ElevatedButton(
-                  
-                  onPressed: () {
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      
+                    },
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(MediaQuery.of(context).size.width, 20.0),
+                      backgroundColor: const Color(0xFF040268),
+                      textStyle: const TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                        fontFamily: 'Lato',
+                        fontSize: 18,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF040268),
-                    textStyle: TextStyle(
-                      color: const Color.fromRGBO(255, 255, 255, 1),
-                      fontFamily: 'Lato',
-                      fontSize: 18,
-                    )
-      
+                    ),
+                    child: const Text('Fazer uma denúncia'),
                   ),
-                  child: const Text('Fazer uma denúncia'),
                 ),
               )
             ],
