@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:guardiao_app/screens/perfil/contato_emergencia.dart';
@@ -8,33 +10,29 @@ import 'package:guardiao_app/widgets/verifica_autenticacao.dart';
 
 class TelaPerfil extends StatelessWidget {
   TelaPerfil({super.key});
-  /*
 
   final _firebaseAuth = FirebaseAuth.instance;
   String nome = '';
 
+  @override
+  InitState(){
+    pegarUsuario();
+  }
+
   pegarUsuario() async{
     User? usuario = await _firebaseAuth.currentUser;
+
+    // arrumar isso aqui
+    /*
     if(usuario != null){
       setState((){
         nome = usuario.displayName!;
       });
-    }
+    }*/
   }
-  */
-
-/*
-  sair() async{
-    await _firebaseAuth.signOut().then(
-      (user) => Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: VerificaAutenticacao)
-        )
-    );
-  }*/
 
   @override
   Widget build(BuildContext context) {
-    //pegarUsuario();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -92,7 +90,7 @@ class TelaPerfil extends StatelessWidget {
                     height: 18,
                   ),
                   Text(
-                    'nome',
+                    nome,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFFF7F7F6),

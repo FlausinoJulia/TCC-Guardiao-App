@@ -1,14 +1,59 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/models/usuario.dart';
 import 'package:guardiao_app/screens/perfil/perfil.dart';
 import 'package:guardiao_app/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class TelaEditaPerfil extends StatelessWidget {
+class TelaEditaPerfil extends TelaPerfil {
   TelaEditaPerfil({super.key});
 
+  Usuario? userModel;
+
+  File? pickedImage;
+  bool showLocalImage = false;
+
+  pickImageFromDevice() async
+  {
+    XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (file == null) return;
+
+    pickedImage = File(file.path);
+
+    showLocalImage = true;
+    setState((){
+
+    });
+
+    // upload this image to firebase storage
+    ProgressDialog progressDialog = ProgressDialog(
+      context,
+      title: const Text('Uploading!!!'),
+      message: const Text('Please wait'),
+    );
+    progressDialog.show();
+    try{
+      var fileName = userModel!.email! + '.jpg';
+
+      UploadTask uploadTask = FirebaseStorage.instance.ref().child('profile_images').child(fileName).putFile(pickedImage!);
+
+      TaskSnapshot snapshot = await uploadTask;
+
+      String profileImageUrl = await snapshot.ref.getDownloadURL();
+
+      print(profileImageUrl);
+
+      progressDialog.dismiss();
+    }
+    catch(e){
+      progressDialog.dismiss();
+
+    }
+  }
+
+  /*
   final FirebaseStorage storage = FirebaseStorage.instance;
 
   Future<XFile?> getImage() async{
@@ -20,8 +65,10 @@ class TelaEditaPerfil extends StatelessWidget {
   Future<void> upload(String path) async{
     File file = File(path);
     try{
-      String ref = 'images/img-${DateTime.now().toString()}.jpg';
-      await storage.ref(ref).putFile(file);
+      final reference = storage.ref().child("images").child("img-${DateTime.now().toString()}.png");
+      // String ref = 'images/img-${DateTime.now().toString()}.jpg';
+      UploadTask uploadTask =  reference.putFile(file);
+      String download = await (await uploadTask).ref.getDownloadURL();
     } on FirebaseException catch(e){
       throw Exception('Erro no upload: ${e.code}');
     }
@@ -33,8 +80,7 @@ class TelaEditaPerfil extends StatelessWidget {
       await upload(file.path);
     }
   }
-      //String imageUrl = '';
-
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +120,15 @@ class TelaEditaPerfil extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 80,
-                    backgroundImage:
-                        NetworkImage('https://via.placeholder.com/100x100'),
+                    backgroundImage: showLocalImage == false ? NetworkImage(
+                      
+                      userModel!.image == "" ? 'https://static.vecteezy.com/ti/vetor-gratis/p3/3715527-imagem-perfil-icone-masculino-icone-humano-ou-pessoa-sinal-e-simbolo-vetor.jpg'
+                        :
+                        userModel!.image!
+                    ): 
+
+                      FileImage(pickedImage!) as ImageProvider,
+                        //NetworkImage('image'),
                   ),
                   Positioned(
                     child: IconButton(
@@ -84,35 +137,10 @@ class TelaEditaPerfil extends StatelessWidget {
                         color: Colors.white,
                         size: 30,
                       ),
-                      onPressed: pickAndUploadImage
-                      /*async{
-                        ImagePicker imagePicker = ImagePicker();
-                        XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-                        print('${file?.path}');
-
-                        if(file==null) return;
-
-                        // isso aqui não sei se precisa pq é da galeria e não cammera
-                        String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-                        // Get a reference to storage root
-                        Reference referenceRoot = FirebaseStorage.instance.ref();
-                        Reference referenceDirImages = referenceRoot.child('images');
-                      
-                        // reate a reference for the image to be stored
-                        //Reference referenceImageToUpload = referenceDirImages.child('${file?.name}');
-                        Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
-
-                        // Handle errors/sucess
-                        try{
-                          // Store the file
-                          await referenceImageToUpload.putFile(File(file.path));
-                          // Sucess: get the dowload URL
-                          imageUrl = await referenceImageToUpload.getDownloadURL();
-                        }catch(error){
-                          // Some error ocurred
-                        }
-                      },*/
+                      onPressed: (){
+                        pickImageFromDevice();
+                      }
+                      //pickAndUploadImage
                     ),
                     bottom: -10,
                     left: 108,

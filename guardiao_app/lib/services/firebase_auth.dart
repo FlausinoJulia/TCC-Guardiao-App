@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 
 String? getUid() {
   return FirebaseAuth.instance.currentUser?.uid;
@@ -50,3 +52,13 @@ Future<bool> login(String email, String senha, BuildContext context) async {
 Future<void> logout() async {
   await FirebaseAuth.instance.signOut();
 }
+
+//var myUser = Usuario().obs;
+
+/*
+getUserInfo() {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  FirebaseFirestore.instance.collection('usuarios').doc(uid).snapshots().listen((event) {
+
+   });
+}*/

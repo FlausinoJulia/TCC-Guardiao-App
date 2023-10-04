@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/screens/menu.dart';
+import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/screens/cadastro/cadastro_1.dart';
 
@@ -134,7 +135,7 @@ class _TelaLoginState extends State<TelaLogin> {
                         {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => const Menu()
+                              builder: (context) => TelaEditaPerfil()
                             ),
                           );
                         }
