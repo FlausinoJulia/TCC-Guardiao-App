@@ -79,7 +79,7 @@ class _OpenStreetMapSearchAndPickState
   bool estaVisivel = false;
   bool iniciandoViagem = false;
   List<LatLng> coordenadasDaRota = [];
-  List<Marker> marcadores = [];
+  //List<Marker> marcadores = [];
   
   //Marker marcadorDestino = Marker(point: LatLng(0,0), builder: (context) => const Icon(Icons.abc, size: 0,));
   //late Marker marcadorLocAtual;

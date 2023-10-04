@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/widgets/card_denuncia.dart';
 
+import 'fazendo_denuncia.dart';
+
 class TelaDenuncias extends StatefulWidget {
   const TelaDenuncias({super.key});
 
@@ -66,7 +68,9 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const TelaFazendoDenuncia()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width, 20.0),
@@ -79,7 +83,6 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                    
                     ),
                     child: const Text('Fazer uma denúncia'),
                   ),
