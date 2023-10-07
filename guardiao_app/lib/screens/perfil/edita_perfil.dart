@@ -1,136 +1,85 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/models/usuario.dart';
-import 'package:guardiao_app/screens/perfil/perfil.dart';
 import 'package:guardiao_app/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class TelaEditaPerfil extends TelaPerfil {
-  TelaEditaPerfil({super.key});
+class TelaEditaPerfil extends StatefulWidget {
+  final Usuario? dadosUsuario;
+  const TelaEditaPerfil({super.key, required this.dadosUsuario});
 
-  Usuario? userModel;
+  @override
+  State<TelaEditaPerfil> createState() => _TelaEditaPerfilState();
+}
 
-  File? pickedImage;
-  bool showLocalImage = false;
+class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
 
-  pickImageFromDevice() async
-  {
-    XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (file == null) return;
-
-    pickedImage = File(file.path);
-
-    showLocalImage = true;
-    setState((){
-
-    });
-
-    // upload this image to firebase storage
-    ProgressDialog progressDialog = ProgressDialog(
-      context,
-      title: const Text('Uploading!!!'),
-      message: const Text('Please wait'),
-    );
-    progressDialog.show();
-    try{
-      var fileName = userModel!.email! + '.jpg';
-
-      UploadTask uploadTask = FirebaseStorage.instance.ref().child('profile_images').child(fileName).putFile(pickedImage!);
-
-      TaskSnapshot snapshot = await uploadTask;
-
-      String profileImageUrl = await snapshot.ref.getDownloadURL();
-
-      print(profileImageUrl);
-
-      progressDialog.dismiss();
+  pickAndUploadImage() async {
+    XFile? file = await pickImage();
+    if (file != null) {
+      await uploadImagem(file.path, widget.dadosUsuario!);
     }
-    catch(e){
-      progressDialog.dismiss();
-
-    }
+    setState(() {});
   }
 
-  /*
-  final FirebaseStorage storage = FirebaseStorage.instance;
-
-  Future<XFile?> getImage() async{
-    final ImagePicker _picker = ImagePicker();
-    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    return image;
-  }
-
-  Future<void> upload(String path) async{
-    File file = File(path);
-    try{
-      final reference = storage.ref().child("images").child("img-${DateTime.now().toString()}.png");
-      // String ref = 'images/img-${DateTime.now().toString()}.jpg';
-      UploadTask uploadTask =  reference.putFile(file);
-      String download = await (await uploadTask).ref.getDownloadURL();
-    } on FirebaseException catch(e){
-      throw Exception('Erro no upload: ${e.code}');
+  Future<Widget> loadProfileImage() async {
+    if (widget.dadosUsuario != null && widget.dadosUsuario!.imagem != "") {
+      final imagemUrl = widget.dadosUsuario!.imagem;
+      final imagem = await FirebaseStorage.instance.ref(imagemUrl).getDownloadURL();
+      return CircleAvatar(
+        radius: 80,
+        backgroundImage:  NetworkImage(imagem),
+      );
+    } else {
+      return const CircleAvatar(
+        radius: 80,
+        backgroundImage: NetworkImage("https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"),
+      );
     }
   }
-
-  pickAndUploadImage() async{
-    XFile? file = await getImage();
-    if (file != null){
-      await upload(file.path);
-    }
-  }
-  */
 
   @override
   Widget build(BuildContext context) {
-    //String imageUrl = '';
     return Scaffold(
         backgroundColor: const Color(0xFF040268),
         body: Center(
           child: Column(
             children: [
-              SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20,),
               Row(
                 children: [
-                  SizedBox(
-                    width: 20,
-                  ),
+                  const SizedBox(width: 20,),
                   IconButton(
                     icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TelaPerfil(),
-                          ));
+                      Navigator.of(context).pop();
                     },
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 150,
               ),
               Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundImage: showLocalImage == false ? NetworkImage(
-                      
-                      userModel!.image == "" ? 'https://static.vecteezy.com/ti/vetor-gratis/p3/3715527-imagem-perfil-icone-masculino-icone-humano-ou-pessoa-sinal-e-simbolo-vetor.jpg'
-                        :
-                        userModel!.image!
-                    ): 
-
-                      FileImage(pickedImage!) as ImageProvider,
-                        //NetworkImage('image'),
+                  FutureBuilder<Widget>(
+                    future: loadProfileImage(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return snapshot.data!;
+                      }
+                    },
                   ),
                   Positioned(
+                    bottom: -10,
+                    left: 108,
                     child: IconButton(
                       icon: const Icon(
                         Icons.camera_alt,
@@ -138,19 +87,17 @@ class TelaEditaPerfil extends TelaPerfil {
                         size: 30,
                       ),
                       onPressed: (){
-                        pickImageFromDevice();
+                        pickAndUploadImage();
+                        setState(() {});
                       }
-                      //pickAndUploadImage
                     ),
-                    bottom: -10,
-                    left: 108,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 'Alterar foto',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -161,40 +108,38 @@ class TelaEditaPerfil extends TelaPerfil {
                   height: 0,
                 ),
               ),
-              SizedBox(
-                height: 32,
-              ),
+              const SizedBox(height: 32,),
               Container(
                 width: 273,
                 height: 50,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2, color: Color(0xFFD9D9D9)),
+                    side: const BorderSide(width: 2, color: Color(0xFFD9D9D9)),
                     borderRadius: BorderRadius.circular(40),
                   ),
                 ),
-                child: TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.edit_document,
-                    color: Colors.white,
-                    size: 25.0,
-                  ),
-                  label: const Text(
-                    "Maria Luiza Pereira",
-                    style: TextStyle(
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.edit_document,
                       color: Colors.white,
-                      fontFamily: 'Lato',
-                      fontSize: 16,
-                      //fontWeight: FontWeight.medium
+                      size: 25.0,
+                    ),
+                    label: Text(
+                      widget.dadosUsuario!.nome,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Lato',
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
+              const SizedBox(height: 20,),
+              const Text(
                 'Editar informações pessoais',
                 textAlign: TextAlign.center,
                 style: TextStyle(

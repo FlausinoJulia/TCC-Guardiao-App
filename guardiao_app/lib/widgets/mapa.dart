@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:guardiao_app/db/firestore.dart';
-import 'package:guardiao_app/screens/boas_vindas.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/services/route_api.dart';
 import 'package:http/http.dart' as http;
@@ -271,13 +270,7 @@ class _OpenStreetMapSearchAndPickState
                   ),
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      logout();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const TelaBoasVindas(), 
-                        ),
-                      );
+                      
                     }, 
                     icon: const Icon(
                       CustomIcons.visivel, 

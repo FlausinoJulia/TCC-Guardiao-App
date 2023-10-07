@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardiao_app/screens/perfil/perfil.dart';
 
 class TelaInformacoesPessoais extends StatelessWidget {
   const TelaInformacoesPessoais({super.key});
@@ -8,83 +7,77 @@ class TelaInformacoesPessoais extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 20,
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 20,
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color:  Color(0xFF040268),
                 ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: const Color(0xFF040268),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TelaPerfil(),
-                          ));
-                  },
-                ),
-                SizedBox(
-                  width: 40,
-                ),
-                Text(
-                  'Informações Pessoais',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              width: 300,
-              height: 100,
-              child: Text(
-                'Essas são as suas informações pessoais, elas não ficam visíveis no seu perfil.',
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              const SizedBox(
+                width: 40,
+              ),
+              const Text(
+                'Informações Pessoais',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                   fontFamily: 'Lato',
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w500,
                   height: 0,
                 ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          const SizedBox(
+            width: 300,
+            height: 100,
+            child: Text(
+              'Essas são as suas informações pessoais, elas não ficam visíveis no seu perfil.',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontFamily: 'Lato',
+                fontWeight: FontWeight.w300,
+                height: 0,
               ),
             ),
-            Container(
-              width: 309,
-              height: 278,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                shadows: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 10,
-                    offset: Offset(0, 3),
-                    spreadRadius: 0,
-                  )
-                ],
+          ),
+          Container(
+            width: 309,
+            height: 278,
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
               ),
+              shadows: [
+                BoxShadow(
+                  color: Color(0x3F000000),
+                  blurRadius: 10,
+                  offset: Offset(0, 3),
+                  spreadRadius: 0,
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       /* 
           Positioned(

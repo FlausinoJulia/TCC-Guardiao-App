@@ -8,8 +8,18 @@ import 'package:guardiao_app/screens/menu.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 
 class TelaCadastro2 extends StatefulWidget {
-  final Usuario dadosUsuario;
-  const TelaCadastro2({super.key, required this.dadosUsuario});
+  final String nome;
+  final String email;
+  final String senha;
+  final String numero;
+
+  const TelaCadastro2({
+    super.key, 
+    required this.nome, 
+    required this.email,
+    required this.senha,
+    required this.numero,
+  });
 
   @override
   State<TelaCadastro2> createState() => _TelaCadastro2State();
@@ -385,29 +395,36 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
                         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
                         child: ElevatedButton(
                           onPressed: () async {
-                            // adicionar lista de contatos no user
-                            salvarListaDeContatos();
-
-                            widget.dadosUsuario.estaDisponivel = true;
+                            // gerar lista de contatos do usuario para salvar no firestore
+                            List<Map<String, dynamic>> contatosDeEmergencia = gerarListaDeContatos();
           
                             // adicionando usuario no firebase auth
-                            await cadastrar(widget.dadosUsuario.email!, widget.dadosUsuario.senha!, context); 
+                            await cadastrar(widget.email, widget.senha, context); 
 
                             String? uid = getUid();
                             if (uid != null && context.mounted)
                             {
-                              widget.dadosUsuario.uid = uid;
-                              bool vaiNavegar = await Firestore.criarUsuario(widget.dadosUsuario);
+                              Usuario usuario = Usuario(
+                                uid: uid, 
+                                nome: widget.nome, 
+                                email: widget.email, 
+                                senha: widget.senha, 
+                                numero: widget.numero, 
+                                contatosDeEmergencia: contatosDeEmergencia, 
+                                imagem: ""
+                              );
+                              
+                              bool vaiNavegar = await Firestore.criarUsuario(usuario);
                               if(vaiNavegar && context.mounted) {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(builder: (context) => const Menu())
                                 );
                               }
                               else {
-                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
+                                if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
                               }
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
+                              if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -466,7 +483,7 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
     );
   }
   
-  void salvarListaDeContatos() {
+  List<Map<String, dynamic>> gerarListaDeContatos() {
     List<Map<String, dynamic>> contatos = [];
 
     Contato contatoUm = Contato(
@@ -488,6 +505,6 @@ class _TelaCadastro2State extends State<TelaCadastro2> {
     contatos.add(contatoTres.toFirestore());
 
 
-    widget.dadosUsuario.contatosDeEmergencia = contatos;
+    return contatos;
   }
 }

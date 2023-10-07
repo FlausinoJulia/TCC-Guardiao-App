@@ -13,7 +13,6 @@ class TelaDenuncias extends StatefulWidget {
 }
 
 class _TelaDenunciasState extends State<TelaDenuncias> {
-  //late List<Denuncia> denuncias;
 
   @override
   Widget build(BuildContext context) {

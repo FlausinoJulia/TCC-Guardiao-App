@@ -5,7 +5,6 @@ import 'package:guardiao_app/models/usuario.dart';
 import '../services/firebase_auth.dart';
 
 class Firestore {
-
   // adiciona um novo usuário no bd
   static Future<bool> criarUsuario(Usuario usuario) async {
     FirebaseFirestore.instance
@@ -32,6 +31,26 @@ class Firestore {
       .onError((error, stackTrace) => false);
       return false;
   }
+
+  static Future<Usuario?> getUsuarioAtual() async {
+    String? uid = getUid();
+    if (uid != null) {
+      final ref = FirebaseFirestore.instance.collection('usuarios').doc(uid).withConverter(
+        fromFirestore: Usuario.fromFirestore, 
+        toFirestore: (Usuario usuario, _) => usuario.toFirestore(),
+      );
+
+      final docSnap = await ref.get();
+
+      final usuario = docSnap.data();
+    
+      return usuario;    
+    }
+    else {
+      return null;
+    }
+  }
+  
 
   static Future<Usuario?> getUsuario(String uid) async {
     final ref = FirebaseFirestore.instance.collection('usuarios').doc(uid).withConverter(

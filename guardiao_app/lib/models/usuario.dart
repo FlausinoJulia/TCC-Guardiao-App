@@ -1,26 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Usuario {
-  String? uid; 
-  String? nome;
-  String? email;
-  String? senha;
-  String? numero;
-  String? image;
-  bool? estaDisponivel;
+  String uid; 
+  String nome;
+  String email;
+  String senha;
+  String numero;
+  String imagem;
+  //bool estaDisponivel;
   List<Map<String, dynamic>>? contatosDeEmergencia;
-  GeoPoint? locAtual;
+  //GeoPoint locAtual;
 
   Usuario ({
-    this.uid,
-    this.nome, 
-    this.email, 
-    this.senha, 
-    this.numero, 
-    this.contatosDeEmergencia,
-    this.estaDisponivel,
-    this.locAtual,
-    this.image,
+    required this.uid,
+    required this.nome, 
+    required this.email, 
+    required this.senha, 
+    required this.numero, 
+    required this.contatosDeEmergencia,
+    //this.estaDisponivel,
+    //this.locAtual,
+    required this.imagem,
   });
 
   factory Usuario.fromFirestore(
@@ -34,25 +34,25 @@ class Usuario {
       email: data?['email'], 
       senha: data?['senha'], 
       numero: data?['numero'], 
-      image: data?['image'],
-      estaDisponivel: data?['estaDisponivel'],
+      imagem: data?['imagem'],
+      // estaDisponivel: data['estaDisponivel'],
       contatosDeEmergencia: 
         data?['contatosDeEmergencia'] is Iterable? List.from(data?['contatosDeEmergencia']) : null, 
-      locAtual: data?['locAtual'],
+      //locAtual: data?['locAtual'],
     );
   }  
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (uid != null) "uid": uid,
-      if (nome != null) "nome": nome, 
-      if (email != null) "email": email,
-      if (senha != null) "senha": senha,
-      if (numero != null) "numero": numero,
-      if (estaDisponivel != null) "estaDisponivel": estaDisponivel,
-      if (contatosDeEmergencia != null) "contatosDeEmergencia": contatosDeEmergencia,
-      if (locAtual != null) "locAtual": locAtual,       
-      if (image != null) "image": image,                                                 
+      "uid": uid,
+      "nome": nome, 
+      "email": email,
+      "senha": senha,
+      "numero": numero,
+      //"estaDisponivel": estaDisponivel,
+      "contatosDeEmergencia": contatosDeEmergencia,
+      //"locAtual": locAtual,       
+      "imagem": imagem,                                                 
     };
   }
 }

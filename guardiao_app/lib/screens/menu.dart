@@ -21,7 +21,7 @@ class _MenuState extends State<Menu> {
     const TelaInicial(),
     const TelaDenuncias(),
     const TelaAlarme(),
-    TelaPerfil(),
+    const TelaPerfil(),
   ];
   
   @override
@@ -32,7 +32,7 @@ class _MenuState extends State<Menu> {
         index: indiceMenu,
         children: telas
       ),
-      bottomNavigationBar:  ClipRRect(
+      bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.only (
             topLeft:Radius.circular(15.0),
             topRight: Radius.circular(15.0),

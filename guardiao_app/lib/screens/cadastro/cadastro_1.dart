@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:guardiao_app/models/usuario.dart';
 //import 'package:guardiao_app/screens/inicio.dart';
 import 'package:guardiao_app/screens/login.dart';
 
@@ -15,7 +14,6 @@ class TelaCadastro extends StatefulWidget {
 
 class _TelaCadastroState extends State<TelaCadastro> {
   final _formKey = GlobalKey<FormState>();
-  Usuario usuario = Usuario();
   final nomeController = TextEditingController();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
@@ -253,15 +251,15 @@ class _TelaCadastroState extends State<TelaCadastro> {
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            usuario.nome = nomeController.text.toString().trim();
-                            usuario.email = emailController.text.toString().trim();
-                            usuario.senha = senhaController.text.toString().trim();
-                            usuario.numero = numeroController.text.toString().trim();
+                            String nome = nomeController.text.toString().trim();
+                            String email = emailController.text.toString().trim();
+                            String senha = senhaController.text.toString().trim();
+                            String numero = numeroController.text.toString().trim();
 
                             //bool vaiNavegar = await cadastrar(usuario.email!, usuario.senha!, context);
                             //usuario.uid = getUid();
                             Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => TelaCadastro2(dadosUsuario: usuario))
+                              MaterialPageRoute(builder: (context) => TelaCadastro2(nome: nome, email: email, senha: senha, numero: numero))
                             );
                           }
                         },
