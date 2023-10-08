@@ -1,8 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:guardiao_app/db/firestore.dart';
+import 'package:guardiao_app/models/denuncia.dart';
+import 'package:guardiao_app/screens/denuncias/denuncias.dart';
+import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/widgets/mapa.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
@@ -239,13 +244,39 @@ class _TelaFazendoDenunciaState extends State<TelaFazendoDenuncia> {
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                           ),
                           maxLines: 8,
-                          minLines: 6,
+                          minLines: 8,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: ElevatedButton(
-                          onPressed: () {}, 
+                          onPressed: () async {
+                            if (local != LatLng(0,0) && _localizacaoController.text.isNotEmpty && _descricaoController.text.isNotEmpty) {
+                              // gravar denuncia no firestore
+                              String? uid = getUid();
+                              GeoPoint coordenadas = GeoPoint(local.latitude, local.longitude);
+
+                              if (uid != null) {
+                                Denuncia denuncia = Denuncia(uid: uid, local: coordenadas, endereco: _localizacaoController.text, descricao: _descricaoController.text);
+                                bool sucesso = await Firestore.salvarDenuncia(denuncia);
+
+                                if (sucesso && context.mounted) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) => const TelaDenuncias())
+                                  );
+                                }
+                                else {
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erro ao fazer denúncia! Tente novamente.')));
+                                }
+                              }
+                              else {
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erro ao fazer denúncia! Tente novamente.')));
+                              }
+                            }
+                            else {
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor, preencha todos os campos!')));
+                            }
+                          }, 
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size(MediaQuery.of(context).size.width, 60.0),
                             backgroundColor: const Color(0xFF040268),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
+import 'package:guardiao_app/models/usuario.dart';
 import 'package:guardiao_app/widgets/card_denuncia.dart';
 
 import 'fazendo_denuncia.dart';
@@ -46,15 +47,33 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
                     );
                   }
                   else {
-                    return Expanded(
+                    return  Expanded(
                       child: ListView(
-                        children: snapshot.data!.docs.map((document) {
-                          return CardDenuncia(
-                            nomeUsuario: document['nomeUsuario'], 
-                            descricao: document['descricao'],
-                          );
-                        }).toList(),
-                      ),
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            children: snapshot.data!.docs.map((document) {
+                              return FutureBuilder<Usuario?> (
+                                future: Firestore.getUsuario(document['uid']),
+                                builder: (BuildContext context, AsyncSnapshot<Usuario?> userSnapshot) {
+                                  if (userSnapshot.connectionState == ConnectionState.waiting) {
+                                    return const Center(child: CircularProgressIndicator());
+                                  //} else if (!userSnapshot.hasData){
+                                  //   return const Center(child: Text("Usuário não encontrado."));
+                                  } else {
+                                    return CardDenuncia(
+                                      nomeUsuario: userSnapshot.data!.nome,
+                                      descricao: document['descricao'],
+                                      fotoUsuario: userSnapshot.data!.imagem
+                                    );
+                                  } 
+                                }
+                              );
+                              // return CardDenuncia(
+                              //   nomeUsuario: document['nomeUsuario'], 
+                              //   descricao: document['descricao'],
+                              // );
+                            }).toList(),
+                          ),
                     );
                   }
                 },

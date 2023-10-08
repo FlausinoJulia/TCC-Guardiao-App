@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geo_firestore_flutter/geo_firestore_flutter.dart';
+import 'package:guardiao_app/models/denuncia.dart';
 import 'package:guardiao_app/models/usuario.dart';
 
 import '../services/firebase_auth.dart';
@@ -101,5 +102,14 @@ class Firestore {
   // denuncias  
   static Stream<QuerySnapshot<Map<String, dynamic>>> getDenuncias() {
     return FirebaseFirestore.instance.collection('denuncias').snapshots();
+  }
+
+  static Future<bool> salvarDenuncia(Denuncia denuncia) async {
+    FirebaseFirestore.instance
+      .collection('denuncias')
+      .add(denuncia.toFirestore())
+      .then((value) => true)
+      .catchError((error) => false);
+      return true;
   }
 }

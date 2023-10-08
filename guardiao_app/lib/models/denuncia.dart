@@ -1,15 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Denuncia {
-  String nomeUsuario;
-  String fotoUsuario;
+  String uid;
+  // String nomeUsuario;
+  // String fotoUsuario;
   GeoPoint local;
+  String endereco;
   String descricao;
 
   Denuncia ({
-    required this.nomeUsuario,
-    required this.fotoUsuario,
+    required this.uid,
+    // required this.nomeUsuario,
+    // required this.fotoUsuario,
     required this.local,
+    required this.endereco,
     required this.descricao,
   });
 
@@ -19,18 +23,22 @@ class Denuncia {
   ) {
     final data = snapshot.data();
     return Denuncia(
-      nomeUsuario: data?['nomeUsuario'], 
-      fotoUsuario: data?['fotoUsuario'], 
+      uid: data?['uid'],
+      // nomeUsuario: data?['nomeUsuario'], 
+      // fotoUsuario: data?['fotoUsuario'], 
       local: data?['local'], 
+      endereco: data?['endereco'],
       descricao: data?['descricao'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
-      "nomeUsuario": nomeUsuario,
-      "fotoUsuario": fotoUsuario,
+      "uid": uid,
+      // "nomeUsuario": nomeUsuario,
+      // "fotoUsuario": fotoUsuario,
       "local": local,
+      "endereco": endereco,
       "descricao": descricao,
     };
   }
