@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:guardiao_app/screens/cadastro/cadastro_1.dart';
-import 'package:guardiao_app/screens/login.dart';
+import 'package:guardiao_app/screens/login/login.dart';
 
 class TelaBoasVindas extends StatelessWidget {
   final String rota = '/boas-vindas';

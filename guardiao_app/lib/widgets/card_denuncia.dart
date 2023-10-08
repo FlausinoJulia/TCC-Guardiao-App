@@ -1,17 +1,18 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/models/denuncia.dart';
 import 'package:guardiao_app/screens/denuncias/visualiza_denuncia.dart';
 
 class CardDenuncia extends StatefulWidget {
   const CardDenuncia({
     super.key,
+    required this.denuncia,
     required this.nomeUsuario,
-    required this.descricao,
     required this.fotoUsuario,
   });
 
+  final Denuncia denuncia;
   final String nomeUsuario;
-  final String descricao;
   final String fotoUsuario;
 
   @override
@@ -48,7 +49,7 @@ class _CardDenunciaState extends State<CardDenuncia> {
       padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const TelaVisualizandoDenuncia()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoDenuncia(denuncia: widget.denuncia)));
         },
         child: Container(
           constraints: const BoxConstraints(
@@ -118,13 +119,13 @@ class _CardDenunciaState extends State<CardDenuncia> {
                     Flexible(
                       child: RichText(
                         text: TextSpan (
-                          text: (widget.descricao.length > 170) ? widget.descricao.substring(0, 165).trimRight() : widget.descricao,
+                          text: (widget.denuncia.descricao.length > 170) ? widget.denuncia.descricao.substring(0, 165).trimRight() : widget.denuncia.descricao,
                           style: const TextStyle(
                             fontFamily: 'Lato',
                             fontSize: 18.0,
                           ),
                           children: <TextSpan>[
-                            if (widget.descricao.length > 170) 
+                            if (widget.denuncia.descricao.length > 170) 
                               const TextSpan(text: "... ver mais", style: TextStyle(
                                 fontFamily: 'Lato',
                                 fontSize: 18.0,

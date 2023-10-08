@@ -2,7 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/usuario.dart';
-import 'package:guardiao_app/screens/boas_vindas.dart';
+import 'package:guardiao_app/screens/boas_vindas/boas_vindas.dart';
 import 'package:guardiao_app/screens/perfil/contato_emergencia.dart';
 import 'package:guardiao_app/screens/perfil/edita_info_pessoal.dart';
 import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
@@ -82,7 +82,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 FutureBuilder<Widget>(
@@ -97,44 +97,26 @@ class _TelaPerfilState extends State<TelaPerfil> {
                     }
                   },
                 ),
-                /*
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: ShapeDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            "https://via.placeholder.com/100x100"),
-                        fit: BoxFit.fill,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100))),
-                ),
-                */
-                SizedBox(
+                const SizedBox(
                   height: 18,
                 ),
                 Text(
                   usuario == null ? "" : usuario!.nome,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFFF7F7F6),
                     fontSize: 18,
                     fontFamily: 'Lato',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 18,
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      minimumSize: Size(210, 45),
-                      //fixedSize:
-                          //Size(MediaQuery.of(context).size.longestSide, 50.0),
-                      // padding: const EdgeInsets.all(2),
+                      minimumSize: const Size(210, 45),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12))),
                   onPressed: () {
@@ -157,13 +139,13 @@ class _TelaPerfilState extends State<TelaPerfil> {
                 ),
               ])),
         ]),
-        SizedBox(
+        const SizedBox(
           height: 32,
         ),
         Align(
           child: Row(
             children: [
-              SizedBox(width: 35,),
+              const SizedBox(width: 35,),
               TextButton.icon(
                 onPressed: () {
                   Navigator.push(
@@ -188,7 +170,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
           Align(
             child: Row(
               children: [
-                SizedBox(width: 35,),
+                const SizedBox(width: 35,),
                 TextButton.icon(
                 onPressed: () {
                   Navigator.push(
@@ -213,7 +195,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
           Align(
             child: Row(
               children: [
-                SizedBox(width: 35,),
+                const SizedBox(width: 35,),
                 TextButton.icon(
                 onPressed: (){
                   logout();
@@ -234,7 +216,6 @@ class _TelaPerfilState extends State<TelaPerfil> {
                     color: Colors.red,
                     fontFamily: 'Lato',
                     fontSize: 18,
-                    //fontWeight: FontWeight.medium
                   ),
                 ),
               ),

@@ -78,16 +78,15 @@ class _OpenStreetMapSearchAndPickState
   bool estaVisivel = false;
   bool iniciandoViagem = false;
   List<LatLng> coordenadasDaRota = [];
-  //List<Marker> marcadores = [];
-  
-  //Marker marcadorDestino = Marker(point: LatLng(0,0), builder: (context) => const Icon(Icons.abc, size: 0,));
-  //late Marker marcadorLocAtual;
 
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _destinyController = TextEditingController();
   
   final FocusNode _focusNode = FocusNode();
   final FocusNode _destinyFocusNode = FocusNode();
+
+  bool exibirZonasDePerigo = false;
+  List<LatLng> zonasDePerigo = [];
 
   // coordenadas de local
   double latLocal = 0;
@@ -176,8 +175,6 @@ class _OpenStreetMapSearchAndPickState
       }
     });
 
-    //marcadorLocAtual = Marker();
-
     super.initState();
   }
 
@@ -240,7 +237,21 @@ class _OpenStreetMapSearchAndPickState
                           color: Colors.red,
                           size: 30,
                         ),
-                      ),                    
+                      ),                 
+                  ],
+                ),
+                CircleLayer(
+                  circles: [
+                    if (zonasDePerigo.isNotEmpty && exibirZonasDePerigo) 
+                    for (int i = 0; i < zonasDePerigo.length; i++) 
+                      CircleMarker(
+                        point: zonasDePerigo[i],
+                        radius: 25.0,
+                        useRadiusInMeter: true,
+                        color: const Color.fromARGB(87, 244, 67, 54),
+                        borderColor: Colors.red,
+                        borderStrokeWidth: 1.0,
+                      ),   
                   ],
                 ),
               ],
@@ -262,15 +273,17 @@ class _OpenStreetMapSearchAndPickState
             Positioned(
                 top: 180.0,
                 right: 20.0,
-                child: Container(
+                child: exibirZonasDePerigo == false ? Container(
                   width: 200.0,
                   height: 35.0,
                   decoration: const BoxDecoration(
                     borderRadius:  BorderRadius.all(Radius.circular(10.0)),
                   ),
                   child: ElevatedButton.icon(
-                    onPressed: () {
-                      
+                    onPressed: () async {
+                      exibirZonasDePerigo = true;
+                      zonasDePerigo = await Firestore.getPontosDePerigo();
+                      setState(() {});
                     }, 
                     icon: const Icon(
                       CustomIcons.visivel, 
@@ -286,6 +299,24 @@ class _OpenStreetMapSearchAndPickState
                     ),
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.white,),
                   ),
+                ) : Container (
+                  width: 35.0,
+                  height: 35.0,
+                  decoration: const BoxDecoration(
+                    borderRadius:  BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  child: TextButton(
+                      onPressed: () {
+                        exibirZonasDePerigo = false;
+                        setState(() {});
+                      }, 
+                      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFDC7171),), 
+                      child: const Icon(
+                        CustomIcons.invisivel, 
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
+                    ),
                 ),
               ),
       
@@ -577,42 +608,46 @@ class _OpenStreetMapSearchAndPickState
                                       if (grupo.isEmpty) {
                                         
                                       } else {
-                                        showModalBottomSheet(
-                                          context: context, 
-                                          builder: (context) {
-                                            return Container(
-                                               width: MediaQuery.of(context).size.width,
-                                               decoration: const BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(10.0),
-                                                    topRight: Radius.circular(10.0),
+                                        if (context.mounted)
+                                        {
+
+                                          showModalBottomSheet(
+                                            context: context, 
+                                            builder: (context) {
+                                              return Container(
+                                                width: MediaQuery.of(context).size.width,
+                                                decoration: const BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(10.0),
+                                                      topRight: Radius.circular(10.0),
+                                                    ),
                                                   ),
-                                                ),
-                                               child: Column(
-                                                  children: [
-                                                    const Text("Essas pessoas estão indo para o mesmo lugar que você:"),
-                                                    ListView.builder(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      itemCount: grupo.length,
-                                                      itemBuilder: (BuildContext context, int indice) {
-                                                        return Row (
-                                                          children: [
-                                                            // foto
-                                                            Text("Nome do usuário: $grupo[indice]" ) // pegar o nome através do uid
-                                                          ],
-                                                        );
-                                                      },
-                                                    ),
-                                                    ElevatedButton(
-                                                      onPressed: () {},
-                                                      child: const Text("Formar grupo"),
-                                                    ),
-                                                  ],
-                                                ),
-                                            );
-                                          },
-                                        );
+                                                child: Column(
+                                                    children: [
+                                                      const Text("Essas pessoas estão indo para o mesmo lugar que você:"),
+                                                      ListView.builder(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        itemCount: grupo.length,
+                                                        itemBuilder: (BuildContext context, int indice) {
+                                                          return Row (
+                                                            children: [
+                                                              // foto
+                                                              Text("Nome do usuário: $grupo[indice]" ) // pegar o nome através do uid
+                                                            ],
+                                                          );
+                                                        },
+                                                      ),
+                                                      ElevatedButton(
+                                                        onPressed: () {},
+                                                        child: const Text("Formar grupo"),
+                                                      ),
+                                                    ],
+                                                  ),
+                                              );
+                                            },
+                                          );
+                                        }
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(

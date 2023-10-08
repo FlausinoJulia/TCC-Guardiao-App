@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/presentation/custom_icons_icons.dart';
 
-import 'inicio.dart';
-import 'alarme/alarme.dart';
-import 'denuncias/denuncias.dart';
-import 'perfil/perfil.dart';
+import '../screens/inicio/inicio.dart';
+import '../screens/alarme/alarme.dart';
+import '../screens/denuncias/denuncias.dart';
+import '../screens/perfil/perfil.dart';
 
 
 class Menu extends StatefulWidget {

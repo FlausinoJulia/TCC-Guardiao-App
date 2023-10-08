@@ -13,8 +13,6 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
-  //late double longitude;
-  //late double latitude;
 
   Future<Position> getLocalizacaoAtual() async {
 
@@ -54,7 +52,6 @@ class _TelaInicialState extends State<TelaInicial> {
           return const Center(child: CircularProgressIndicator(),); 
         } else if (snapshot.hasError) { // nao foi permitida a localizacao
           // If an error occurred, display an error message
-          //return Text('Error: ${snapshot.error}');
           return Scaffold(
             body: OpenStreetMapSearchAndPick(
               center: const LatLong(-22.90207936673223, -47.066738940426944),

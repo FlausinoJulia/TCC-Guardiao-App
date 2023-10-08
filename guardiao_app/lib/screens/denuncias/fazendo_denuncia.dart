@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/denuncia.dart';
-import 'package:guardiao_app/screens/denuncias/denuncias.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/widgets/mapa.dart';
 import 'package:latlong2/latlong.dart';
@@ -261,12 +260,10 @@ class _TelaFazendoDenunciaState extends State<TelaFazendoDenuncia> {
                                 bool sucesso = await Firestore.salvarDenuncia(denuncia);
 
                                 if (sucesso && context.mounted) {
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(builder: (context) => const TelaDenuncias())
-                                  );
+                                  Navigator.of(context).pop();
                                 }
                                 else {
-                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erro ao fazer denúncia! Tente novamente.')));
+                                  if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Erro ao fazer denúncia! Tente novamente.')));
                                 }
                               }
                               else {

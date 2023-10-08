@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geo_firestore_flutter/geo_firestore_flutter.dart';
 import 'package:guardiao_app/models/denuncia.dart';
 import 'package:guardiao_app/models/usuario.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../services/firebase_auth.dart';
 
@@ -105,11 +106,36 @@ class Firestore {
   }
 
   static Future<bool> salvarDenuncia(Denuncia denuncia) async {
+    await adicionarPontoDePerigo(denuncia.local);
     FirebaseFirestore.instance
       .collection('denuncias')
       .add(denuncia.toFirestore())
       .then((value) => true)
       .catchError((error) => false);
       return true;
+  }
+
+  // zonas de perigo
+  static Future<void> adicionarPontoDePerigo(GeoPoint geoPoint) async {
+    await FirebaseFirestore.instance
+      .collection('pontos_de_perigo')
+      .add({'coordenada': geoPoint})
+      .then((value) => true)
+      .catchError((error) => false);
+  }
+
+  static Future<List<LatLng>> getPontosDePerigo() async {
+    List<LatLng> zonasDePerigo = [];
+
+    final snapshot = await FirebaseFirestore.instance.collection('pontos_de_perigo').get();
+    for (QueryDocumentSnapshot document in snapshot.docs) {
+      GeoPoint geoPoint = document['coordenada'] as GeoPoint;
+      double latitude = geoPoint.latitude;
+      double longitude = geoPoint.longitude;
+      LatLng latLng = LatLng(latitude, longitude);
+      zonasDePerigo.add(latLng);
+    }
+
+    return zonasDePerigo;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
+import 'package:guardiao_app/models/denuncia.dart';
 import 'package:guardiao_app/models/usuario.dart';
 import 'package:guardiao_app/widgets/card_denuncia.dart';
 
@@ -41,9 +42,11 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  else if (!snapshot.hasData) {
-                    return const Center (
-                      child: Text("Nenhuma denúncia encontrada."),
+                  else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Expanded(
+                      child: Center (
+                        child: Text("Nenhuma denúncia encontrada..."),
+                      ),
                     );
                   }
                   else {
@@ -57,21 +60,20 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
                                 builder: (BuildContext context, AsyncSnapshot<Usuario?> userSnapshot) {
                                   if (userSnapshot.connectionState == ConnectionState.waiting) {
                                     return const Center(child: CircularProgressIndicator());
-                                  //} else if (!userSnapshot.hasData){
-                                  //   return const Center(child: Text("Usuário não encontrado."));
                                   } else {
+                                    final denuncia = Denuncia.fromFirestore(
+                                      document as DocumentSnapshot<Map<String, dynamic>>,
+                                      null
+                                    );
                                     return CardDenuncia(
+                                      denuncia: denuncia,
                                       nomeUsuario: userSnapshot.data!.nome,
-                                      descricao: document['descricao'],
+                                      //descricao: document['descricao'],
                                       fotoUsuario: userSnapshot.data!.imagem
                                     );
                                   } 
                                 }
                               );
-                              // return CardDenuncia(
-                              //   nomeUsuario: document['nomeUsuario'], 
-                              //   descricao: document['descricao'],
-                              // );
                             }).toList(),
                           ),
                     );

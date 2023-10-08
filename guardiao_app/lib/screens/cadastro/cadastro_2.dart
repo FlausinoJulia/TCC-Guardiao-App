@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/models/contato.dart';
 import 'package:guardiao_app/models/usuario.dart';
 import 'package:guardiao_app/db/firestore.dart';
-import 'package:guardiao_app/screens/login.dart';
-import 'package:guardiao_app/screens/menu.dart';
+import 'package:guardiao_app/screens/login/login.dart';
+import 'package:guardiao_app/widgets/menu.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 
 class TelaCadastro2 extends StatefulWidget {
