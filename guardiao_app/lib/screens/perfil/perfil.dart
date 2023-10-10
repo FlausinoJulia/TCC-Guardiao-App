@@ -29,13 +29,6 @@ class _TelaPerfilState extends State<TelaPerfil> {
     usuario = await Firestore.getUsuarioAtual();
     setState(() {});
     print (usuario!.nome);
-
-    // if (usuario != null) {
-    //   nome = usuario.nome;
-    //   setState(() {
-    //     nome = usuario.nome;
-    //   });
-    // }
   }
 
   Future<Widget> loadProfileImage() async {
@@ -64,27 +57,9 @@ class _TelaPerfilState extends State<TelaPerfil> {
               color: const Color(0xFF040268),
               height: 341.0,
               width: MediaQuery.of(context).size.width,
-              child: Column(children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                 FutureBuilder<Widget>(
                   future: loadProfileImage(),
                   builder: (context, snapshot) {

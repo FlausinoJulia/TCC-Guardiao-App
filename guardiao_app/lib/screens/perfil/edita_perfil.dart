@@ -55,7 +55,7 @@ class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.pop(context, true);
                     },
                   ),
                 ],

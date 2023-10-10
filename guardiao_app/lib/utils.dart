@@ -7,8 +7,8 @@ import 'package:guardiao_app/models/usuario.dart';
 import 'package:image_picker/image_picker.dart';
 
 Future<XFile?> pickImage() async{
-  final ImagePicker _imagePicker = ImagePicker();
-  XFile? imagem = await _imagePicker.pickImage(source: ImageSource.gallery);
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? imagem = await imagePicker.pickImage(source: ImageSource.gallery);
   return imagem;
 }
 

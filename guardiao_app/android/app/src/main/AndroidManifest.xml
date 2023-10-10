@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     
     <uses-permission android:name="android.name.INTERNET"/>
-    <uses-permission androdi:name="android.name.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.name.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.name.CAMERA"/>
 
     <application
