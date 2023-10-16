@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geo_firestore_flutter/geo_firestore_flutter.dart';
+import 'package:guardiao_app/models/contato.dart';
 import 'package:guardiao_app/models/denuncia.dart';
 import 'package:guardiao_app/models/usuario.dart';
 import 'package:latlong2/latlong.dart';
@@ -53,7 +54,6 @@ class Firestore {
     }
   }
   
-
   static Future<Usuario?> getUsuario(String uid) async {
     final ref = FirebaseFirestore.instance.collection('usuarios').doc(uid).withConverter(
       fromFirestore: Usuario.fromFirestore, 
@@ -65,6 +65,30 @@ class Firestore {
     final usuario = docSnap.data();
 
     return usuario;    
+  }
+
+  static Future<List<Contato>> getContatosDeEmergencia(String uid) async {
+    List<Contato> contatosDeEmergencia = [];
+
+    final userDoc = await FirebaseFirestore.instance.collection('usuarios').doc(uid).get();
+
+    if (userDoc.exists) {
+      final data = userDoc.data();
+      if (data != null) {
+        final contatos = data['contatosDeEmergencia'];
+        if (contatos != null && contatos is List) {
+          for (var contatoData in contatos) {
+            final contato = Contato.fromFirestore(
+              contatoData,
+              null
+            );
+            contatosDeEmergencia.add(contato);
+          }
+        }
+      }
+    }
+
+    return contatosDeEmergencia;
   }
 
   // static Future<void> atualizarLocAtual(String uid, GeoPoint novaLoc) async {

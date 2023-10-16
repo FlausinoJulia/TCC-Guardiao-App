@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/db/firestore.dart';
+import 'package:guardiao_app/models/contato.dart';
+import 'package:guardiao_app/services/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TelaAlarme extends StatefulWidget {
   const TelaAlarme({super.key});
@@ -8,6 +12,45 @@ class TelaAlarme extends StatefulWidget {
 }
 
 class _TelaAlarmeState extends State<TelaAlarme> {
+  
+  enviarMensagens() async {
+    String? uid = getUid();
+    List<String> numerosDeEmergencia = [];
+    if( uid != null)
+    {
+      List<Contato> contatos = await Firestore.getContatosDeEmergencia(uid);
+      if (contatos.isNotEmpty)
+      {
+        for (var contato in contatos) 
+        {
+          if (contato.numero != "")
+          {
+            numerosDeEmergencia.add(contato.numero);
+          }
+        }
+      }
+
+      if (numerosDeEmergencia.isNotEmpty) 
+      {
+        String msg = "Teste";
+        String stringNumeros = numerosDeEmergencia.join(';'); // separando os numeros com ;
+        String url = 'sms:$stringNumeros?body$msg';
+        Uri smsUrl = Uri.parse(url);
+        
+        if (await canLaunchUrl(smsUrl)) {
+          await launchUrl(smsUrl);
+        } else {
+          print('n deu nao pae');
+        }
+      }
+    }
+    
+
+    
+    //if (usuario!.contatosDeEmergencia!.any((element) => ))
+
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,8 +121,10 @@ class _TelaAlarmeState extends State<TelaAlarme> {
               ),
             ),
             ElevatedButton(
-              onPressed: (){}, 
-              child: Text("ACIONAR ALARME")
+              onPressed: () {
+                enviarMensagens();
+              }, 
+              child: const Text("ACIONAR ALARME")
             ),
           ],
         ),
