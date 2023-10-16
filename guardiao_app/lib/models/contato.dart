@@ -7,13 +7,13 @@ class Contato {
   Contato({required this.nome, required this.numero});
 
   factory Contato.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    Map<String, dynamic> snapshot,
     SnapshotOptions? options, 
   ) {
-    final data = snapshot.data();
+    //final data = snapshot.data();
     return Contato (
-      nome: data?['nome'],
-      numero: data?['numero'],
+      nome: snapshot['nome'],
+      numero: snapshot['numero'],
     );
   }
 

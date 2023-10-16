@@ -32,9 +32,9 @@ class _TelaAlarmeState extends State<TelaAlarme> {
 
       if (numerosDeEmergencia.isNotEmpty) 
       {
-        String msg = "Teste";
+        String msg = "ALERTA DE EMERGÊNCIA!\n ${usuario.nome} está em perigo e acionou o botão de pânico nas coordenadas $coordenadas. \n Essa mensagem foi enviada através do botão de pânico do aplicativo guardião COTUCA.";
         String stringNumeros = numerosDeEmergencia.join(';'); // separando os numeros com ;
-        String url = 'sms:$stringNumeros?body$msg';
+        String url = 'sms:$stringNumeros?body=$msg';
         Uri smsUrl = Uri.parse(url);
         
         if (await canLaunchUrl(smsUrl)) {
