@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:guardiao_app/db/firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/widgets/mapa.dart';
+import 'package:latlong2/latlong.dart';
+
+import '../../utils.dart';
 
 class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
@@ -13,40 +12,12 @@ class TelaInicial extends StatefulWidget {
 }
 
 class _TelaInicialState extends State<TelaInicial> {
-
-  Future<Position> getLocalizacaoAtual() async {
-
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-
-    if (!serviceEnabled) {
-      return Future.error('Serviços de localização desativados.');
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission==LocationPermission.denied) {
-        return Future.error('Permissão para localização negada.');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Permissão para localização negada para sempre.');
-    }
-
-    Position pos = await Geolocator.getCurrentPosition();
-
-    String uid = getUid()!;
-    Firestore.adicionarLocalizacao(uid, GeoPoint(pos.latitude, pos.longitude));
-
-    return pos;
-  }
   
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getLocalizacaoAtual(), // Execute your asynchronous method here
-      builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<LatLng> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // While waiting for the data to be loaded, display a loading indicator
           return const Center(child: CircularProgressIndicator(),); 

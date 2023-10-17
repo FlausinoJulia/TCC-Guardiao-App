@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/contato.dart';
-import 'package:guardiao_app/services/firebase_auth.dart';
+import 'package:guardiao_app/models/usuario.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../utils.dart';
 
 class TelaAlarme extends StatefulWidget {
   const TelaAlarme({super.key});
@@ -14,10 +17,14 @@ class TelaAlarme extends StatefulWidget {
 class _TelaAlarmeState extends State<TelaAlarme> {
   
   enviarMensagens() async {
-    String? uid = getUid();
-    List<String> numerosDeEmergencia = [];
-    if( uid != null)
+    Usuario? usuario = await Firestore.getUsuarioAtual();
+    LatLng coordenadas = await getLocalizacaoAtual();
+
+    if (usuario != null)
     {
+      String uid = usuario.uid;
+      List<String> numerosDeEmergencia = [];
+      
       List<Contato> contatos = await Firestore.getContatosDeEmergencia(uid);
       if (contatos.isNotEmpty)
       {
@@ -28,19 +35,19 @@ class _TelaAlarmeState extends State<TelaAlarme> {
             numerosDeEmergencia.add(contato.numero);
           }
         }
-      }
 
-      if (numerosDeEmergencia.isNotEmpty) 
-      {
-        String msg = "ALERTA DE EMERGÊNCIA!\n ${usuario.nome} está em perigo e acionou o botão de pânico nas coordenadas $coordenadas. \n Essa mensagem foi enviada através do botão de pânico do aplicativo guardião COTUCA.";
-        String stringNumeros = numerosDeEmergencia.join(';'); // separando os numeros com ;
-        String url = 'sms:$stringNumeros?body=$msg';
-        Uri smsUrl = Uri.parse(url);
-        
-        if (await canLaunchUrl(smsUrl)) {
-          await launchUrl(smsUrl);
-        } else {
-          print('n deu nao pae');
+        if (numerosDeEmergencia.isNotEmpty) 
+        {
+          String msg = "ALERTA DE EMERGÊNCIA! \n${usuario.nome} está em perigo e acionou o botão de pânico nas coordenadas [Latitude: ${coordenadas.latitude}, Longitude: ${coordenadas.longitude}]. \nEssa mensagem foi enviada através do botão de pânico do aplicativo guardião COTUCA.";
+          String stringNumeros = numerosDeEmergencia.join(';'); // separando os numeros com ;
+          String url = 'sms:$stringNumeros?body=$msg';
+          Uri smsUrl = Uri.parse(url);
+          
+          if (await canLaunchUrl(smsUrl)) {
+            await launchUrl(smsUrl);
+          } else {
+            print('n deu nao'); // arrumar isso aqui
+          }
         }
       }
     }
