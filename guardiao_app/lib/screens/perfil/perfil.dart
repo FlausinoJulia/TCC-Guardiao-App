@@ -99,7 +99,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => TelaEditaPerfil(dadosUsuario: usuario),
-                        ));
+                        )).then((_) => setState(() {}));
                   },
                   child: const Text(
                     'Editar Perfil',
