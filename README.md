@@ -25,7 +25,7 @@ A Central de Denúncias consiste em um local onde os alunos poderão fazer denú
 ### :warning: Zonas de Perigo: 
 Essa função destaca no mapa, em vermelho, as regiões mais perigosas e violentas, com base nas denúncias feitas naquele local.
 
-#### Botão de Pânico
+#### 🚨 Botão de Pânico
 
 O botão de pânico estará disponível para o usuário tanto no aplicativo quanto no hardware, que atuará em integração ao software. Ao acionado, o botão do pânico emite um alerta no aplicativo e, além disso, envia um SMS para os contatos de emergência cadastrados pelo usuário, indicando que o aluno está em perigo.
 
