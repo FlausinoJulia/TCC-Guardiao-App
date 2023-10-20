@@ -1,6 +1,7 @@
 # Guardião COTUCA
 
-![Guardião COTUCA Logo](blob:https://web.whatsapp.com/5dcc29ac-9c47-460c-9545-36e6854f7f47)
+![Guardião COTUCA Logo](![image](https://github.com/FlausinoJulia/TCC-Guardiao-App/assets/90472966/e388df7a-f07a-470e-b67b-7657c833704c)
+)
 
 ![image](https://github.com/FlausinoJulia/TCC-Guardiao-App/assets/90472966/c4d2514f-a71b-4199-83eb-dd153689e14e)
 
