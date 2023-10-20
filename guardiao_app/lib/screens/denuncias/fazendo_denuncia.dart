@@ -170,6 +170,7 @@ class _TelaFazendoDenunciaState extends State<TelaFazendoDenuncia> {
                                       _options = decodedResponse
                                         .map((e) => OSMdata(
                                           displayname: e['display_name'],
+                                          name: e['name'],
                                           lat: double.parse(e['lat']),
                                           lon: double.parse(e['lon'])
                                         )).toList();

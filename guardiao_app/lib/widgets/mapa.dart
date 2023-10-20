@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:guardiao_app/db/firestore.dart';
+import 'package:guardiao_app/screens/grupos/grupos_dispo.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/services/route_api.dart';
 import 'package:http/http.dart' as http;
@@ -78,6 +79,8 @@ class _OpenStreetMapSearchAndPickState
   bool estaVisivel = false;
   bool iniciandoViagem = false;
   List<LatLng> coordenadasDaRota = [];
+
+  String enderecoDestino = "";
 
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _destinyController = TextEditingController();
@@ -382,6 +385,7 @@ class _OpenStreetMapSearchAndPickState
                               _destinyOptions = decodedResponse
                                   .map((e) => OSMdata(
                                       displayname: e['display_name'],
+                                      name: e['name'],
                                       lat: double.parse(e['lat']),
                                       lon: double.parse(e['lon'])))
                                   .toList();
@@ -409,7 +413,10 @@ class _OpenStreetMapSearchAndPickState
                                 // definindo a coordenada de destino
                                 latDestiny = _destinyOptions[index].lat;
                                 lonDestiny =  _destinyOptions[index].lon;
-      
+
+                                enderecoDestino = _destinyOptions[index].name;
+                                print("\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA enderecoDestino $enderecoDestino \n ");
+
                                 // armazenando novo destino no firestore
                                 String uid = getUid()!;
                                 Firestore.adicionarDestino(uid, GeoPoint(latDestiny, lonDestiny));
@@ -509,6 +516,7 @@ class _OpenStreetMapSearchAndPickState
                               _options = decodedResponse
                                   .map((e) => OSMdata(
                                       displayname: e['display_name'],
+                                      name: e['name'],
                                       lat: double.parse(e['lat']),
                                       lon: double.parse(e['lon'])))
                                   .toList();
@@ -604,51 +612,9 @@ class _OpenStreetMapSearchAndPickState
                                   ElevatedButton(
                                     onPressed: () async {
                                       // verificar se tem pessoas indo para o mesmo lugar
-                                      List<String> grupo = await Firestore.getUsuariosComMesmoDestino(GeoPoint(latDestiny, lonDestiny));
-                                      if (grupo.isEmpty) {
-                                        
-                                      } else {
-                                        if (context.mounted)
-                                        {
-
-                                          showModalBottomSheet(
-                                            context: context, 
-                                            builder: (context) {
-                                              return Container(
-                                                width: MediaQuery.of(context).size.width,
-                                                decoration: const BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.only(
-                                                      topLeft: Radius.circular(10.0),
-                                                      topRight: Radius.circular(10.0),
-                                                    ),
-                                                  ),
-                                                child: Column(
-                                                    children: [
-                                                      const Text("Essas pessoas estão indo para o mesmo lugar que você:"),
-                                                      ListView.builder(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        itemCount: grupo.length,
-                                                        itemBuilder: (BuildContext context, int indice) {
-                                                          return Row (
-                                                            children: [
-                                                              // foto
-                                                              Text("Nome do usuário: $grupo[indice]" ) // pegar o nome através do uid
-                                                            ],
-                                                          );
-                                                        },
-                                                      ),
-                                                      ElevatedButton(
-                                                        onPressed: () {},
-                                                        child: const Text("Formar grupo"),
-                                                      ),
-                                                    ],
-                                                  ),
-                                              );
-                                            },
-                                          );
-                                        }
-                                      }
+                                      LatLng destino = LatLng(latDestiny, lonDestiny);
+                                      String enderecoDestino = _destinyController.text;
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaGruposDisponiveis(destino: destino, enderecoDestino: enderecoDestino)));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       fixedSize: Size(MediaQuery.of(context).size.width, 46.0),
@@ -702,16 +668,17 @@ class _OpenStreetMapSearchAndPickState
 
 class OSMdata {
   final String displayname;
+  final String name;
   final double lat;
   final double lon;
-  OSMdata({required this.displayname, required this.lat, required this.lon});
+  OSMdata({required this.displayname, required this.name, required this.lat, required this.lon});
   @override
   String toString() {
-    return '$displayname, $lat, $lon';
+    return '$displayname, $name, $lat, $lon';
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator == (Object other) {
     if (other.runtimeType != runtimeType) {
       return false;
     }
@@ -719,7 +686,7 @@ class OSMdata {
   }
 
   @override
-  int get hashCode => Object.hash(displayname, lat, lon);
+  int get hashCode => Object.hash(displayname, name, lat, lon);
 }
 
 class LatLong {
