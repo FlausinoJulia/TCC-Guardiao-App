@@ -22,7 +22,7 @@ Os alunos poderão encontrar pessoas que estão indo para o mesmo lugar que eles
 
 A Central de Denúncias consiste em um local onde os alunos poderão fazer denúncias quanto a situações perigosas que ocorreram ao redor da escola, alertando os colegas sobre locais perigosos que devem ser evitados.
 
-- :warning:#### Zonas de Perigo
+- :warning: >Zonas de Perigo
 
 Essa função destaca no mapa, em vermelho, as regiões mais perigosas e violentas, com base nas denúncias feitas naquele local.
 
