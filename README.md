@@ -38,5 +38,5 @@ O botão de pânico estará disponível para o usuário tanto no aplicativo quan
 
 ## Equipe
 
-[Perfil do GitHub de nomedousuario](https://github.com/danyellefranca)
-- Julia Flausino da Silva
+- [Danyelle](https://github.com/danyellefranca)
+- [Julia](https://github.com/FlausinoJulia)
