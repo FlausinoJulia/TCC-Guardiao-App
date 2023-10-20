@@ -1,6 +1,6 @@
 # Guardião COTUCA
 
-![Logo do Guardião COTUCA](img src="/assets/imagens/logo.png")
+![Logo do Guardião COTUCA](/assets/imagens/logo.png)
 
 ## Status: em desenvolvimento
 
