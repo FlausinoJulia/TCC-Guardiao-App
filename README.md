@@ -6,6 +6,12 @@
 <br>
 Projeto em desenvolvimento para a disciplina de Trabalho de Conclusão de Curso II. 
 
+### Tópicos
+- Descrição do Projeto
+- Funcionalidades
+- Ferramentas/Tecnologias
+- Equipe
+
 ## O que é?
 
 O Guardião Cotuca é um aplicativo mobile destinado aos alunos do Colégio Técnico de Campinas, que tem como finalidade agir na segurança para tais, servindo como uma rede de apoio para eles. Sendo uma aplicação hardware-software, fornece alternativas para que os estudantes possam se sentir mais seguros ao ir ou voltar do colégio, bem como andar ao redor da escola.
