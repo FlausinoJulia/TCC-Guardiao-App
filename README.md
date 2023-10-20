@@ -14,11 +14,11 @@ O Guardião Cotuca é um aplicativo mobile destinado aos alunos do Colégio Téc
 
 ![Imagens das telas do aplicativo](link-para-imagens-das-telas.jpg)
 
-#### Formação de Grupos
+### 👥 Formação de Grupos
 
 Os alunos poderão encontrar pessoas que estão indo para o mesmo lugar que eles ao mesmo tempo. Assim, poderão evitar sair desacompanhados da escola. Essa funcionalidade visa ajudar principalmente as pessoas que saem do colégio de noite, ou que estão saindo desacompanhados para um local mais perigoso.
 
-#### Central de Denúncias
+### 🚫 Central de Denúncias
 
 A Central de Denúncias consiste em um local onde os alunos poderão fazer denúncias quanto a situações perigosas que ocorreram ao redor da escola, alertando os colegas sobre locais perigosos que devem ser evitados.
 
