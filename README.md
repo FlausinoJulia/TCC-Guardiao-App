@@ -35,9 +35,6 @@ O botão de pânico estará disponível para o usuário tanto no aplicativo quan
 ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![OpenStreetMap](![image](https://github.com/FlausinoJulia/TCC-Guardiao-App/assets/90472966/e022a5e4-eab0-4aa2-9fb7-2569fc311a3f))
-- OpenStreetMap
-- Nominatim
 
 ## Equipe
 
