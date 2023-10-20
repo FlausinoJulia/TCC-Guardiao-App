@@ -3,6 +3,7 @@
 ![Guardião COTUCA Logo](![image](https://github.com/FlausinoJulia/TCC-Guardiao-App/assets/90472966/e388df7a-f07a-470e-b67b-7657c833704c))
 
 ![image](https://github.com/FlausinoJulia/TCC-Guardiao-App/assets/90472966/c4d2514f-a71b-4199-83eb-dd153689e14e)
+Projeto em desenvolvimento para a disciplina de Trabalho de Conclusão de Curso II. 
 
 ## O que é?
 
