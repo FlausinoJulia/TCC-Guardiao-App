@@ -2,7 +2,7 @@
 
 ![Guardião COTUCA Logo](/assets/imagens/logo.png)
 
-## Status: em desenvolvimento
+![image](https://github.com/FlausinoJulia/TCC-Guardiao-App/assets/90472966/c4d2514f-a71b-4199-83eb-dd153689e14e)
 
 ## O que é?
 
