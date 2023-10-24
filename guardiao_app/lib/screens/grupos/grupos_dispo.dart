@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/grupo.dart';
 import 'package:guardiao_app/models/usuario.dart';
+import 'package:guardiao_app/widgets/card_grupo.dart';
 import 'package:latlong2/latlong.dart';
 
 class TelaGruposDisponiveis extends StatefulWidget {
@@ -55,8 +56,15 @@ class _TelaGruposDisponiveisState extends State<TelaGruposDisponiveis> {
                   }
                   else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return Expanded(
-                      child: Center (
-                        child: Text("Não há nenhum grupo indo para ${widget.enderecoDestino} disponível no momento...\n Deseja criar um grupo?"),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          "Não há nenhum grupo indo para ${widget.enderecoDestino} no momento... Deseja criar um novo grupo?",
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                            fontFamily: 'Lato',
+                          ),
+                        ),
                       ),
                     );
                   }
@@ -68,20 +76,18 @@ class _TelaGruposDisponiveisState extends State<TelaGruposDisponiveis> {
                             children: snapshot.data!.docs.map((document) {
                               return FutureBuilder<Usuario?> (
                                 future: Firestore.getUsuario(document['administrador']),
-                                builder: (BuildContext context, AsyncSnapshot<Usuario?> userSnapshot) {
-                                  if (userSnapshot.connectionState == ConnectionState.waiting) {
+                                builder: (BuildContext context, AsyncSnapshot<Usuario?> admnistradorSnapshot) {
+                                  if (admnistradorSnapshot.connectionState == ConnectionState.waiting) {
                                     return const Center(child: CircularProgressIndicator());
-                                  } else if (userSnapshot.hasData == false){
-                                  
-                                  }else {
+                                  } else {
                                     final grupo = Grupo.fromFirestore(
                                       document as DocumentSnapshot<Map<String, dynamic>>,
                                       null
                                     );
                                     return CardGrupo(
                                       grupo: grupo,
-                                      nomeAdmin: userSnapshot.data!.nome,
-                                      fotoAdmin: userSnapshot.data!.imagem
+                                      nomeAdmin: admnistradorSnapshot.data!.nome,
+                                      fotoAdmin: admnistradorSnapshot.data!.imagem,
                                     );
                                   } 
                                 }

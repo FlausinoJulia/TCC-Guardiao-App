@@ -415,7 +415,6 @@ class _OpenStreetMapSearchAndPickState
                                 lonDestiny =  _destinyOptions[index].lon;
 
                                 enderecoDestino = _destinyOptions[index].name;
-                                print("\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA enderecoDestino $enderecoDestino \n ");
 
                                 // armazenando novo destino no firestore
                                 String uid = getUid()!;
@@ -613,7 +612,6 @@ class _OpenStreetMapSearchAndPickState
                                     onPressed: () async {
                                       // verificar se tem pessoas indo para o mesmo lugar
                                       LatLng destino = LatLng(latDestiny, lonDestiny);
-                                      String enderecoDestino = _destinyController.text;
                                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaGruposDisponiveis(destino: destino, enderecoDestino: enderecoDestino)));
                                     },
                                     style: ElevatedButton.styleFrom(

@@ -139,6 +139,11 @@ class Firestore {
       return true;
   }
 
+  // grupos
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getGrupos() {
+    return FirebaseFirestore.instance.collection('grupos').snapshots();
+  }
+
   // zonas de perigo
   static Future<void> adicionarPontoDePerigo(GeoPoint geoPoint) async {
     await FirebaseFirestore.instance

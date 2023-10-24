@@ -1,19 +1,19 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/models/grupo.dart';
-import 'package:guardiao_app/screens/denuncias/visualiza_denuncia.dart';
+import 'package:guardiao_app/screens/grupos/visualiza_grupo.dart';
 
 class CardGrupo extends StatefulWidget {
   const CardGrupo({
     super.key,
     required this.grupo,
     required this.nomeAdmin,
-    required this.fotoUsuario,
+    required this.fotoAdmin,
   });
 
   final Grupo grupo;
   final String nomeAdmin;
-  final String fotoUsuario;
+  final String fotoAdmin;
 
   @override
   State<CardGrupo> createState() => _CardGrupoState();
@@ -28,8 +28,8 @@ class _CardGrupoState extends State<CardGrupo> {
   }
 
    Future<Widget> getImagem() async {
-    if (widget.fotoUsuario != "") {
-      final imagem = await FirebaseStorage.instance.ref(widget.fotoUsuario).getDownloadURL();
+    if (widget.fotoAdmin != "") {
+      final imagem = await FirebaseStorage.instance.ref(widget.fotoAdmin).getDownloadURL();
       return CircleAvatar(
         radius: 30,
         backgroundImage:  NetworkImage(imagem),
@@ -49,7 +49,7 @@ class _CardGrupoState extends State<CardGrupo> {
       padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoDenuncia(denuncia: widget.denuncia)));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoGrupo(grupo: widget.grupo)));
         },
         child: Container(
           constraints: const BoxConstraints(
@@ -62,82 +62,73 @@ class _CardGrupoState extends State<CardGrupo> {
             color: Color(0xFFE9E9E9),
           ),
           padding: const EdgeInsets.all(20.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30),),
-                  color: Color(0xFF6C6C6C)
-                ),
-                child: FutureBuilder<Widget> (
-                  future: getImagem(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center (
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return snapshot.data!;
-                    }
-                  },
-                ),
-              ), 
-              const SizedBox(width: 10.0,),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.nomeUsuario,
-                      style: const TextStyle(
-                        fontFamily: 'Lato',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                        color:  Color(0xFF6C6C6C),
-                      ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(30),),
+                      color: Color(0xFF6C6C6C)
                     ),
-                    const Row (
+                    child: FutureBuilder<Widget> (
+                      future: getImagem(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center (
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return snapshot.data!;
+                        }
+                      },
+                    ),
+                  ), 
+                  const SizedBox(width: 10.0,),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.location_pin,
-                          color: Color(0xFF040268),
-                        ),
                         Text(
-                          "Ver local da ocorrência",
-                          style: TextStyle(
+                          "Grupo de ${widget.nomeAdmin}",
+                          style: const TextStyle(
                             fontFamily: 'Lato',
                             fontWeight: FontWeight.bold,
-                            fontSize: 15.0,
-                            color: Color(0xFF040268),
+                            fontSize: 18.0,
+                            color:  Color(0xFF6C6C6C),
+                          ),
+                        ),
+                        Text(
+                          "${widget.grupo.integrantes.length}/${widget.grupo.numMaxParticipantes} pessoas",
+                          style: const TextStyle(
+                            fontFamily: 'Lato',
+                            fontSize: 15.0
                           ),
                         ),
                       ],
                     ),
-                    Flexible(
-                      child: RichText(
-                        text: TextSpan (
-                          text: (widget.grupo.descricao.length > 170) ? widget.grupo.descricao.substring(0, 165).trimRight() : widget.grupo.descricao,
-                          style: const TextStyle(
-                            fontFamily: 'Lato',
-                            fontSize: 18.0,
-                          ),
-                          children: <TextSpan>[
-                            if (widget.grupo.descricao.length > 170) 
-                              const TextSpan(text: "... ver mais", style: TextStyle(
-                                fontFamily: 'Lato',
-                                fontSize: 18.0,
-                                color: Color(0xFF040268),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {}, 
+                    child: Text(
+                      "Ver integrantes"
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 10,),
+                  ElevatedButton(
+                    onPressed: () {}, 
+                    child: Text(
+                      "Entrar no grupo",
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -2,26 +2,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Grupo {
   String administrador;
-  GeoPoint endereco;
+  GeoPoint coordenadasDestino;
   String endereco;
+  List<String> integrantes; // lista com UID dos participantes do grupo
+  bool estaDisponivel;
+  int numMaxParticipantes;
 
-  Contato({required this.nome, required this.numero});
+  Grupo({
+    required this.administrador, 
+    required this.coordenadasDestino, 
+    required this.endereco,
+    required this.integrantes,
+    required this.estaDisponivel,
+    required this.numMaxParticipantes
+  });
 
-  factory Contato.fromFirestore(
-    Map<String, dynamic> snapshot,
+  factory Grupo.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options, 
   ) {
-    //final data = snapshot.data();
-    return Contato (
-      nome: snapshot['nome'],
-      numero: snapshot['numero'],
+    final data = snapshot.data();
+    return Grupo (
+      administrador: data?['administrador'],
+      coordenadasDestino: data?['coordenadasDestino'],
+      endereco: data?['endereco'],
+      integrantes: List.from(data?['integrantes']), 
+      estaDisponivel: data?['estaDisponivel'],
+      numMaxParticipantes: data?['numMaxParticipantes']
     );
   }
 
   Map<String,dynamic> toFirestore() {
     return {
-      "nome": nome,
-      "numero": numero,
+      "administrador": administrador,
+      "coordenadasDestino": coordenadasDestino,
+      "endereco": endereco
     };
   }
 }
