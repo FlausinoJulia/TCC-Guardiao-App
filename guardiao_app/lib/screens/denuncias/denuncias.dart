@@ -107,7 +107,7 @@ class _TelaDenunciasState extends State<TelaDenuncias> {
                     child: const Text('Fazer uma denúncia'),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

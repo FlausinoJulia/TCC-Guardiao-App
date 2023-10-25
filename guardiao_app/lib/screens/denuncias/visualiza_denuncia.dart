@@ -91,6 +91,7 @@ class _TelaVisualizandoDenunciaState extends State<TelaVisualizandoDenuncia> {
                     center: LatLng(-22.90074534849959, -47.06715141665595),
                     zoom: 17,
                     maxZoom: 17,
+                    interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.doubleTapZoom
                   ),
                   children: [
                     TileLayer(

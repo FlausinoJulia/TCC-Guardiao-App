@@ -602,8 +602,9 @@ class _OpenStreetMapSearchAndPickState
                                           coordenadasDaRota = [];
                                           latDestiny = 0; 
                                           lonDestiny = 0;
+                                          enderecoDestino = "";
                                           _destinyController.clear();
-                                          //setState(() {});
+                                          setState(() {});
                                         },
                                       ),
                                     ],
