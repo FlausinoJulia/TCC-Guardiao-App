@@ -126,7 +126,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                   Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const TelaInformacoesPessoais(),
+                          builder: (context) => TelaInformacoesPessoais(),
                         ));
                 },
                 icon: const Icon(
@@ -151,7 +151,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                   Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const TelaContatoEmergencia(),
+                          builder: (context) => TelaContatoEmergencia(),
                         ));
                 },
                 icon: const Icon(

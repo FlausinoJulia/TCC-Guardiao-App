@@ -1,7 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/db/firestore.dart';
 
-class TelaInformacoesPessoais extends StatelessWidget {
-  const TelaInformacoesPessoais({super.key});
+import '../../models/usuario.dart';
+
+class TelaInformacoesPessoais extends StatefulWidget {
+  @override
+  State<TelaInformacoesPessoais> createState() => _TelaInformacoesPessoais();
+}
+
+class _TelaInformacoesPessoais extends State<TelaInformacoesPessoais> {
+    Usuario? dadosUsuario;
+
+/*
+    @override
+  void initState() {
+    super.initState();
+    pegarUsuario();
+  }
+
+  pegarUsuario() async {
+    dadosUsuario = await Firestore.getUsuarioAtual();
+    setState(() {});
+    print (dadosUsuario!.nome);
+  }*/
+    //await user?.updateDisplayName("Jane Q. User");
+    //await user?.updatePhotoURL("https://example.com/jane-q-user/profile.jpg");
+
+/*
+    Future<void> editarNome(String nome) async{
+      String novoNome = "";
+      await showDialog(
+        context: context;
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.grey[900],
+          title: Text(
+            "Editar nome",
+            style: const TextStyle(color: Colors.white),
+          ),
+          content: TextField(
+            autofocus: true,
+            style: TextStyle(
+              color: Colors.white,
+              decoration: InputDecoration(
+                hintText: "Digite um novo nome",
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+              )
+            ),
+          ),
+        ),
+      );
+    }*/
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +70,7 @@ class TelaInformacoesPessoais extends StatelessWidget {
               IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  color:  Color(0xFF040268),
+                  color: Color(0xFF040268),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -62,6 +112,148 @@ class TelaInformacoesPessoais extends StatelessWidget {
           Container(
             width: 309,
             height: 278,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Text(
+                      dadosUsuario == null ? "" : dadosUsuario!.nome,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Lato',
+                          fontSize: 16),
+                    ),
+                    SizedBox(
+                      width: 75,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          
+                        },
+                        icon: const Icon(
+                          Icons.edit_document,
+                          color: Colors.black,
+                          size: 25.0,
+                        )),
+                  ],
+                ),
+                Container(
+                  width: 310,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 0.2,
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Text(
+                      dadosUsuario == null ? "" : dadosUsuario!.numero,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Lato',
+                          fontSize: 16),
+                    ),
+                    SizedBox(
+                      width: 108,
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.edit_document,
+                          color: Colors.black,
+                          size: 25.0,
+                        )),
+                  ],
+                ),
+                Container(
+                  width: 310,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 0.2,
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Text(
+                      dadosUsuario == null ? "" : dadosUsuario!.senha,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Lato',
+                          fontSize: 16),
+                    ),
+                    SizedBox(
+                      width: 148,
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.edit_document,
+                          color: Colors.black,
+                          size: 25.0,
+                        )),
+                  ],
+                ),
+                Container(
+                  width: 310,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 0.2,
+                        strokeAlign: BorderSide.strokeAlignCenter,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Text(
+                      dadosUsuario == null ? "" : dadosUsuario!.email,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Lato',
+                          fontSize: 16),
+                    ),
+                    SizedBox(
+                      width: 48,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                        },
+                        icon: const Icon(
+                          Icons.edit_document,
+                          color: Colors.black,
+                          size: 25.0,
+                        )),
+                  ],
+                ),
+              ],
+            ),
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
