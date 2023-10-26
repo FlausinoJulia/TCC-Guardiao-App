@@ -104,6 +104,17 @@ class _OpenStreetMapSearchAndPickState
   Timer? _debounce;
   var client = http.Client();
 
+  bool ehAdministrador = false;
+  bool ehIntegrante = false;
+
+  void atualizarSituacaoGrupo(bool ehAdmin, bool ehInt) {
+    // Atualize sua variável aqui
+    setState(() {
+      ehAdministrador = ehAdmin;
+      ehIntegrante = ehInt;
+    });
+  }
+
   void setNameCurrentPos() async {
     double latitude = _mapController.center.latitude;
     double longitude = _mapController.center.longitude;    

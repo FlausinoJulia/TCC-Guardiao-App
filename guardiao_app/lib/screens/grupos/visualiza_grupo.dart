@@ -68,8 +68,10 @@ class _TelaVisualizandoGrupoState extends State<TelaVisualizandoGrupo> {
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
                   onPressed: () {
+
+                    
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Menu()),
+                      MaterialPageRoute(builder: (context) => const Menu()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
