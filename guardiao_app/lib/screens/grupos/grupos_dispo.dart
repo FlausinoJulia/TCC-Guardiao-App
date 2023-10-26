@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/grupo.dart';
 import 'package:guardiao_app/models/usuario.dart';
+import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/widgets/card_grupo.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -24,66 +25,80 @@ class _TelaGruposDisponiveisState extends State<TelaGruposDisponiveis> {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Criando Grupo'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Criando grupo com destino a ${widget.enderecoDestino}'),
-                const SizedBox(height: 20.0,),
-                Wrap(
-                  children: [
-                    const Text('Defina o número máximo de integrantes (de 2 a 6): '),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF040268),
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Criando Grupo'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text('Criando grupo com destino a ${widget.enderecoDestino}'),
+                    const SizedBox(height: 20.0,),
+                    Wrap(
+                      children: [
+                        const Text('Defina o número máximo de integrantes (de 2 a 6): '),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF040268),
+                            ),
+                            onPressed: () {
+                              if (numMaxParticipantes > 2){
+                                setState(() {
+                                  numMaxParticipantes = numMaxParticipantes - 1;
+                                });
+                              }
+                            }, 
+                            child: const Icon(
+                              Icons.remove,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                        onPressed: () {
-                          if (numMaxParticipantes > 2){
-                            setState(() {
-                              numMaxParticipantes = numMaxParticipantes - 1;
-                            });
-                          }
-                        }, 
-                        child: const Icon(
-                          Icons.remove,
-                          color: Colors.white,
+                        Text("$numMaxParticipantes"),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF040268),
+                            ),
+                            onPressed: () {
+                              if (numMaxParticipantes < 6){
+                                setState(() {
+                                  numMaxParticipantes = numMaxParticipantes + 1;
+                                });
+                              }
+                            }, 
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Text("$numMaxParticipantes"),
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF040268),
-                        ),
-                        onPressed: () {
-                          if (numMaxParticipantes < 6){
-                            setState(() {
-                              numMaxParticipantes = numMaxParticipantes + 1;
-                            });
-                          }
-                        }, 
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Criar grupo'),
+                  onPressed: () {
+                    // criar grupo
+                    String? uid = getUid();
+                    if (uid != null) {
+                      List<String> integrantes = [];
+                      integrantes.add(uid);
+                      GeoPoint coordenadas = GeoPoint(widget.destino.latitude, widget.destino.longitude);
+                      Grupo grupo = Grupo(administrador: uid, coordenadasDestino: coordenadas, endereco: widget.enderecoDestino, integrantes: integrantes, estaDisponivel: true, numMaxParticipantes: numMaxParticipantes);
+                      Firestore.criarGrupo(grupo);
+                    } else {
+                      // printar scaffold erro ao criar grupo (nao foi possivel criar grupo)
+                    }
+                  },
+                ),
               ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Criar grupo'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+            );
+          }
         );
       },
     );
@@ -144,29 +159,31 @@ class _TelaGruposDisponiveisState extends State<TelaGruposDisponiveis> {
                 else {
                   return  Expanded(
                     child: ListView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          children: snapshot.data!.docs.map((document) {
-                            return FutureBuilder<Usuario?> (
-                              future: Firestore.getUsuario(document['administrador']),
-                              builder: (BuildContext context, AsyncSnapshot<Usuario?> admnistradorSnapshot) {
-                                if (admnistradorSnapshot.connectionState == ConnectionState.waiting) {
-                                  return const Center(child: CircularProgressIndicator());
-                                } else {
-                                  final grupo = Grupo.fromFirestore(
-                                    document as DocumentSnapshot<Map<String, dynamic>>,
-                                    null
-                                  );
-                                  return CardGrupo(
-                                    grupo: grupo,
-                                    nomeAdmin: admnistradorSnapshot.data!.nome,
-                                    fotoAdmin: admnistradorSnapshot.data!.imagem,
-                                  );
-                                } 
-                              }
-                            );
-                          }).toList(),
-                        ),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      children: snapshot.data!.docs.map((document) {
+                        return FutureBuilder<Usuario?> (
+                          future: Firestore.getUsuario(document['administrador']),
+                          builder: (BuildContext context, AsyncSnapshot<Usuario?> admnistradorSnapshot) {
+                            if (admnistradorSnapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(child: CircularProgressIndicator());
+                            } else if (document['estaDisponivel'] == true) {
+                              final grupo = Grupo.fromFirestore(
+                                document as DocumentSnapshot<Map<String, dynamic>>,
+                                null
+                              );
+                              return CardGrupo(
+                                grupo: grupo,
+                                nomeAdmin: admnistradorSnapshot.data!.nome,
+                                fotoAdmin: admnistradorSnapshot.data!.imagem,
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }
+                        );
+                      }).toList(),
+                    ),
                   );
                 }
               },

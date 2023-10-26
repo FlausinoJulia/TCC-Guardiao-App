@@ -36,7 +36,10 @@ class Grupo {
     return {
       "administrador": administrador,
       "coordenadasDestino": coordenadasDestino,
-      "endereco": endereco
+      "endereco": endereco,
+      "integrantes": integrantes,
+      "estaDisponivel": estaDisponivel,
+      "numMaxParticipantes": numMaxParticipantes
     };
   }
 }

@@ -54,8 +54,8 @@ class _CardGrupoState extends State<CardGrupo> {
         child: Container(
           constraints: const BoxConstraints(
             maxWidth: 150.0,
-            minHeight: 40.0,
-            maxHeight: 182.0,
+            minHeight: 145.0,
+            maxHeight: 150.0,
           ),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20),),
@@ -113,22 +113,35 @@ class _CardGrupoState extends State<CardGrupo> {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {}, 
-                    child: Text(
-                      "Ver integrantes"
+              const SizedBox(height: 20.0,),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF040268),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoGrupo(grupo: widget.grupo)));
+                      }, 
+                      child: const Text(
+                        "Ver integrantes"
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10,),
-                  ElevatedButton(
-                    onPressed: () {}, 
-                    child: Text(
-                      "Entrar no grupo",
+                    const SizedBox(width: 10,),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF040268),
+                      ),
+                      onPressed: () {}, 
+                      child: const Text(
+                        "Entrar no grupo",
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
