@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-class TelaContatoEmergencia extends StatelessWidget {
-  const TelaContatoEmergencia({super.key});
+class TelaContatoEmergencia extends StatefulWidget {
+  @override
+  State<TelaContatoEmergencia> createState() => _TelaContatoEmergencia();
+}
 
+class _TelaContatoEmergencia extends State<TelaContatoEmergencia> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +72,9 @@ class TelaContatoEmergencia extends StatelessWidget {
               height: 0,
             ),
           ),
+          SizedBox(
+            height: 18,
+          ),
           Form(
               key: null,
               child: Column(
@@ -106,7 +112,7 @@ class TelaContatoEmergencia extends StatelessWidget {
                             style: const TextStyle(
                                 fontSize: 16.0,
                                 fontFamily: 'Lato',
-                                color: Colors.white),
+                                color: Colors.black),
                             validator: (value) {
                               if (value!.isNotEmpty) {
                                 if (!RegExp(r'^[a-z A-Z]+$')
@@ -343,6 +349,64 @@ class TelaContatoEmergencia extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // gerar lista de contatos do usuario para salvar no firestore
+                           // List<Map<String, dynamic>> contatosDeEmergencia = gerarListaDeContatos();
+          
+                            // adicionando usuario no firebase auth
+                            //await cadastrar(widget.email, widget.senha, context); 
+/*
+                            String? uid = getUid();
+                            if (uid != null && context.mounted)
+                            {
+                              Usuario usuario = Usuario(
+                                uid: uid, 
+                                nome: widget.nome, 
+                                email: widget.email, 
+                                senha: widget.senha, 
+                                numero: widget.numero, 
+                                contatosDeEmergencia: contatosDeEmergencia, 
+                                imagem: ""
+                              );
+                              
+                              bool vaiNavegar = await Firestore.criarUsuario(usuario);
+                              if(vaiNavegar && context.mounted) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) => const Menu())
+                                );
+                              }
+                              else {
+                                if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
+                              }
+                            } else {
+                              if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
+                            }*/
+                          },
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: Size(MediaQuery.of(context).size.width, 55.0),
+                            backgroundColor: Color.fromARGB(143, 97, 97, 97),
+                            padding: const EdgeInsets.all(15.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)
+                            ),
+                          ),
+                          child: const Text(
+                            "SALVAR", 
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontFamily: 'Lato',
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                        ),
+                      ),
                 ],
               ),
             )
