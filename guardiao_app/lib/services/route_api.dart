@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 const String baseUrl = 'https://api.openrouteservice.org/v2/directions/foot-walking';
-const String apiKey = Env.orsApiKey;
+const String apiKey = String.fromEnvironment('ORS_API_KEY');
 
 
 // startPoint is an String containing longitude and latitude of the starting point of the route

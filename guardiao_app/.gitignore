@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 .DS_Store
+/.DS_Store
 .atom/
 .buildlog/
 .history
@@ -43,4 +44,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/android/app/google-services.json
+# Firebase configuration files / Google Services (e.g. APIs or Firebase)
+**ios/Runner/GoogleService-Info.plist
+**macos/Runner/GoogleService-Info.plist
+**android/app/google-services.json
+
+firebase_options.dart
+.env

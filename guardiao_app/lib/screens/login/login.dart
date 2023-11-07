@@ -129,7 +129,7 @@ class _TelaLoginState extends State<TelaLogin> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        bool vaiNavegar = await login(emailController.text, senhaController.text, context);
+                        bool vaiNavegar = await login(emailController.text.trim(), senhaController.text, context);
                         if (vaiNavegar && context.mounted)
                         {
                           Navigator.of(context).pushReplacement(
