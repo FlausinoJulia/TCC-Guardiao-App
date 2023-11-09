@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/models/usuario.dart';
+import 'package:guardiao_app/screens/perfil/edita_info_pessoal.dart';
 import 'package:guardiao_app/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,7 +14,6 @@ class TelaEditaPerfil extends StatefulWidget {
 }
 
 class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
-
   pickAndUploadImage() async {
     XFile? file = await pickImage();
     if (file != null) {
@@ -25,15 +25,17 @@ class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
   Future<Widget> loadProfileImage() async {
     if (widget.dadosUsuario != null && widget.dadosUsuario!.imagem != "") {
       final imagemUrl = widget.dadosUsuario!.imagem;
-      final imagem = await FirebaseStorage.instance.ref(imagemUrl).getDownloadURL();
+      final imagem =
+          await FirebaseStorage.instance.ref(imagemUrl).getDownloadURL();
       return CircleAvatar(
         radius: 80,
-        backgroundImage:  NetworkImage(imagem),
+        backgroundImage: NetworkImage(imagem),
       );
     } else {
       return const CircleAvatar(
         radius: 80,
-        backgroundImage: NetworkImage("https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"),
+        backgroundImage: NetworkImage(
+            "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"),
       );
     }
   }
@@ -45,10 +47,14 @@ class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
         body: Center(
           child: Column(
             children: [
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 children: [
-                  const SizedBox(width: 20,),
+                  const SizedBox(
+                    width: 20,
+                  ),
                   IconButton(
                     icon: const Icon(
                       Icons.arrow_back,
@@ -81,16 +87,15 @@ class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
                     bottom: -10,
                     left: 108,
                     child: IconButton(
-                      icon: const Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      onPressed: (){
-                        pickAndUploadImage();
-                        setState(() {});
-                      }
-                    ),
+                        icon: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          pickAndUploadImage();
+                          setState(() {});
+                        }),
                   ),
                 ],
               ),
@@ -108,7 +113,9 @@ class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
                   height: 0,
                 ),
               ),
-              const SizedBox(height: 32,),
+              const SizedBox(
+                height: 32,
+              ),
               Container(
                 width: 273,
                 height: 50,
@@ -121,7 +128,13 @@ class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
                 child: Directionality(
                   textDirection: TextDirection.rtl,
                   child: TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TelaInformacoesPessoais(),
+                          ));
+                    },
                     icon: const Icon(
                       Icons.edit_document,
                       color: Colors.white,
@@ -138,7 +151,9 @@ class _TelaEditaPerfilState extends State<TelaEditaPerfil> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               const Text(
                 'Editar informações pessoais',
                 textAlign: TextAlign.center,
