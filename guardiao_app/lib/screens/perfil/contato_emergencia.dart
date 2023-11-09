@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/usuario.dart';
 
 class TelaContatoEmergencia extends StatefulWidget {
   @override
@@ -6,6 +10,36 @@ class TelaContatoEmergencia extends StatefulWidget {
 }
 
 class _TelaContatoEmergencia extends State<TelaContatoEmergencia> {
+  List<Map<String, dynamic>> contactsData = List.generate(
+    3,
+    (index) => {'nome': '', 'numero': ''},
+  );
+
+  void salvarContatosDeEmergencia() async {
+    // Verifica se todos os contatos foram preenchidos
+    if (contactsData.every((contact) =>
+        contact['name'] != null && contact['phone'] != null)) {
+      // Obtém a referência do usuário atualmente autenticado
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // Atualiza os contatos de emergência no Firestore
+        await FirebaseFirestore.instance
+            .collection('usuarios')
+            .doc(user.uid)
+            .update({
+          'contatosDeEmergencia': contactsData,
+        });
+
+        print('Contatos de emergência salvos com sucesso!');
+      } else {
+        print('Usuário não autenticado.');
+      }
+    } else {
+      print('Por favor, preencha todos os campos de contato.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
