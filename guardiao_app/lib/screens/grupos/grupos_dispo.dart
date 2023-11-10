@@ -173,6 +173,7 @@ class _TelaGruposDisponiveisState extends State<TelaGruposDisponiveis> {
                                 null
                               );
                               return CardGrupo(
+                                grupoId: document.id,
                                 grupo: grupo,
                                 nomeAdmin: admnistradorSnapshot.data!.nome,
                                 fotoAdmin: admnistradorSnapshot.data!.imagem,

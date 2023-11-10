@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/grupo.dart';
 import 'package:guardiao_app/widgets/card_integrante.dart';
 import 'package:guardiao_app/widgets/menu.dart';
 
 class TelaVisualizandoGrupo extends StatefulWidget {
-  const TelaVisualizandoGrupo({super.key, required this.grupo});
+  const TelaVisualizandoGrupo({super.key, required this.grupoId, required this.grupo});
 
+  final String grupoId;
   final Grupo grupo;
 
   @override
@@ -68,8 +70,7 @@ class _TelaVisualizandoGrupoState extends State<TelaVisualizandoGrupo> {
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
                   onPressed: () {
-
-                    
+                    Firestore.entrarNoGrupo(widget.grupoId);
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => const Menu()),
                     );

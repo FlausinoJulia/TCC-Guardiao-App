@@ -1,13 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 const String baseUrl = 'https://api.openrouteservice.org/v2/directions/foot-walking';
-const String apiKey = String.fromEnvironment('ORS_API_KEY');
+final String apiKey = dotenv.get('API_URL', fallback: "");
 
-
-// startPoint is an String containing longitude and latitude of the starting point of the route
 getCoordinates(String startPoint, String endPoint) async  {
   List listOfPoints = [];
   List<LatLng> points = [];

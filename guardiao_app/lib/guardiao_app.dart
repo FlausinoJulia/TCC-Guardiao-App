@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardiao_app/screens/perfil/edita_info_pessoal.dart';
-import 'package:guardiao_app/screens/perfil/edita_perfil.dart';
 import 'package:guardiao_app/widgets/verifica_autenticacao.dart';
 
 class GuardiaoApp extends StatefulWidget {
@@ -10,8 +8,7 @@ class GuardiaoApp extends StatefulWidget {
   State<GuardiaoApp> createState() => _GuardiaoAppState();
 }
 
-class _GuardiaoAppState extends State<GuardiaoApp> {
-  
+class _GuardiaoAppState extends State<GuardiaoApp> {  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +17,7 @@ class _GuardiaoAppState extends State<GuardiaoApp> {
       theme: ThemeData(
         primaryColor: const Color.fromRGBO(4, 2, 104, 1.0), // mudar para primarySwatch
       ),
-      home: VerificaAutenticacao(),
+      home: const VerificaAutenticacao(),
     );
   }
 }              

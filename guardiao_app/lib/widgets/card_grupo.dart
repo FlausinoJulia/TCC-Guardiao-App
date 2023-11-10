@@ -1,16 +1,19 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/grupo.dart';
 import 'package:guardiao_app/screens/grupos/visualiza_grupo.dart';
 
 class CardGrupo extends StatefulWidget {
   const CardGrupo({
     super.key,
+    required this.grupoId,
     required this.grupo,
     required this.nomeAdmin,
     required this.fotoAdmin,
   });
 
+  final String grupoId;
   final Grupo grupo;
   final String nomeAdmin;
   final String fotoAdmin;
@@ -49,7 +52,7 @@ class _CardGrupoState extends State<CardGrupo> {
       padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoGrupo(grupo: widget.grupo)));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoGrupo(grupoId: widget.grupoId, grupo: widget.grupo)));
         },
         child: Container(
           constraints: const BoxConstraints(
@@ -124,7 +127,7 @@ class _CardGrupoState extends State<CardGrupo> {
                         backgroundColor: const Color(0xFF040268),
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoGrupo(grupo: widget.grupo)));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TelaVisualizandoGrupo(grupoId: widget.grupoId, grupo: widget.grupo)));
                       }, 
                       child: const Text(
                         "Ver integrantes"
@@ -135,7 +138,11 @@ class _CardGrupoState extends State<CardGrupo> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF040268),
                       ),
-                      onPressed: () {}, 
+                      onPressed: () {
+                        Firestore.entrarNoGrupo(widget.grupoId);
+                        // navigation
+                        Navigator.of(context).pop();
+                      }, 
                       child: const Text(
                         "Entrar no grupo",
                       ),

@@ -154,6 +154,25 @@ class Firestore {
       return true;
   }
 
+  static Future<bool> entrarNoGrupo (String grupoId) async {
+    String? usuarioAtual = getUid();
+
+    if (usuarioAtual != null) {
+
+      final grupoRef = FirebaseFirestore.instance
+                      .collection('grupos')
+                      .doc(grupoId);
+
+      grupoRef.update({
+        "integrantes": FieldValue.arrayUnion([usuarioAtual]),
+      });
+
+      return true;
+    } 
+
+    return false;
+  } 
+
   // zonas de perigo
   static Future<void> adicionarPontoDePerigo(GeoPoint geoPoint) async {
     await FirebaseFirestore.instance
