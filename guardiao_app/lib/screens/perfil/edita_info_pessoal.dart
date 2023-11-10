@@ -227,8 +227,7 @@ class _TelaInformacoesPessoais extends State<TelaInformacoesPessoais> {
                 buildEditableField('Nome', usuario!.nome, userNameController),
                 buildEditableField('Número', usuario!.numero, userNumberController),
                 buildEditableField('Email', usuario!.email, userEmailController),
-                buildEditableField('Senha', usuario!.senha, userPasswordController,),
-                    //isPassword: true),
+                buildEditableField('Senha', usuario!.senha, userPasswordController, isPassword: true),
                 ElevatedButton(
                   onPressed: () {
                     // Chamadas para atualizar os dados no Firebase

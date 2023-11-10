@@ -17,8 +17,8 @@ class _TelaContatoEmergencia extends State<TelaContatoEmergencia> {
 
   void salvarContatosDeEmergencia() async {
     // Verifica se todos os contatos foram preenchidos
-    if (contactsData.every((contact) =>
-        contact['name'] != null && contact['phone'] != null)) {
+    if (contactsData.every(
+        (contact) => contact['name'] != null && contact['phone'] != null)) {
       // Obtém a referência do usuário atualmente autenticado
       User? user = FirebaseAuth.instance.currentUser;
 
@@ -109,351 +109,109 @@ class _TelaContatoEmergencia extends State<TelaContatoEmergencia> {
           SizedBox(
             height: 18,
           ),
-          Form(
-              key: null,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: null,
-                            decoration: InputDecoration(
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.never,
-                              contentPadding: const EdgeInsets.all(20.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40.0),
-                                borderSide: const BorderSide(
-                                  color: Colors.black,
-                                  //width: 2.0,
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40.0),
-                                borderSide: const BorderSide(
-                                  color: Colors.black,
-                                 // width: 2.5,
-                                ),
-                              ),
-                              labelText: 'Nome',
-                              labelStyle:
-                                  const TextStyle(color: Colors.black),
-                            ),
-                            style: const TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: 'Lato',
-                                color: Colors.black),
-                            validator: (value) {
-                              if (value!.isNotEmpty) {
-                                if (!RegExp(r'^[a-z A-Z]+$')
-                                    .hasMatch(value)) {
-                                  return "Nome inválido!";
-                                }
-                                return null;
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 10.0),
-                          Expanded(
-                            child: TextFormField (
-                              controller: null,
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
-                                floatingLabelBehavior: FloatingLabelBehavior.never,
-                                contentPadding: const EdgeInsets.all(20.0),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.5,
-                                  ),
-                                ),
-                                labelText: 'Número',
-                                labelStyle: const TextStyle(color: Colors.black),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: 'Lato',
-                                color: Colors.black
-                              ),
-                              validator: (value) {
-                                if (value!.isNotEmpty) {
-                                  if (value.length < 11) {
-                                    return "Número de celular inválido!";
-                                  }
-                                  return null;
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Row (
-                        children: [
-                          Expanded(
-                            child: TextFormField (
-                              controller: null,
-                              decoration: InputDecoration(
-                                floatingLabelBehavior: FloatingLabelBehavior.never,
-                                contentPadding: const EdgeInsets.all(20.0),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.5,
-                                  ),
-                                ),
-                                labelText: 'Nome',
-                                labelStyle: const TextStyle(color: Colors.black),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: 'Lato',
-                                color: Colors.black
-                              ),
-                              validator: (value) {
-                                if (value!.isNotEmpty) {
-                                  if (!RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                                    return "Nome inválido!";
-                                  }
-                                  return null;
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Expanded(
-                            child: TextFormField (
-                                controller: null,
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  contentPadding: const EdgeInsets.all(20.0),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(40.0),
-                                    borderSide: const BorderSide(
-                                      color: Colors.black,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(40.0),
-                                    borderSide: const BorderSide(
-                                      color: Colors.black,
-                                      width: 2.5,
-                                    ),
-                                  ),
-                                  labelText: 'Telefone',
-                                  labelStyle: const TextStyle(color: Colors.black),
-                                ),
-                                style: const TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: 'Lato',
-                                  color: Colors.black
-                                ),
-                                validator: (value) {
-                                  if (value!.isNotEmpty) {
-                                    if (value.length < 11) {
-                                      return "Número de celular inválido!";
-                                    }
-                                    return null;
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: Row (
-                        children: [
-                          Expanded(
-                            child: TextFormField (
-                              controller: null,
-                              decoration: InputDecoration(
-                                floatingLabelBehavior: FloatingLabelBehavior.never,
-                                contentPadding: const EdgeInsets.all(20.0),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.0,
-                                  ),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40.0),
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.5,
-                                  ),
-                                ),
-                                labelText: 'Nome',
-                                labelStyle: const TextStyle(color: Colors.black),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: 'Lato',
-                                color: Colors.black
-                              ),
-                              validator: (value) {
-                                if (value!.isNotEmpty) {
-                                  if (!RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                                    return "Nome inválido!";
-                                  }
-                                  return null;
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Expanded(
-                            child: TextFormField (
-                                controller: null,
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  contentPadding: const EdgeInsets.all(20.0),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(40.0),
-                                    borderSide: const BorderSide(
-                                      color: Colors.black,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(40.0),
-                                    borderSide: const BorderSide(
-                                      color: Colors.black,
-                                      width: 2.5,
-                                    ),
-                                  ),
-                                  labelText: 'Telefone',
-                                  labelStyle: const TextStyle(color: Colors.black),
-                                ),
-                                style: const TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: 'Lato',
-                                  color: Colors.black
-                                ),
-                                validator: (value) {
-                                  if (value!.isNotEmpty) {
-                                    if (value.length < 11) {
-                                      return "Número de celular inválido!";
-                                    }
-                                    return null;
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            // gerar lista de contatos do usuario para salvar no firestore
-                           // List<Map<String, dynamic>> contatosDeEmergencia = gerarListaDeContatos();
-          
-                            // adicionando usuario no firebase auth
-                            //await cadastrar(widget.email, widget.senha, context); 
-/*
-                            String? uid = getUid();
-                            if (uid != null && context.mounted)
-                            {
-                              Usuario usuario = Usuario(
-                                uid: uid, 
-                                nome: widget.nome, 
-                                email: widget.email, 
-                                senha: widget.senha, 
-                                numero: widget.numero, 
-                                contatosDeEmergencia: contatosDeEmergencia, 
-                                imagem: ""
-                              );
-                              
-                              bool vaiNavegar = await Firestore.criarUsuario(usuario);
-                              if(vaiNavegar && context.mounted) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) => const Menu())
-                                );
-                              }
-                              else {
-                                if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
-                              }
-                            } else {
-                              if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Falha ao fazer o cadastro. Tente novamente!')));
-                            }*/
-                          },
-                          style: ElevatedButton.styleFrom(
-                            fixedSize: Size(MediaQuery.of(context).size.width, 55.0),
-                            backgroundColor: Color.fromARGB(143, 97, 97, 97),
-                            padding: const EdgeInsets.all(15.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                          ),
-                          child: const Text(
-                            "SALVAR", 
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                              fontFamily: 'Lato',
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ),
-                      ),
-                ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (int i = 0; i < contactsData.length; i++)
+                ContactForm(
+                  contactData: contactsData[i],
+                  onChanged: (data) {
+                    setState(() {
+                      contactsData[i] = data;
+                    });
+                  },
+                ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: salvarContatosDeEmergencia,
+                child: Text('Salvar Contatos de Emergência'),
               ),
-            )
+            ],
+          ),
         ],
       ),
-      /*
-        body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Stack(children: [
-              
-              
-            ]))
-            */
     );
   }
+}
+
+class ContactForm extends StatelessWidget {
+  final Map<String, dynamic> contactData;
+  final ValueChanged<Map<String, dynamic>> onChanged;
+
+  ContactForm({required this.contactData, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                onChanged: (value) {
+                  onChanged({
+                    'name': value,
+                    'phone': contactData['phone'],
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'Nome',
+                ),
+              ),
+            ),
+            SizedBox(width: 8.0),
+            Expanded(
+              child: TextField(
+                onChanged: (value) {
+                  onChanged({
+                    'name': contactData['name'],
+                    'phone': value,
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'Telefone',
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16.0),
+      ],
+    );
+  }
+    /*
+    return Column(
+      children: [
+        /*
+        Text(
+          'Contato de Emergência',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),*/
+        TextField(
+          onChanged: (value) {
+            onChanged({
+              'nome': value,
+              'numero': contactData['numero'],
+            });
+          },
+          decoration: InputDecoration(
+            hintText: 'Nome',
+          ),
+        ),
+        SizedBox(height: 8.0),
+        TextField(
+          onChanged: (value) {
+            onChanged({
+              'nome': contactData['nome'],
+              'numero': value,
+            });
+          },
+          decoration: InputDecoration(
+            hintText: 'Telefone',
+          ),
+        ),
+        SizedBox(height: 16.0),
+      ],
+    );
+  }*/
 }
