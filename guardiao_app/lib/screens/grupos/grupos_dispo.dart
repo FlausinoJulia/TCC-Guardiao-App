@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/grupo.dart';
 import 'package:guardiao_app/models/usuario.dart';
+import 'package:guardiao_app/providers/provider_grupo.dart';
 import 'package:guardiao_app/services/firebase_auth.dart';
 import 'package:guardiao_app/widgets/card_grupo.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 
 class TelaGruposDisponiveis extends StatefulWidget {
   const TelaGruposDisponiveis({super.key, required this.destino, required this.enderecoDestino});
@@ -82,18 +84,38 @@ class _TelaGruposDisponiveisState extends State<TelaGruposDisponiveis> {
               actions: <Widget>[
                 TextButton(
                   child: const Text('Criar grupo'),
-                  onPressed: () {
-                    // criar grupo
-                    String? uid = getUid();
-                    if (uid != null) {
-                      List<String> integrantes = [];
-                      integrantes.add(uid);
-                      GeoPoint coordenadas = GeoPoint(widget.destino.latitude, widget.destino.longitude);
-                      Grupo grupo = Grupo(administrador: uid, coordenadasDestino: coordenadas, endereco: widget.enderecoDestino, integrantes: integrantes, estaDisponivel: true, numMaxParticipantes: numMaxParticipantes);
-                      Firestore.criarGrupo(grupo);
-                    } else {
-                      // printar scaffold erro ao criar grupo (nao foi possivel criar grupo)
+                  onPressed: () async {
+
+                    // verificando se ja esta em grupo
+                    if (Provider.of<GrupoProvider>(context).ehAdministrador == false && Provider.of<GrupoProvider>(context).ehIntegrante == false)
+                    {
+                      // criar grupo
+                      String? uid = getUid();
+                      if (uid != null) {
+                        List<String> integrantes = [];
+                        integrantes.add(uid);
+                        GeoPoint coordenadas = GeoPoint(widget.destino.latitude, widget.destino.longitude);
+                        Grupo grupo = Grupo(administrador: uid, coordenadasDestino: coordenadas, endereco: widget.enderecoDestino, integrantes: integrantes, estaDisponivel: true, numMaxParticipantes: numMaxParticipantes);
+                        bool criouGrupo = await Firestore.criarGrupo(grupo);
+                        if (criouGrupo && context.mounted)
+                        {
+                          Provider.of<GrupoProvider>(context).atualizaEstaEmGrupo(integrante: false, administrador: true);
+                          //Provider.of<GrupoProvider>(context).atualizaCoordenadas(coordenadas: widget.enderecoDestino)
+                        }
+                        else
+                        {
+                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Não foi possível criar o grupo!')));
+                        }
+                      } else {
+                        // printar scaffold erro ao criar grupo (nao foi possivel criar grupo)
+                        if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Não foi possível criar o grupo!')));
+                      }
                     }
+                    else
+                    {
+                      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text('Você já está em um grupo.')));
+                    }
+                    
                   },
                 ),
               ],

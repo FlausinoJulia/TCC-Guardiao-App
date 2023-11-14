@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 const String baseUrl = 'https://api.openrouteservice.org/v2/directions/foot-walking';
-final String apiKey = dotenv.get('API_URL', fallback: "");
+final String apiKey = dotenv.get('ORS_API_KEY', fallback: "");
 
 getCoordinates(String startPoint, String endPoint) async  {
   List listOfPoints = [];
