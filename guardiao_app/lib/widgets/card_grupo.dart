@@ -2,7 +2,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:guardiao_app/db/firestore.dart';
 import 'package:guardiao_app/models/grupo.dart';
+import 'package:guardiao_app/providers/provider_grupo.dart';
 import 'package:guardiao_app/screens/grupos/visualiza_grupo.dart';
+import 'package:provider/provider.dart';
 
 class CardGrupo extends StatefulWidget {
   const CardGrupo({
@@ -138,10 +140,19 @@ class _CardGrupoState extends State<CardGrupo> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF040268),
                       ),
-                      onPressed: () {
-                        Firestore.entrarNoGrupo(widget.grupoId);
-                        // navigation
-                        Navigator.of(context).pop();
+                      onPressed: () async {
+                        bool entrouNoGrupo = await Firestore.entrarNoGrupo(widget.grupoId);
+                        if (entrouNoGrupo && context.mounted)
+                        {
+                          //Provider.of<GrupoProvider>(context).atualizaEstaEmGrupo(integrante: true, administrador: false);
+                          Provider.of<GrupoProvider>(context, listen: false).atualizaEstaEmGrupo(integrante: true, administrador: false);
+                          print("Eh integrante: ${Provider.of<GrupoProvider>(context).ehIntegrante}");
+                          Navigator.of(context).pop();
+                        }
+                        else 
+                        {
+                          if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Não foi possível entrar no grupo!')));
+                        }
                       }, 
                       child: const Text(
                         "Entrar no grupo",

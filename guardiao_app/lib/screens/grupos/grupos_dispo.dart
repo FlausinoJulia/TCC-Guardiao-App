@@ -85,7 +85,6 @@ class _TelaGruposDisponiveisState extends State<TelaGruposDisponiveis> {
                 TextButton(
                   child: const Text('Criar grupo'),
                   onPressed: () async {
-
                     // verificando se ja esta em grupo
                     if (Provider.of<GrupoProvider>(context).ehAdministrador == false && Provider.of<GrupoProvider>(context).ehIntegrante == false)
                     {

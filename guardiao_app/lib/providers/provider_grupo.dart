@@ -24,5 +24,6 @@ class GrupoProvider extends ChangeNotifier {
     required List<LatLng> coordenadas
   }) async {
     coordenadasDaRota = coordenadas;
-     }
+    notifyListeners();
+  }
 }
