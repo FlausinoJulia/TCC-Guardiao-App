@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guardiao_app/services/firebase_auth.dart';
 import '../../db/firestore.dart';
 import '../../models/usuario.dart';
 
@@ -162,100 +161,102 @@ class _TelaInformacoesPessoais extends State<TelaInformacoesPessoais> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Color(0xFF040268),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 20,
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              const SizedBox(
-                width: 40,
-              ),
-              const Text(
-                'Informações Pessoais',
-                textAlign: TextAlign.center,
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Color(0xFF040268),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                const SizedBox(
+                  width: 40,
+                ),
+                const Text(
+                  'Informações Pessoais',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: 'Lato',
+                    fontWeight: FontWeight.w500,
+                    height: 0,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            const SizedBox(
+              width: 300,
+              height: 100,
+              child: Text(
+                'Essas são as suas informações pessoais, elas não ficam visíveis no seu perfil.',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                   fontFamily: 'Lato',
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w300,
                   height: 0,
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          const SizedBox(
-            width: 300,
-            height: 100,
-            child: Text(
-              'Essas são as suas informações pessoais, elas não ficam visíveis no seu perfil.',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontFamily: 'Lato',
-                fontWeight: FontWeight.w300,
-                height: 0,
               ),
             ),
-          ),
-          Container(
-            width: 309,
-            height: 380,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                buildEditableField('Nome', usuario!.nome, userNameController),
-                buildEditableField('Número', usuario!.numero, userNumberController),
-                buildEditableField('Email', usuario!.email, userEmailController),
-                buildEditableField('Senha', usuario!.senha, userPasswordController, isPassword: true),
-                ElevatedButton(
-                  onPressed: () {
-                    // Chamadas para atualizar os dados no Firebase
-                    updateUserName(userNameController.text);
-                    updateUserNumber(userNumberController.text);
-                    updateUserEmail(userEmailController.text);
-                    updatePassword(userPasswordController.text);
-                  },
-                  child: Text('Salvar Alterações'),
-                ),
-              ],
-            ),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
+            Container(
+              width: 309,
+              height: 380,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  buildEditableField('Nome', usuario!.nome, userNameController),
+                  buildEditableField('Número', usuario!.numero, userNumberController),
+                  buildEditableField('Email', usuario!.email, userEmailController),
+                  buildEditableField('Senha', usuario!.senha, userPasswordController, isPassword: true),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Chamadas para atualizar os dados no Firebase
+                      updateUserName(userNameController.text);
+                      updateUserNumber(userNumberController.text);
+                      updateUserEmail(userEmailController.text);
+                      updatePassword(userPasswordController.text);
+                    },
+                    child: Text('Salvar Alterações'),
+                  ),
+                ],
               ),
-              shadows: [
-                BoxShadow(
-                  color: Color(0x3F000000),
-                  blurRadius: 10,
-                  offset: Offset(0, 3),
-                  spreadRadius: 0,
-                )
-              ],
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 10,
+                    offset: Offset(0, 3),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

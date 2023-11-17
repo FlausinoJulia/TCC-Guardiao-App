@@ -123,6 +123,7 @@ class _CardDenunciaState extends State<CardDenuncia> {
                           style: const TextStyle(
                             fontFamily: 'Lato',
                             fontSize: 18.0,
+                            color: Colors.black
                           ),
                           children: <TextSpan>[
                             if (widget.denuncia.descricao.length > 170) 

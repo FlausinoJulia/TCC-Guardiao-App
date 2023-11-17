@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/usuario.dart';
-
 class TelaContatoEmergencia extends StatefulWidget {
   @override
   State<TelaContatoEmergencia> createState() => _TelaContatoEmergencia();
@@ -142,41 +140,43 @@ class ContactForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                onChanged: (value) {
-                  onChanged({
-                    'name': value,
-                    'phone': contactData['phone'],
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Nome',
+    return SafeArea(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  onChanged: (value) {
+                    onChanged({
+                      'name': value,
+                      'phone': contactData['phone'],
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Nome',
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: 8.0),
-            Expanded(
-              child: TextField(
-                onChanged: (value) {
-                  onChanged({
-                    'name': contactData['name'],
-                    'phone': value,
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Telefone',
+              SizedBox(width: 8.0),
+              Expanded(
+                child: TextField(
+                  onChanged: (value) {
+                    onChanged({
+                      'name': contactData['name'],
+                      'phone': value,
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Telefone',
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 16.0),
-      ],
+            ],
+          ),
+          SizedBox(height: 16.0),
+        ],
+      ),
     );
   }
     /*

@@ -8,9 +8,9 @@ environment:
 
 dependencies:
   image_picker: ^1.0.4
-  firebase_auth: ^4.7.1
-  firebase_core: ^2.15.0
-  cloud_firestore: ^4.9.0 
+  firebase_auth: ^4.14.0
+  firebase_core: ^2.22.0
+  cloud_firestore: ^4.13.1 
   flutter:
     sdk: flutter
   provider: ^6.1.0
